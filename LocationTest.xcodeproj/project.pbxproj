@@ -49,13 +49,18 @@
 		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
 		B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E915BDE83500F28FA8 /* TrackViewController.m */; };
 		B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39EC15BDECE300F28FA8 /* Track+Data.m */; };
+		B1904FFA15FD2D5E00B225E2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FEE15FD25CE00B225E2 /* libRestKit.a */; };
+		B1904FFC15FD2D8400B225E2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */; };
+		B1904FFE15FD2D9400B225E2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FFD15FD2D9400B225E2 /* MobileCoreServices.framework */; };
+		B190500015FD2D9C00B225E2 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FFF15FD2D9C00B225E2 /* Security.framework */; };
+		B190500215FD2DA700B225E2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B190500115FD2DA700B225E2 /* SystemConfiguration.framework */; };
+		B190500415FD2DBB00B225E2 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B190500315FD2DBB00B225E2 /* libxml2.dylib */; };
 		B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E4715C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m */; };
 		B1976E6615C9CB8D008BCDCF /* mapThumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */; };
 		B1976E6715C9CB8D008BCDCF /* mapThumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */; };
 		B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E6915CC201B008BCDCF /* FileHelper.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
 		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
-		B1A0226315CD76920054C2D7 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
 		B1CDFB3B15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
@@ -67,6 +72,51 @@
 		B1FB1B7415BC66D300B51E16 /* Waypoint+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FB1B7315BC66D300B51E16 /* Waypoint+Create.m */; };
 		B1FB1B7715BC680800B51E16 /* Segment+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FB1B7615BC680800B51E16 /* Segment+Create.m */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B1904FED15FD25CE00B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D1614564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+		B1904FEF15FD25CE00B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160D2614564E820060A5C5;
+			remoteInfo = RestKitTests;
+		};
+		B1904FF115FD25CE00B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E62145651060060A5C5;
+			remoteInfo = RestKitFramework;
+		};
+		B1904FF315FD25CE00B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 25160E78145651060060A5C5;
+			remoteInfo = RestKitFrameworkTests;
+		};
+		B1904FF515FD25CE00B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 259C301615128079003066A2;
+			remoteInfo = RestKitResources;
+		};
+		B1904FF815FD2D2500B225E2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 25160D1514564E810060A5C5;
+			remoteInfo = RestKit;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		B10BFDA115CDBF790070FA11 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
@@ -141,6 +191,12 @@
 		B17D39EB15BDECE300F28FA8 /* Track+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Data.h"; sourceTree = "<group>"; };
 		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
 		B17D39EE15BDF60900F28FA8 /* TrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackHandler.h; sourceTree = "<group>"; };
+		B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
+		B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		B1904FFD15FD2D9400B225E2 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		B1904FFF15FD2D9C00B225E2 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		B190500115FD2DA700B225E2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		B190500315FD2DBB00B225E2 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		B1976E4615C9B1E7008BCDCF /* GoogleStaticMapsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleStaticMapsFetcher.h; sourceTree = "<group>"; };
 		B1976E4715C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleStaticMapsFetcher.m; sourceTree = "<group>"; };
 		B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapThumbnail.png; path = LocationTest/mapThumbnail.png; sourceTree = "<group>"; };
@@ -150,8 +206,6 @@
 		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
 		B1A0225915CD4FF70054C2D7 /* GPXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXParser.h; sourceTree = "<group>"; };
 		B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Cyclemeter-Cycle-20120701-0953.gpx"; sourceTree = "<group>"; };
-		B1A0226115CD76910054C2D7 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
-		B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
 		B1CDFB3915C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPolyline+EncodedPolyline.h"; sourceTree = "<group>"; };
@@ -176,6 +230,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B190500415FD2DBB00B225E2 /* libxml2.dylib in Frameworks */,
+				B190500215FD2DA700B225E2 /* SystemConfiguration.framework in Frameworks */,
+				B190500015FD2D9C00B225E2 /* Security.framework in Frameworks */,
+				B1904FFE15FD2D9400B225E2 /* MobileCoreServices.framework in Frameworks */,
+				B1904FFC15FD2D8400B225E2 /* CFNetwork.framework in Frameworks */,
+				B1904FFA15FD2D5E00B225E2 /* libRestKit.a in Frameworks */,
 				B1FB1B1015BC0F7700B51E16 /* CoreData.framework in Frameworks */,
 				B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */,
 				B16A047915B21CAA005B372D /* CoreBluetooth.framework in Frameworks */,
@@ -195,6 +255,7 @@
 		B12D4BAF15B1CCA6001490B3 = {
 			isa = PBXGroup;
 			children = (
+				B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */,
 				B12D4BC415B1CCA6001490B3 /* LocationTest */,
 				B12D4BBD15B1CCA6001490B3 /* Frameworks */,
 				B12D4BBB15B1CCA6001490B3 /* Products */,
@@ -212,6 +273,11 @@
 		B12D4BBD15B1CCA6001490B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B190500315FD2DBB00B225E2 /* libxml2.dylib */,
+				B190500115FD2DA700B225E2 /* SystemConfiguration.framework */,
+				B1904FFF15FD2D9C00B225E2 /* Security.framework */,
+				B1904FFD15FD2D9400B225E2 /* MobileCoreServices.framework */,
+				B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */,
 				B1FB1B0F15BC0F7700B51E16 /* CoreData.framework */,
 				B164D56515B74F110061E562 /* QuartzCore.framework */,
 				B16A047815B21CAA005B372D /* CoreBluetooth.framework */,
@@ -300,6 +366,18 @@
 			name = Categories;
 			sourceTree = "<group>";
 		};
+		B1904FE315FD25CE00B225E2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B1904FEE15FD25CE00B225E2 /* libRestKit.a */,
+				B1904FF015FD25CE00B225E2 /* RestKitTests.octest */,
+				B1904FF215FD25CE00B225E2 /* RestKit.framework */,
+				B1904FF415FD25CE00B225E2 /* RestKitFrameworkTests.octest */,
+				B1904FF615FD25CE00B225E2 /* RestKitResources.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		BE3633D915DBDE4400D81B35 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -354,8 +432,6 @@
 				B1A0225615CD4EC80054C2D7 /* GPXParser.m */,
 				B1976E6815CC201B008BCDCF /* FileHelper.h */,
 				B1976E6915CC201B008BCDCF /* FileHelper.m */,
-				B1A0226115CD76910054C2D7 /* ISO8601DateFormatter.h */,
-				B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -414,6 +490,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B1904FF915FD2D2500B225E2 /* PBXTargetDependency */,
 			);
 			name = LocationTest;
 			productName = LocationTest;
@@ -440,12 +517,56 @@
 			mainGroup = B12D4BAF15B1CCA6001490B3;
 			productRefGroup = B12D4BBB15B1CCA6001490B3 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = B1904FE315FD25CE00B225E2 /* Products */;
+					ProjectRef = B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				B12D4BB915B1CCA6001490B3 /* LocationTest */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		B1904FEE15FD25CE00B225E2 /* libRestKit.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRestKit.a;
+			remoteRef = B1904FED15FD25CE00B225E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1904FF015FD25CE00B225E2 /* RestKitTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitTests.octest;
+			remoteRef = B1904FEF15FD25CE00B225E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1904FF215FD25CE00B225E2 /* RestKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = RestKit.framework;
+			remoteRef = B1904FF115FD25CE00B225E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1904FF415FD25CE00B225E2 /* RestKitFrameworkTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitFrameworkTests.octest;
+			remoteRef = B1904FF315FD25CE00B225E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1904FF615FD25CE00B225E2 /* RestKitResources.bundle */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RestKitResources.bundle;
+			remoteRef = B1904FF515FD25CE00B225E2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		B12D4BB815B1CCA6001490B3 /* Resources */ = {
@@ -498,7 +619,6 @@
 				B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */,
 				B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */,
 				B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */,
-				B1A0226315CD76920054C2D7 /* ISO8601DateFormatter.m in Sources */,
 				B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */,
 				B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */,
 				B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */,
@@ -515,6 +635,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B1904FF915FD2D2500B225E2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RestKit;
+			targetProxy = B1904FF815FD2D2500B225E2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B12D4BC715B1CCA6001490B3 /* InfoPlist.strings */ = {
@@ -575,6 +703,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_LDFLAGS = (
 					"-lstdc++",
@@ -598,6 +727,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
@@ -619,7 +749,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationTest/LocationTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "LocationTest/LocationTest-Info.plist";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -634,7 +770,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationTest/LocationTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(BUILT_PRODUCTS_DIR)/../../Headers\"";
 				INFOPLIST_FILE = "LocationTest/LocationTest-Info.plist";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-all_load",
+					"-ObjC",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

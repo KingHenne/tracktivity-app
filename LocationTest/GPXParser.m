@@ -12,7 +12,7 @@
 #import "Route.h"
 #import "Segment+Create.h"
 #import "Waypoint+Create.h"
-#import "ISO8601DateFormatter.h"
+#import "RestKit/ISO8601DateFormatter.h"
 #import "NSURL+FileHelper.h"
 
 @interface GPXParser ()

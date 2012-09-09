@@ -14,6 +14,7 @@
 #import "TrackTableViewController.h"
 #import "TrackViewController.h"
 #import "SegmentedControlViewController.h"
+#import <RestKit/RestKit.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) GPXParser *gpxParser;
