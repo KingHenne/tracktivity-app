@@ -1,0 +1,680 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA215CDBF790070FA11 /* Track.m */; };
+		B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA615CDBF7A0070FA11 /* Segment.m */; };
+		B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA915CDBF7A0070FA11 /* Waypoint.m */; };
+		B10BFDB015CDBF7B0070FA11 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDAF15CDBF7B0070FA11 /* Activity.m */; };
+		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
+		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
+		B10BFDBC15CE9C250070FA11 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBB15CE9C240070FA11 /* Route.m */; };
+		B10BFDBF15CECBA40070FA11 /* SegmentedControlViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBE15CECBA40070FA11 /* SegmentedControlViewController.m */; };
+		B10BFDC215CECF100070FA11 /* ActivityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDC115CECF0F0070FA11 /* ActivityTableViewController.m */; };
+		B10BFDC515CECF300070FA11 /* RouteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */; };
+		B12D4BBF15B1CCA6001490B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BBE15B1CCA6001490B3 /* UIKit.framework */; };
+		B12D4BC115B1CCA6001490B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BC015B1CCA6001490B3 /* Foundation.framework */; };
+		B12D4BC315B1CCA6001490B3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BC215B1CCA6001490B3 /* CoreGraphics.framework */; };
+		B12D4BC915B1CCA6001490B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BC715B1CCA6001490B3 /* InfoPlist.strings */; };
+		B12D4BCB15B1CCA6001490B3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B12D4BCA15B1CCA6001490B3 /* main.m */; };
+		B12D4BCF15B1CCA6001490B3 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */; };
+		B12D4BD215B1CCA6001490B3 /* iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */; };
+		B12D4BD515B1CCA6001490B3 /* MainStoryboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BD315B1CCA6001490B3 /* MainStoryboard_iPad.storyboard */; };
+		B12D4BD815B1CCA6001490B3 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B12D4BD715B1CCA6001490B3 /* RecordViewController.m */; };
+		B12D4BDA15B1CCA6001490B3 /* first.png in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BD915B1CCA6001490B3 /* first.png */; };
+		B12D4BDC15B1CCA6001490B3 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BDB15B1CCA6001490B3 /* first@2x.png */; };
+		B12D4BDF15B1CCA6001490B3 /* RawDataViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B12D4BDE15B1CCA6001490B3 /* RawDataViewController.m */; };
+		B12D4BE115B1CCA6001490B3 /* second.png in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BE015B1CCA6001490B3 /* second.png */; };
+		B12D4BE315B1CCA6001490B3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BE215B1CCA6001490B3 /* second@2x.png */; };
+		B12D4BEB15B1CDC2001490B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */; };
+		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
+		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
+		B16A047215B20FC1005B372D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16A046F15B20FC1005B372D /* Localizable.strings */; };
+		B16A047515B21C35005B372D /* WFConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047415B21C35005B372D /* WFConnector.framework */; };
+		B16A047715B21CA3005B372D /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047615B21CA3005B372D /* ExternalAccessory.framework */; };
+		B16A047915B21CAA005B372D /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047815B21CAA005B372D /* CoreBluetooth.framework */; };
+		B16A048115B2B7FD005B372D /* TrackingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A048015B2B7FC005B372D /* TrackingManager.m */; };
+		B16A048C15B2FB30005B372D /* CLLocation+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A048B15B2FB30005B372D /* CLLocation+Strings.m */; };
+		B16A049715B32101005B372D /* NSDate+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049615B32100005B372D /* NSDate+Strings.m */; };
+		B16A049B15B343F6005B372D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049A15B343F6005B372D /* MapViewController.m */; };
+		B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A115B34639005B372D /* WaypointAnnotation.m */; };
+		B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A515B36311005B372D /* TrackOverlayView.m */; };
+		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
+		B17D39E115BDDAF900F28FA8 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */; };
+		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
+		B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E915BDE83500F28FA8 /* TrackViewController.m */; };
+		B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39EC15BDECE300F28FA8 /* Track+Data.m */; };
+		B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E4715C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m */; };
+		B1976E6615C9CB8D008BCDCF /* mapThumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */; };
+		B1976E6715C9CB8D008BCDCF /* mapThumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */; };
+		B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E6915CC201B008BCDCF /* FileHelper.m */; };
+		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
+		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
+		B1A0226315CD76920054C2D7 /* ISO8601DateFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
+		B1CDFB3B15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */; };
+		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
+		B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298215D7B74000CF1574 /* gpxFile@2x.png */; };
+		B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E9298615D7B87D00CF1574 /* ImportViewController.m */; };
+		B1E9298A15D7C31500CF1574 /* TabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E9298915D7C31400CF1574 /* TabBarController.m */; };
+		B1FB1B0D15BC0F3600B51E16 /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */; };
+		B1FB1B1015BC0F7700B51E16 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1FB1B0F15BC0F7700B51E16 /* CoreData.framework */; };
+		B1FB1B7415BC66D300B51E16 /* Waypoint+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FB1B7315BC66D300B51E16 /* Waypoint+Create.m */; };
+		B1FB1B7715BC680800B51E16 /* Segment+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B1FB1B7615BC680800B51E16 /* Segment+Create.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B10BFDA115CDBF790070FA11 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
+		B10BFDA215CDBF790070FA11 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
+		B10BFDA515CDBF7A0070FA11 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
+		B10BFDA615CDBF7A0070FA11 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
+		B10BFDA815CDBF7A0070FA11 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
+		B10BFDA915CDBF7A0070FA11 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
+		B10BFDAE15CDBF7B0070FA11 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		B10BFDAF15CDBF7B0070FA11 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		B10BFDB115CDC04C0070FA11 /* Activity+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Create.h"; sourceTree = "<group>"; };
+		B10BFDB215CDC04C0070FA11 /* Activity+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Create.m"; sourceTree = "<group>"; };
+		B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+FileHelper.h"; sourceTree = "<group>"; };
+		B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+FileHelper.m"; sourceTree = "<group>"; };
+		B10BFDBA15CE9C230070FA11 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		B10BFDBB15CE9C240070FA11 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
+		B10BFDBD15CECBA30070FA11 /* SegmentedControlViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedControlViewController.h; sourceTree = "<group>"; };
+		B10BFDBE15CECBA40070FA11 /* SegmentedControlViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedControlViewController.m; sourceTree = "<group>"; };
+		B10BFDC015CECF0E0070FA11 /* ActivityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewController.h; sourceTree = "<group>"; };
+		B10BFDC115CECF0F0070FA11 /* ActivityTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewController.m; sourceTree = "<group>"; };
+		B10BFDC315CECF2E0070FA11 /* RouteTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RouteTableViewController.h; sourceTree = "<group>"; };
+		B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RouteTableViewController.m; sourceTree = "<group>"; };
+		B12D4BBA15B1CCA6001490B3 /* LocationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B12D4BBE15B1CCA6001490B3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B12D4BC015B1CCA6001490B3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B12D4BC215B1CCA6001490B3 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B12D4BC615B1CCA6001490B3 /* LocationTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "LocationTest-Info.plist"; sourceTree = "<group>"; };
+		B12D4BC815B1CCA6001490B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B12D4BCA15B1CCA6001490B3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B12D4BCC15B1CCA6001490B3 /* LocationTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocationTest-Prefix.pch"; sourceTree = "<group>"; };
+		B12D4BCD15B1CCA6001490B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B12D4BD115B1CCA6001490B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		B12D4BD615B1CCA6001490B3 /* RecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
+		B12D4BD715B1CCA6001490B3 /* RecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
+		B12D4BD915B1CCA6001490B3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = first.png; path = LocationTest/first.png; sourceTree = "<group>"; };
+		B12D4BDB15B1CCA6001490B3 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "first@2x.png"; path = "LocationTest/first@2x.png"; sourceTree = "<group>"; };
+		B12D4BDD15B1CCA6001490B3 /* RawDataViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RawDataViewController.h; sourceTree = "<group>"; };
+		B12D4BDE15B1CCA6001490B3 /* RawDataViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RawDataViewController.m; sourceTree = "<group>"; };
+		B12D4BE015B1CCA6001490B3 /* second.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = second.png; path = LocationTest/second.png; sourceTree = "<group>"; };
+		B12D4BE215B1CCA6001490B3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "second@2x.png"; path = "LocationTest/second@2x.png"; sourceTree = "<group>"; };
+		B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		B12D4BEC15B1CDC7001490B3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B164D56515B74F110061E562 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
+		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B16A047115B20FC1005B372D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B16A047415B21C35005B372D /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_2.2.3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
+		B16A047615B21CA3005B372D /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		B16A047815B21CAA005B372D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		B16A047F15B2B7FC005B372D /* TrackingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingManager.h; sourceTree = "<group>"; };
+		B16A048015B2B7FC005B372D /* TrackingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackingManager.m; sourceTree = "<group>"; };
+		B16A048A15B2FB30005B372D /* CLLocation+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CLLocation+Strings.h"; sourceTree = "<group>"; };
+		B16A048B15B2FB30005B372D /* CLLocation+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CLLocation+Strings.m"; sourceTree = "<group>"; };
+		B16A049515B32100005B372D /* NSDate+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Strings.h"; sourceTree = "<group>"; };
+		B16A049615B32100005B372D /* NSDate+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Strings.m"; sourceTree = "<group>"; };
+		B16A049915B343F6005B372D /* MapViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		B16A049A15B343F6005B372D /* MapViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		B16A04A015B34639005B372D /* WaypointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaypointAnnotation.h; sourceTree = "<group>"; };
+		B16A04A115B34639005B372D /* WaypointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaypointAnnotation.m; sourceTree = "<group>"; };
+		B16A04A315B35784005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		B16A04A415B36311005B372D /* TrackOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackOverlayView.h; sourceTree = "<group>"; };
+		B16A04A515B36311005B372D /* TrackOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackOverlayView.m; sourceTree = "<group>"; };
+		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
+		B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackTableViewController.m; sourceTree = "<group>"; };
+		B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
+		B17D39E015BDDAF900F28FA8 /* CoreDataTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreDataTableViewController.h; sourceTree = "<group>"; };
+		B17D39E215BDDD6A00F28FA8 /* Track+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Create.h"; sourceTree = "<group>"; };
+		B17D39E315BDDD6A00F28FA8 /* Track+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Create.m"; sourceTree = "<group>"; };
+		B17D39E815BDE83500F28FA8 /* TrackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackViewController.h; sourceTree = "<group>"; };
+		B17D39E915BDE83500F28FA8 /* TrackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackViewController.m; sourceTree = "<group>"; };
+		B17D39EB15BDECE300F28FA8 /* Track+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Data.h"; sourceTree = "<group>"; };
+		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
+		B17D39EE15BDF60900F28FA8 /* TrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackHandler.h; sourceTree = "<group>"; };
+		B1976E4615C9B1E7008BCDCF /* GoogleStaticMapsFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GoogleStaticMapsFetcher.h; sourceTree = "<group>"; };
+		B1976E4715C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GoogleStaticMapsFetcher.m; sourceTree = "<group>"; };
+		B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapThumbnail.png; path = LocationTest/mapThumbnail.png; sourceTree = "<group>"; };
+		B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapThumbnail@2x.png"; path = "LocationTest/mapThumbnail@2x.png"; sourceTree = "<group>"; };
+		B1976E6815CC201B008BCDCF /* FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHelper.h; sourceTree = "<group>"; };
+		B1976E6915CC201B008BCDCF /* FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelper.m; sourceTree = "<group>"; };
+		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
+		B1A0225915CD4FF70054C2D7 /* GPXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXParser.h; sourceTree = "<group>"; };
+		B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Cyclemeter-Cycle-20120701-0953.gpx"; sourceTree = "<group>"; };
+		B1A0226115CD76910054C2D7 /* ISO8601DateFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ISO8601DateFormatter.h; sourceTree = "<group>"; };
+		B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ISO8601DateFormatter.m; sourceTree = "<group>"; };
+		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
+		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
+		B1CDFB3915C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPolyline+EncodedPolyline.h"; sourceTree = "<group>"; };
+		B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPolyline+EncodedPolyline.m"; sourceTree = "<group>"; };
+		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = LocationTest/gpxFile.png; sourceTree = "<group>"; };
+		B1E9298215D7B74000CF1574 /* gpxFile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gpxFile@2x.png"; path = "LocationTest/gpxFile@2x.png"; sourceTree = "<group>"; };
+		B1E9298515D7B87C00CF1574 /* ImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportViewController.h; sourceTree = "<group>"; };
+		B1E9298615D7B87D00CF1574 /* ImportViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImportViewController.m; sourceTree = "<group>"; };
+		B1E9298815D7C31400CF1574 /* TabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TabBarController.h; sourceTree = "<group>"; };
+		B1E9298915D7C31400CF1574 /* TabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TabBarController.m; sourceTree = "<group>"; };
+		B1FB1B0C15BC0F3600B51E16 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		B1FB1B0F15BC0F7700B51E16 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		B1FB1B7215BC66D300B51E16 /* Waypoint+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Create.h"; sourceTree = "<group>"; };
+		B1FB1B7315BC66D300B51E16 /* Waypoint+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Create.m"; sourceTree = "<group>"; };
+		B1FB1B7515BC680800B51E16 /* Segment+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Segment+Create.h"; sourceTree = "<group>"; };
+		B1FB1B7615BC680800B51E16 /* Segment+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Segment+Create.m"; sourceTree = "<group>"; };
+		BE84756815B41E4B006E967A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B12D4BB715B1CCA6001490B3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1FB1B1015BC0F7700B51E16 /* CoreData.framework in Frameworks */,
+				B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */,
+				B16A047915B21CAA005B372D /* CoreBluetooth.framework in Frameworks */,
+				B16A047715B21CA3005B372D /* ExternalAccessory.framework in Frameworks */,
+				B16A047515B21C35005B372D /* WFConnector.framework in Frameworks */,
+				B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */,
+				B12D4BEB15B1CDC2001490B3 /* CoreLocation.framework in Frameworks */,
+				B12D4BBF15B1CCA6001490B3 /* UIKit.framework in Frameworks */,
+				B12D4BC115B1CCA6001490B3 /* Foundation.framework in Frameworks */,
+				B12D4BC315B1CCA6001490B3 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B12D4BAF15B1CCA6001490B3 = {
+			isa = PBXGroup;
+			children = (
+				B12D4BC415B1CCA6001490B3 /* LocationTest */,
+				B12D4BBD15B1CCA6001490B3 /* Frameworks */,
+				B12D4BBB15B1CCA6001490B3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B12D4BBB15B1CCA6001490B3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B12D4BBA15B1CCA6001490B3 /* LocationTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B12D4BBD15B1CCA6001490B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B1FB1B0F15BC0F7700B51E16 /* CoreData.framework */,
+				B164D56515B74F110061E562 /* QuartzCore.framework */,
+				B16A047815B21CAA005B372D /* CoreBluetooth.framework */,
+				B16A047615B21CA3005B372D /* ExternalAccessory.framework */,
+				B16A047415B21C35005B372D /* WFConnector.framework */,
+				B12D4BEC15B1CDC7001490B3 /* MapKit.framework */,
+				B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */,
+				B12D4BBE15B1CCA6001490B3 /* UIKit.framework */,
+				B12D4BC015B1CCA6001490B3 /* Foundation.framework */,
+				B12D4BC215B1CCA6001490B3 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B12D4BC415B1CCA6001490B3 /* LocationTest */ = {
+			isa = PBXGroup;
+			children = (
+				BE3633D915DBDE4400D81B35 /* ViewController */,
+				BE3633DD15DBDEF500D81B35 /* Views */,
+				BE3633DC15DBDEA500D81B35 /* Utilities */,
+				BE3633DF15DBE0D900D81B35 /* Services */,
+				BE3633DB15DBDE7F00D81B35 /* Model */,
+				B16A049815B32119005B372D /* Categories */,
+				B12D4BC515B1CCA6001490B3 /* Supporting Files */,
+			);
+			path = LocationTest;
+			sourceTree = "<group>";
+		};
+		B12D4BC515B1CCA6001490B3 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BE3633DE15DBE09500D81B35 /* GPX */,
+				B12D4BE915B1CD78001490B3 /* Images */,
+				B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */,
+				B12D4BCD15B1CCA6001490B3 /* AppDelegate.h */,
+				B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */,
+				B16A046F15B20FC1005B372D /* Localizable.strings */,
+				B12D4BC615B1CCA6001490B3 /* LocationTest-Info.plist */,
+				B12D4BC715B1CCA6001490B3 /* InfoPlist.strings */,
+				B12D4BCA15B1CCA6001490B3 /* main.m */,
+				B12D4BCC15B1CCA6001490B3 /* LocationTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B12D4BE915B1CD78001490B3 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				B1E9298115D7B73F00CF1574 /* gpxFile.png */,
+				B1E9298215D7B74000CF1574 /* gpxFile@2x.png */,
+				B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */,
+				B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */,
+				B12D4BD915B1CCA6001490B3 /* first.png */,
+				B12D4BDB15B1CCA6001490B3 /* first@2x.png */,
+				B12D4BE015B1CCA6001490B3 /* second.png */,
+				B12D4BE215B1CCA6001490B3 /* second@2x.png */,
+			);
+			name = Images;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		B16A049815B32119005B372D /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */,
+				B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */,
+				B1CDFB3915C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.h */,
+				B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */,
+				B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */,
+				B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */,
+				B17D39EB15BDECE300F28FA8 /* Track+Data.h */,
+				B17D39EC15BDECE300F28FA8 /* Track+Data.m */,
+				B17D39E215BDDD6A00F28FA8 /* Track+Create.h */,
+				B17D39E315BDDD6A00F28FA8 /* Track+Create.m */,
+				B10BFDB115CDC04C0070FA11 /* Activity+Create.h */,
+				B10BFDB215CDC04C0070FA11 /* Activity+Create.m */,
+				B1FB1B7215BC66D300B51E16 /* Waypoint+Create.h */,
+				B1FB1B7315BC66D300B51E16 /* Waypoint+Create.m */,
+				B1FB1B7515BC680800B51E16 /* Segment+Create.h */,
+				B1FB1B7615BC680800B51E16 /* Segment+Create.m */,
+				B16A049515B32100005B372D /* NSDate+Strings.h */,
+				B16A049615B32100005B372D /* NSDate+Strings.m */,
+				B16A048A15B2FB30005B372D /* CLLocation+Strings.h */,
+				B16A048B15B2FB30005B372D /* CLLocation+Strings.m */,
+			);
+			name = Categories;
+			sourceTree = "<group>";
+		};
+		BE3633D915DBDE4400D81B35 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				BE3633E015DBE13B00D81B35 /* NavigationController */,
+				B17D39EE15BDF60900F28FA8 /* TrackHandler.h */,
+				B16A049915B343F6005B372D /* MapViewController.h */,
+				B16A049A15B343F6005B372D /* MapViewController.m */,
+				B12D4BDD15B1CCA6001490B3 /* RawDataViewController.h */,
+				B12D4BDE15B1CCA6001490B3 /* RawDataViewController.m */,
+				B12D4BD615B1CCA6001490B3 /* RecordViewController.h */,
+				B12D4BD715B1CCA6001490B3 /* RecordViewController.m */,
+				B17D39E815BDE83500F28FA8 /* TrackViewController.h */,
+				B17D39E915BDE83500F28FA8 /* TrackViewController.m */,
+				B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */,
+				B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */,
+				B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */,
+				B17D39E015BDDAF900F28FA8 /* CoreDataTableViewController.h */,
+				B1E9298515D7B87C00CF1574 /* ImportViewController.h */,
+				B1E9298615D7B87D00CF1574 /* ImportViewController.m */,
+				B10BFDC015CECF0E0070FA11 /* ActivityTableViewController.h */,
+				B10BFDC115CECF0F0070FA11 /* ActivityTableViewController.m */,
+				B10BFDC315CECF2E0070FA11 /* RouteTableViewController.h */,
+				B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		BE3633DB15DBDE7F00D81B35 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B10BFDA515CDBF7A0070FA11 /* Segment.h */,
+				B10BFDA615CDBF7A0070FA11 /* Segment.m */,
+				B10BFDA815CDBF7A0070FA11 /* Waypoint.h */,
+				B10BFDA915CDBF7A0070FA11 /* Waypoint.m */,
+				B10BFDAE15CDBF7B0070FA11 /* Activity.h */,
+				B10BFDAF15CDBF7B0070FA11 /* Activity.m */,
+				B10BFDA115CDBF790070FA11 /* Track.h */,
+				B10BFDA215CDBF790070FA11 /* Track.m */,
+				B10BFDBA15CE9C230070FA11 /* Route.h */,
+				B10BFDBB15CE9C240070FA11 /* Route.m */,
+				B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		BE3633DC15DBDEA500D81B35 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B16A047F15B2B7FC005B372D /* TrackingManager.h */,
+				B16A048015B2B7FC005B372D /* TrackingManager.m */,
+				B1A0225915CD4FF70054C2D7 /* GPXParser.h */,
+				B1A0225615CD4EC80054C2D7 /* GPXParser.m */,
+				B1976E6815CC201B008BCDCF /* FileHelper.h */,
+				B1976E6915CC201B008BCDCF /* FileHelper.m */,
+				B1A0226115CD76910054C2D7 /* ISO8601DateFormatter.h */,
+				B1A0226215CD76910054C2D7 /* ISO8601DateFormatter.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		BE3633DD15DBDEF500D81B35 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B16A04A015B34639005B372D /* WaypointAnnotation.h */,
+				B16A04A115B34639005B372D /* WaypointAnnotation.m */,
+				B16A04A415B36311005B372D /* TrackOverlayView.h */,
+				B16A04A515B36311005B372D /* TrackOverlayView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BE3633DE15DBE09500D81B35 /* GPX */ = {
+			isa = PBXGroup;
+			children = (
+				B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */,
+				B164D56815B754C80061E562 /* 18-05-2012.gpx */,
+			);
+			name = GPX;
+			sourceTree = "<group>";
+		};
+		BE3633DF15DBE0D900D81B35 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				B1976E4615C9B1E7008BCDCF /* GoogleStaticMapsFetcher.h */,
+				B1976E4715C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		BE3633E015DBE13B00D81B35 /* NavigationController */ = {
+			isa = PBXGroup;
+			children = (
+				B1E9298815D7C31400CF1574 /* TabBarController.h */,
+				B1E9298915D7C31400CF1574 /* TabBarController.m */,
+				B10BFDBD15CECBA30070FA11 /* SegmentedControlViewController.h */,
+				B10BFDBE15CECBA40070FA11 /* SegmentedControlViewController.m */,
+			);
+			name = NavigationController;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B12D4BB915B1CCA6001490B3 /* LocationTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B12D4BE615B1CCA6001490B3 /* Build configuration list for PBXNativeTarget "LocationTest" */;
+			buildPhases = (
+				B12D4BB615B1CCA6001490B3 /* Sources */,
+				B12D4BB715B1CCA6001490B3 /* Frameworks */,
+				B12D4BB815B1CCA6001490B3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LocationTest;
+			productName = LocationTest;
+			productReference = B12D4BBA15B1CCA6001490B3 /* LocationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B12D4BB115B1CCA6001490B3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = SinnerSchrader;
+			};
+			buildConfigurationList = B12D4BB415B1CCA6001490B3 /* Build configuration list for PBXProject "LocationTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				de,
+			);
+			mainGroup = B12D4BAF15B1CCA6001490B3;
+			productRefGroup = B12D4BBB15B1CCA6001490B3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B12D4BB915B1CCA6001490B3 /* LocationTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B12D4BB815B1CCA6001490B3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B12D4BC915B1CCA6001490B3 /* InfoPlist.strings in Resources */,
+				B12D4BD215B1CCA6001490B3 /* iPhone.storyboard in Resources */,
+				B12D4BD515B1CCA6001490B3 /* MainStoryboard_iPad.storyboard in Resources */,
+				B12D4BDA15B1CCA6001490B3 /* first.png in Resources */,
+				B12D4BDC15B1CCA6001490B3 /* first@2x.png in Resources */,
+				B12D4BE115B1CCA6001490B3 /* second.png in Resources */,
+				B12D4BE315B1CCA6001490B3 /* second@2x.png in Resources */,
+				B16A047215B20FC1005B372D /* Localizable.strings in Resources */,
+				B1976E6615C9CB8D008BCDCF /* mapThumbnail.png in Resources */,
+				B1976E6715C9CB8D008BCDCF /* mapThumbnail@2x.png in Resources */,
+				B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */,
+				B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */,
+				B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B12D4BB615B1CCA6001490B3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B12D4BCB15B1CCA6001490B3 /* main.m in Sources */,
+				B12D4BCF15B1CCA6001490B3 /* AppDelegate.m in Sources */,
+				B12D4BD815B1CCA6001490B3 /* RecordViewController.m in Sources */,
+				B12D4BDF15B1CCA6001490B3 /* RawDataViewController.m in Sources */,
+				B16A048115B2B7FD005B372D /* TrackingManager.m in Sources */,
+				B16A048C15B2FB30005B372D /* CLLocation+Strings.m in Sources */,
+				B16A049715B32101005B372D /* NSDate+Strings.m in Sources */,
+				B16A049B15B343F6005B372D /* MapViewController.m in Sources */,
+				B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */,
+				B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */,
+				B1FB1B0D15BC0F3600B51E16 /* Model.xcdatamodeld in Sources */,
+				B1FB1B7415BC66D300B51E16 /* Waypoint+Create.m in Sources */,
+				B1FB1B7715BC680800B51E16 /* Segment+Create.m in Sources */,
+				B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */,
+				B17D39E115BDDAF900F28FA8 /* CoreDataTableViewController.m in Sources */,
+				B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */,
+				B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */,
+				B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */,
+				B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */,
+				B1CDFB3B15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m in Sources */,
+				B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */,
+				B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */,
+				B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */,
+				B1A0226315CD76920054C2D7 /* ISO8601DateFormatter.m in Sources */,
+				B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */,
+				B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */,
+				B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */,
+				B10BFDB015CDBF7B0070FA11 /* Activity.m in Sources */,
+				B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */,
+				B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */,
+				B10BFDBC15CE9C250070FA11 /* Route.m in Sources */,
+				B10BFDBF15CECBA40070FA11 /* SegmentedControlViewController.m in Sources */,
+				B10BFDC215CECF100070FA11 /* ActivityTableViewController.m in Sources */,
+				B10BFDC515CECF300070FA11 /* RouteTableViewController.m in Sources */,
+				B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */,
+				B1E9298A15D7C31500CF1574 /* TabBarController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B12D4BC715B1CCA6001490B3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B12D4BC815B1CCA6001490B3 /* en */,
+				BE84756815B41E4B006E967A /* de */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B12D4BD115B1CCA6001490B3 /* en */,
+				B16A04A315B35784005B372D /* de */,
+			);
+			name = iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		B12D4BD315B1CCA6001490B3 /* MainStoryboard_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+			);
+			name = MainStoryboard_iPad.storyboard;
+			path = /Users/hendrik/Entwicklung/iOS/LocationTest/LocationTest;
+			sourceTree = "<absolute>";
+		};
+		B16A046F15B20FC1005B372D /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B16A047015B20FC1005B372D /* de */,
+				B16A047115B20FC1005B372D /* en */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B12D4BE415B1CCA6001490B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B12D4BE515B1CCA6001490B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				OTHER_LDFLAGS = (
+					"-lstdc++",
+					"-all_load",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B12D4BE715B1CCA6001490B3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocationTest/LocationTest-Prefix.pch";
+				INFOPLIST_FILE = "LocationTest/LocationTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B12D4BE815B1CCA6001490B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "LocationTest/LocationTest-Prefix.pch";
+				INFOPLIST_FILE = "LocationTest/LocationTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B12D4BB415B1CCA6001490B3 /* Build configuration list for PBXProject "LocationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B12D4BE415B1CCA6001490B3 /* Debug */,
+				B12D4BE515B1CCA6001490B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B12D4BE615B1CCA6001490B3 /* Build configuration list for PBXNativeTarget "LocationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B12D4BE715B1CCA6001490B3 /* Debug */,
+				B12D4BE815B1CCA6001490B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B1FB1B0C15BC0F3600B51E16 /* Model.xcdatamodel */,
+			);
+			currentVersion = B1FB1B0C15BC0F3600B51E16 /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = B12D4BB115B1CCA6001490B3 /* Project object */;
+}
