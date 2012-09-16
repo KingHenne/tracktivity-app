@@ -2,7 +2,7 @@
 //  Activity.m
 //  LocationTest
 //
-//  Created by Hendrik on 04.08.12.
+//  Created by Hendrik on 16.09.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
@@ -11,8 +11,9 @@
 
 @implementation Activity
 
-@dynamic start;
 @dynamic end;
+@dynamic start;
 @dynamic type;
+@dynamic tracktivityID;
 
 @end

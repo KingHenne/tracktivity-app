@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12B19" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Activity" representedClassName="Activity" parentEntity="Track" syncable="YES">
         <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="tracktivityID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Route" representedClassName="Route" parentEntity="Track" syncable="YES">
@@ -29,10 +30,10 @@
         <relationship name="segment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Segment" inverseName="points" inverseEntity="Segment" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Segment" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Track" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Waypoint" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Activity" positionX="0" positionY="0" width="0" height="0"/>
-        <element name="Route" positionX="0" positionY="0" width="0" height="0"/>
+        <element name="Activity" positionX="0" positionY="0" width="128" height="103"/>
+        <element name="Route" positionX="0" positionY="0" width="128" height="73"/>
+        <element name="Segment" positionX="0" positionY="0" width="128" height="73"/>
+        <element name="Track" positionX="0" positionY="0" width="128" height="103"/>
+        <element name="Waypoint" positionX="0" positionY="0" width="128" height="148"/>
     </elements>
 </model>

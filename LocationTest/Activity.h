@@ -2,7 +2,7 @@
 //  Activity.h
 //  LocationTest
 //
-//  Created by Hendrik on 04.08.12.
+//  Created by Hendrik on 16.09.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
@@ -13,8 +13,9 @@
 
 @interface Activity : Track
 
-@property (nonatomic, retain) NSDate * start;
 @property (nonatomic, retain) NSDate * end;
+@property (nonatomic, retain) NSDate * start;
 @property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSString * tracktivityID;
 
 @end

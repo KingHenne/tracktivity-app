@@ -10,7 +10,6 @@
 		B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA215CDBF790070FA11 /* Track.m */; };
 		B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA615CDBF7A0070FA11 /* Segment.m */; };
 		B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA915CDBF7A0070FA11 /* Waypoint.m */; };
-		B10BFDB015CDBF7B0070FA11 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDAF15CDBF7B0070FA11 /* Activity.m */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
 		B10BFDBC15CE9C250070FA11 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBB15CE9C240070FA11 /* Route.m */; };
@@ -33,6 +32,7 @@
 		B12D4BE315B1CCA6001490B3 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B12D4BE215B1CCA6001490B3 /* second@2x.png */; };
 		B12D4BEB15B1CDC2001490B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */; };
 		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
+		B13F55761605ED4F002A3EF2 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B13F55751605ED4F002A3EF2 /* Activity.m */; };
 		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
 		B16A047215B20FC1005B372D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16A046F15B20FC1005B372D /* Localizable.strings */; };
 		B16A047515B21C35005B372D /* WFConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047415B21C35005B372D /* WFConnector.framework */; };
@@ -125,8 +125,6 @@
 		B10BFDA615CDBF7A0070FA11 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
 		B10BFDA815CDBF7A0070FA11 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
 		B10BFDA915CDBF7A0070FA11 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
-		B10BFDAE15CDBF7B0070FA11 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
-		B10BFDAF15CDBF7B0070FA11 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B10BFDB115CDC04C0070FA11 /* Activity+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Create.h"; sourceTree = "<group>"; };
 		B10BFDB215CDC04C0070FA11 /* Activity+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Create.m"; sourceTree = "<group>"; };
 		B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+FileHelper.h"; sourceTree = "<group>"; };
@@ -149,7 +147,6 @@
 		B12D4BCC15B1CCA6001490B3 /* LocationTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocationTest-Prefix.pch"; sourceTree = "<group>"; };
 		B12D4BCD15B1CCA6001490B3 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		B12D4BD115B1CCA6001490B3 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		B12D4BD615B1CCA6001490B3 /* RecordViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
 		B12D4BD715B1CCA6001490B3 /* RecordViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RecordViewController.m; sourceTree = "<group>"; };
 		B12D4BD915B1CCA6001490B3 /* first.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = first.png; path = LocationTest/first.png; sourceTree = "<group>"; };
@@ -160,6 +157,8 @@
 		B12D4BE215B1CCA6001490B3 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "second@2x.png"; path = "LocationTest/second@2x.png"; sourceTree = "<group>"; };
 		B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		B12D4BEC15B1CDC7001490B3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		B13F55741605ED4F002A3EF2 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		B13F55751605ED4F002A3EF2 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B164D56515B74F110061E562 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
 		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -295,7 +294,7 @@
 		B12D4BC415B1CCA6001490B3 /* LocationTest */ = {
 			isa = PBXGroup;
 			children = (
-				BE3633D915DBDE4400D81B35 /* ViewController */,
+				BE3633D915DBDE4400D81B35 /* ViewControllers */,
 				BE3633DD15DBDEF500D81B35 /* Views */,
 				BE3633DC15DBDEA500D81B35 /* Utilities */,
 				BE3633DF15DBE0D900D81B35 /* Services */,
@@ -378,10 +377,10 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		BE3633D915DBDE4400D81B35 /* ViewController */ = {
+		BE3633D915DBDE4400D81B35 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				BE3633E015DBE13B00D81B35 /* NavigationController */,
+				BE3633E015DBE13B00D81B35 /* NavigationControllers */,
 				B17D39EE15BDF60900F28FA8 /* TrackHandler.h */,
 				B16A049915B343F6005B372D /* MapViewController.h */,
 				B16A049A15B343F6005B372D /* MapViewController.m */,
@@ -402,18 +401,18 @@
 				B10BFDC315CECF2E0070FA11 /* RouteTableViewController.h */,
 				B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */,
 			);
-			name = ViewController;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B13F55741605ED4F002A3EF2 /* Activity.h */,
+				B13F55751605ED4F002A3EF2 /* Activity.m */,
 				B10BFDA515CDBF7A0070FA11 /* Segment.h */,
 				B10BFDA615CDBF7A0070FA11 /* Segment.m */,
 				B10BFDA815CDBF7A0070FA11 /* Waypoint.h */,
 				B10BFDA915CDBF7A0070FA11 /* Waypoint.m */,
-				B10BFDAE15CDBF7B0070FA11 /* Activity.h */,
-				B10BFDAF15CDBF7B0070FA11 /* Activity.m */,
 				B10BFDA115CDBF790070FA11 /* Track.h */,
 				B10BFDA215CDBF790070FA11 /* Track.m */,
 				B10BFDBA15CE9C230070FA11 /* Route.h */,
@@ -465,7 +464,7 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
-		BE3633E015DBE13B00D81B35 /* NavigationController */ = {
+		BE3633E015DBE13B00D81B35 /* NavigationControllers */ = {
 			isa = PBXGroup;
 			children = (
 				B1E9298815D7C31400CF1574 /* TabBarController.h */,
@@ -473,7 +472,7 @@
 				B10BFDBD15CECBA30070FA11 /* SegmentedControlViewController.h */,
 				B10BFDBE15CECBA40070FA11 /* SegmentedControlViewController.m */,
 			);
-			name = NavigationController;
+			name = NavigationControllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -622,7 +621,6 @@
 				B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */,
 				B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */,
 				B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */,
-				B10BFDB015CDBF7B0070FA11 /* Activity.m in Sources */,
 				B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */,
 				B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */,
 				B10BFDBC15CE9C250070FA11 /* Route.m in Sources */,
@@ -631,6 +629,7 @@
 				B10BFDC515CECF300070FA11 /* RouteTableViewController.m in Sources */,
 				B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */,
 				B1E9298A15D7C31500CF1574 /* TabBarController.m in Sources */,
+				B13F55761605ED4F002A3EF2 /* Activity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,7 +656,6 @@
 		B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B12D4BD115B1CCA6001490B3 /* en */,
 				B16A04A315B35784005B372D /* de */,
 			);
 			name = iPhone.storyboard;
