@@ -1,3 +1,6 @@
 https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCN2cDoZ48VOzB7as_UYZMk3rqO-XXlOqQ&size=53x53&scale=2&sensor=false&path=color:0x0073E6cc|weight:4|enc:kizbF|aygVFd@H@`BDZAv@_@LKDIFe@@y@CqBZeA@OJ[BqCHgB?iAE{BBkDCgBB{BI_D?cBKMi@E{@AmECu@LoA\sAXs@Hk@?gAAqAEgD@sAK_Ck@}@KkD?gAEKDGR@x@EfC
 
 https://maps.googleapis.com/maps/api/staticmap?size=53x53&scale=1&sensor=false&path=color:0x0073E6ee%7Cweight:3%7Cenc:oizbFbaygVdFIj@%7Dj@mm@Sj@tqBnZo@RsOhEoB_AqStKuABiR%7B@mCyDX&key=AIzaSyCN2cDoZ48VOzB7as_UYZMk3rqO-XXlOqQ&style=feature:all|element:labels|visibility:off
+
+
+https://maps.googleapis.com/maps/api/staticmap?key=AIzaSyCN2cDoZ48VOzB7as_UYZMk3rqO-XXlOqQ&size=53x53&scale=2&sensor=false&path=color:0x0073E655|weight:4|enc:kizbF|aygVFd@H@`BDZAv@_@LKDIFe@@y@CqBZeA@OJ[BqCHgB?iAE{BBkDCgBB{BI_D?cBKMi@E{@AmECu@LoA\sAXs@Hk@?gAAqAEgD@sAK_Ck@}@KkD?gAEKDGR@x@EfC&path=color:0x0073E655|weight:4|enc:oizbFbaygVdFIj@%7Dj@mm@Sj@tqBnZo@RsOhEoB_AqStKuABiR%7B@mCyDX&key=AIzaSyCN2cDoZ48VOzB7as_UYZMk3rqO-XXlOqQ
