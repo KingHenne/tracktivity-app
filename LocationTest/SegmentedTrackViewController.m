@@ -53,6 +53,7 @@
 {
 	if (viewControllerIndex == kActivityViewController || viewControllerIndex == kRouteViewController) {
 		self.trackTypeControl.selectedSegmentIndex = viewControllerIndex;
+		self.title = [self.trackTypeControl titleForSegmentAtIndex:viewControllerIndex];
 		self.currentViewController = [self.childViewControllers objectAtIndex:viewControllerIndex];
 	}
 	if (viewControllerIndex == kActivityViewController) {
@@ -64,7 +65,6 @@
 
 - (IBAction)trackTypeChanged:(UISegmentedControl *)sender
 {
-	self.title = [sender titleForSegmentAtIndex:sender.selectedSegmentIndex];
 	[self setCurrentViewControllerWithIndex:sender.selectedSegmentIndex];
 }
 
