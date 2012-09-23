@@ -19,14 +19,18 @@
 
 @synthesize track = _track;
 
-- (void)createOverlay
+- (void)createOverlays
 {
 	if (self.track == nil) return;
-	MKPolyline *trackline = self.track.polyline;
-	if (trackline) {
+	MultiPolyline *multiPolyline = self.track.multiPolyline;
+	if (multiPolyline) {
 		[self.mapView removeOverlays:self.mapView.overlays];
-		[self.mapView addOverlay:trackline];
-		[self.mapView setRegion:[self adjustRectForMinimumZoomLevel:trackline.boundingMapRect onMapView:self.mapView] animated:NO];
+		MKMapRect unionRect = MKMapRectNull;
+		for (MKPolyline *polyline in multiPolyline.polylines) {
+			[self.mapView addOverlay:polyline];
+			unionRect = MKMapRectUnion(unionRect, polyline.boundingMapRect);
+		}
+		[self.mapView setRegion:[self adjustRectForMinimumZoomLevel:unionRect onMapView:self.mapView] animated:NO];
 		[self.mapView setNeedsDisplay];
 	}
 }
@@ -39,9 +43,9 @@
 	[self.mapView addAnnotation:[WaypointAnnotation annotationForEndWaypoint:self.track.lastPoint]];
 }
 
-- (void)createOverlayAndAnnotations
+- (void)createOverlaysAndAnnotations
 {
-	[self createOverlay];
+	[self createOverlays];
 	[self createAnnotations];
 }
 
@@ -59,7 +63,7 @@
 {
 	if (_track == track) return;
 	_track = track;
-	[self performSelector:@selector(createOverlayAndAnnotations) withObject:nil afterDelay:0];
+	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
 
 - (IBAction)actionButtonPressed:(UIBarButtonItem *)sender

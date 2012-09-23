@@ -15,4 +15,10 @@
 					  height:(int)height
 				  withLabels:(BOOL)labels;
 
+// encodedPaths must be an array of strings
++ (id)mapImageForEncodedPaths:(NSArray *)encodedPaths
+						width:(int)width
+					   height:(int)height
+				   withLabels:(BOOL)labels;
+
 @end

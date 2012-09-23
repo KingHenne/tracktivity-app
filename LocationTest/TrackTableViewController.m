@@ -96,10 +96,10 @@
 				Track *t = (Track *) [context objectWithID:trackObjectID];
 				if (t) {
 					NSDate *start = [NSDate date];
-					NSString *encodedPolylineString = t.encodedPolylineString;
+					NSArray *encodedPolylineStrings = t.encodedPolylineStrings;
 					NSTimeInterval time = [start timeIntervalSinceNow];
 					NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
-					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
+					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPaths:encodedPolylineStrings width:53 height:53 withLabels:NO];
 					if (thumbnail) {
 						t.thumbnail = thumbnail;
 						[self saveContext];

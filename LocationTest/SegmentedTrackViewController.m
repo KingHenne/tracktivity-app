@@ -80,21 +80,55 @@
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender
 {
 	[self uploadNewActivities];
-	[self downloadNewActivities];
+	[self fetchActivityList];
 }
 
 - (void)uploadNewActivities
 {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID = nil"];
-	NSArray *newActivities = [Activity findAllWithPredicate:predicate];
+	NSArray *newActivities = [Activity findByAttribute:@"tracktivityID" withValue:nil];
 	for (Activity *newActivity in newActivities) {
 		[[RKObjectManager sharedManager] postObject:newActivity delegate:self];
 	}
 }
 
-- (void)downloadNewActivities
+- (void)fetchActivityList
 {
 	[[[RKObjectManager sharedManager] client] get:@"/users/hendrik/activities" delegate:self];
+}
+
+// activityIDs must be an array of dictionaries with a key 'id'
+- (void)downloadNewActivities:(NSArray *)activityIDs
+{
+	for (NSDictionary *activity in activityIDs) {
+		NSString *tracktivityID = [activity valueForKey:@"id"];
+		if (tracktivityID && [Activity findByPrimaryKey:tracktivityID] == nil) {
+			NSLog(@"Loading activity %@ from the server...", tracktivityID);
+			NSString *path = [NSString stringWithFormat:@"/activities/%@", tracktivityID];
+			[[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
+		}
+	}
+}
+
+- (void)deleteActivitiesNotIncludedInList:(NSArray *)activityIDs
+{
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID != nil"];
+	NSArray *activities = [Activity findAllWithPredicate:predicate];
+	for (Activity *activity in activities) {
+		NSDictionary *testDict = [NSDictionary dictionaryWithObject:activity.tracktivityID forKey:@"id"];
+		if (![activityIDs containsObject:testDict]) {
+			NSLog(@"Deleting activity %@ now.", activity.tracktivityID);
+			[activity deleteEntity];
+			[self saveContext];
+		}
+	}
+}
+
+- (void)saveContext
+{
+	NSError *error;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	}
 }
 
 #pragma mark UIActionSheetDelegate Methods
@@ -112,18 +146,14 @@
 
 - (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
 {
-	if (response.isJSON) {
+	if (request.method == RKRequestMethodGET && response.isJSON) {
 		NSError * error;
 		NSDictionary *responseBody = [response parsedBody:&error];
 		if (responseBody) {
-			NSArray *activities = [responseBody valueForKey:@"activities"];
-			for (NSDictionary *activity in activities) {
-				NSString *tracktivityID = [[activity valueForKey:@"id"] stringValue];
-				if (tracktivityID && [Activity findByPrimaryKey:tracktivityID] == nil) {
-					NSLog(@"Loading activity %@ from the server...", tracktivityID);
-					NSString *path = [NSString stringWithFormat:@"/activities/%@", tracktivityID];
-					[[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
-				}
+			NSArray *activityIDs = [responseBody valueForKey:@"activities"];
+			if (activityIDs) {
+				[self downloadNewActivities:activityIDs];
+				[self deleteActivitiesNotIncludedInList:activityIDs];
 			}
 		} else {
 			NSLog(@"Error parsing response: %@, %@", error, [error userInfo]);

@@ -61,8 +61,9 @@
 		B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E6915CC201B008BCDCF /* FileHelper.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
 		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
+		B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B00160F6165000FFD92 /* Segment+Data.m */; };
+		B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B03160F6E22000FFD92 /* MultiPolyline.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
-		B1CDFB3B15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */; };
 		B1E5A46D160909C9003443C3 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5A46C160909C9003443C3 /* Activity.m */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
 		B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298215D7B74000CF1574 /* gpxFile@2x.png */; };
@@ -207,10 +208,12 @@
 		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
 		B1A0225915CD4FF70054C2D7 /* GPXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXParser.h; sourceTree = "<group>"; };
 		B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Cyclemeter-Cycle-20120701-0953.gpx"; sourceTree = "<group>"; };
+		B1A59AFF160F6165000FFD92 /* Segment+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Segment+Data.h"; sourceTree = "<group>"; };
+		B1A59B00160F6165000FFD92 /* Segment+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Segment+Data.m"; sourceTree = "<group>"; };
+		B1A59B02160F6E22000FFD92 /* MultiPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiPolyline.h; sourceTree = "<group>"; };
+		B1A59B03160F6E22000FFD92 /* MultiPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiPolyline.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
-		B1CDFB3915C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MKPolyline+EncodedPolyline.h"; sourceTree = "<group>"; };
-		B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MKPolyline+EncodedPolyline.m"; sourceTree = "<group>"; };
 		B1E5A46B160909C9003443C3 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		B1E5A46C160909C9003443C3 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = LocationTest/gpxFile.png; sourceTree = "<group>"; };
@@ -347,12 +350,12 @@
 			children = (
 				B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */,
 				B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */,
-				B1CDFB3915C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.h */,
-				B1CDFB3A15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m */,
 				B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */,
 				B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */,
 				B17D39EB15BDECE300F28FA8 /* Track+Data.h */,
 				B17D39EC15BDECE300F28FA8 /* Track+Data.m */,
+				B1A59AFF160F6165000FFD92 /* Segment+Data.h */,
+				B1A59B00160F6165000FFD92 /* Segment+Data.m */,
 				B17D39E215BDDD6A00F28FA8 /* Track+Create.h */,
 				B17D39E315BDDD6A00F28FA8 /* Track+Create.m */,
 				B10BFDB115CDC04C0070FA11 /* Activity+Create.h */,
@@ -422,6 +425,8 @@
 				B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */,
 				B1E5A46B160909C9003443C3 /* Activity.h */,
 				B1E5A46C160909C9003443C3 /* Activity.m */,
+				B1A59B02160F6E22000FFD92 /* MultiPolyline.h */,
+				B1A59B03160F6E22000FFD92 /* MultiPolyline.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -621,7 +626,6 @@
 				B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */,
 				B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */,
 				B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */,
-				B1CDFB3B15C5C5BB00D5D3B7 /* MKPolyline+EncodedPolyline.m in Sources */,
 				B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */,
 				B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */,
 				B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */,
@@ -638,6 +642,8 @@
 				B1E9298A15D7C31500CF1574 /* TabBarController.m in Sources */,
 				B1E5A46D160909C9003443C3 /* Activity.m in Sources */,
 				B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */,
+				B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */,
+				B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

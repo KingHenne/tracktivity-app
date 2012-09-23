@@ -9,12 +9,12 @@
 #import "Track.h"
 #import <MapKit/MKMapView.h>
 #import "Waypoint.h"
+#import "MultiPolyline.h"
 
 @interface Track (Data)
 
-- (MKPolyline *)polyline;
-- (NSString *)encodedPolylineString;
-- (NSString *)pathPointsString;
+- (MultiPolyline *)multiPolyline;
+- (NSArray *)encodedPolylineStrings;
 - (Waypoint *)firstPoint;
 - (Waypoint *)lastPoint;
 

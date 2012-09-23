@@ -172,8 +172,8 @@
 	objectManager.client.password = @"boerrek";
 	
 	// Activate logging.
-	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
 	
     return YES;
 }
