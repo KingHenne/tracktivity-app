@@ -15,9 +15,9 @@
 #import "RestKit/ISO8601DateFormatter.h"
 #import "NSURL+FileHelper.h"
 #import <RestKit/RestKit.h>
+#import <TBXML-Headers/TBXML.h>
 
 @interface GPXParser ()
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property NSMutableDictionary *elementStates;
 @property Route *currentTrack;
 @property Segment *currentSegment;
@@ -31,7 +31,6 @@
 
 @implementation GPXParser
 
-@synthesize context = _context;
 @synthesize parsedTrack = _parsedTrack;
 @synthesize elementStates = _elementStates;
 @synthesize currentTrack = _currentTrack;
@@ -52,49 +51,65 @@
 
 - (BOOL)parseGPXFile:(NSURL *)fileURL
 {
-	self.context = [NSManagedObjectContext contextForCurrentThread];
-	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:fileURL];
 	self.fileURL = fileURL;
 	NSString *xmlFileString = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:NULL];
 	self.pointsParsed = 0;
 	self.totalPointsToParse	= [xmlFileString componentsSeparatedByString:@"<trkpt"].count - 1;
 	NSLog(@"totalPointsToParse=%d", self.totalPointsToParse);
-	xmlParser.delegate = self;
-	return [xmlParser parse];
-}
-
-- (void)saveContext
-{
-    NSError *error = nil;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
+	NSError *error;
+	NSDate *start = [NSDate date];
+	TBXML *tbxml = [TBXML newTBXMLWithXMLString:xmlFileString error:&error];
+	if (error) {
+        NSLog(@"%@ %@", [error localizedDescription], [error userInfo]);
+		return NO;
+    }
+	// If TBXML found a root node, process element and iterate all children
+	if (tbxml.rootXMLElement) {
+		[self traverseElement:tbxml.rootXMLElement];
 	}
+	NSTimeInterval time = [start timeIntervalSinceNow];
+	NSLog(@"Finished parsing %d points in %.2f seconds.", self.pointsParsed, time * -1);
+    return YES;
 }
 
-#pragma mark NSXMLParserDelegate Methods
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName
-	attributes:(NSDictionary *)attributeDict
+- (void) traverseElement:(TBXMLElement *)element
 {
-	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName.lowercaseString];
-	if ([elementName.lowercaseString isEqualToString:@"trk"]) {
+	do {
+		[self didStartElement:element];
+		
+		// Extract the content of the current element.
+		[self didFindContent:[TBXML textForElement:element]];
+		
+		// If the element has child elements, process them.
+		if (element->firstChild) {
+			[self traverseElement:element->firstChild];
+		}
+		
+		[self didEndElement:element];
+		
+		// Obtain next sibling element.
+	} while ((element = element->nextSibling));
+}
+
+- (void)didStartElement:(TBXMLElement *)element
+{
+	NSString *elementName = [TBXML elementName:element].lowercaseString;
+	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName];
+	if ([elementName isEqualToString:@"trk"]) {
 		self.currentTrack = [Route createEntity];
 		self.currentTrack.created = [NSDate date];
-	} else if ([elementName.lowercaseString isEqualToString:@"trkseg"]) {
+	} else if ([elementName isEqualToString:@"trkseg"]) {
 		self.currentSegment = [Segment createEntity];
-	} else if ([elementName.lowercaseString isEqualToString:@"trkpt"]) {
-		double lat = [[attributeDict objectForKey:@"lat"] doubleValue];
-		double lon = [[attributeDict objectForKey:@"lon"] doubleValue];
+	} else if ([elementName isEqualToString:@"trkpt"]) {
+		double lat = [[TBXML valueOfAttributeNamed:@"lat" forElement:element] doubleValue];
+		double lon = [[TBXML valueOfAttributeNamed:@"lon" forElement:element] doubleValue];
 		self.currentTrackPoint = [Waypoint createEntity];
 		self.currentTrackPoint.latitude = [NSNumber numberWithDouble:lat];
 		self.currentTrackPoint.longitude = [NSNumber numberWithDouble:lon];
 	}
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
+- (void)didFindContent:(NSString *)string
 {
 	if ([[self.elementStates objectForKey:@"trk"] boolValue] == YES) {
 		if ([[self.elementStates objectForKey:@"name"] boolValue] == YES) {
@@ -116,12 +131,11 @@
 	}
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName
-  namespaceURI:(NSString *)namespaceURI
- qualifiedName:(NSString *)qName
-{	
-	[self.elementStates setObject:[NSNumber numberWithBool:NO] forKey:elementName.lowercaseString];
-	if ([elementName.lowercaseString isEqualToString:@"trk"]) {
+- (void)didEndElement:(TBXMLElement *)element
+{
+	NSString *elementName = [TBXML elementName:element].lowercaseString;
+	[self.elementStates setObject:[NSNumber numberWithBool:NO] forKey:elementName];
+	if ([elementName isEqualToString:@"trk"]) {
 		if (self.currentTrack.name == nil) {
 			self.currentTrack.name = self.fileURL.fileNameWithoutExtension;
 		}
@@ -129,10 +143,10 @@
 		[self saveContext];
 		self.parsedTrack = self.currentTrack;
 		self.currentTrack = nil;
-	} else if ([elementName.lowercaseString isEqualToString:@"trkseg"]) {
+	} else if ([elementName isEqualToString:@"trkseg"]) {
 		[self.currentTrack addSegmentsObject:self.currentSegment];
 		self.currentSegment = nil;
-	} else if ([elementName.lowercaseString isEqualToString:@"trkpt"]) {
+	} else if ([elementName isEqualToString:@"trkpt"]) {
 		[self.currentSegment addPointsObject:self.currentTrackPoint];
 		self.currentTrackPoint = nil;
 		self.pointsParsed++;
@@ -140,9 +154,13 @@
 	}
 }
 
-- (void)parserDidEndDocument:(NSXMLParser *)parser
+- (void)saveContext
 {
-	NSLog(@"Finished parsing %d points.", self.pointsParsed);
+    NSError *error = nil;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
 }
 
 @end
