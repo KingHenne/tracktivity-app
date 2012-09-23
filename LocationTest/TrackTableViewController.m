@@ -50,13 +50,13 @@
 - (void)deleteTracks
 {
 	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
-	[RKManagedObjectStore.defaultObjectStore save:NULL];
+	[self saveContext];
 }
 
 - (void)deleteThumbnails
 {
 	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(setThumbnail:) withObject:nil];
-	[RKManagedObjectStore.defaultObjectStore save:NULL];
+	[self saveContext];
 }
 
 #pragma mark - Table view data source
@@ -102,11 +102,7 @@
 					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
 					if (thumbnail) {
 						t.thumbnail = thumbnail;
-						NSError *error;
-						if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-							NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-							abort();
-						}
+						[self saveContext];
 					}
 				}
 			});
@@ -117,6 +113,14 @@
 	}
     
     return cell;
+}
+
+- (void)saveContext
+{
+	NSError *error;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	}
 }
 
 // Override to support conditional editing of the table view.
@@ -132,14 +136,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the managed object at the given index path.
 		Track *track = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		NSManagedObjectContext *context = track.managedObjectContext;
-		[track.managedObjectContext deleteObject:track];
-		// Commit the change.
-		NSError *error;
-		if (![context save:&error]) {
-			NSLog(@"%@", error);
+		// If the track is a synced activity, first delete it from the server.
+		if ([track isKindOfClass:[Activity class]]) {
+			Activity *activity = (Activity *) track;
+			if (activity.tracktivityID) {
+				[[RKObjectManager sharedManager] deleteObject:track delegate:self];
+			}
 		}
-		
+		[track deleteEntity];
+		[self saveContext];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -161,6 +166,13 @@
     return YES;
 }
 */
+
+#pragma mark RestKit Delegate Methods
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+}
 
 #pragma mark Segues
 

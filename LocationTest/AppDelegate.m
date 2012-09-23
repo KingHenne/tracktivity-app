@@ -129,6 +129,8 @@
 	RKObjectRouter *router = objectManager.router;
 	// Define a resource path for posting activities.
 	[router routeClass:[Activity class] toResourcePath:@"/activities" forMethod:RKRequestMethodPOST];
+	// Define a resource path for deleting activities.
+	[router routeClass:[Activity class] toResourcePath:@"/activities/:tracktivityID" forMethod:RKRequestMethodDELETE];
 	
 	// Configure a (serialization) mapping for the Activity class.
 	RKManagedObjectMapping* activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
@@ -170,8 +172,8 @@
 	objectManager.client.password = @"boerrek";
 	
 	// Activate logging.
-	//RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-	//RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
 	
     return YES;
 }
