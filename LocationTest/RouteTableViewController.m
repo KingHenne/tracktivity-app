@@ -7,20 +7,15 @@
 //
 
 #import "RouteTableViewController.h"
-#import "AppDelegate.h"
+#import "Route.h"
+#import <RestKit/RestKit.h>
 
 @implementation RouteTableViewController
 
 - (void)setupFetchedResultsController
 {
 	self.debug = YES;
-	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Route"];
-	request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO]];
-	
-	AppDelegate * appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-	NSManagedObjectContext *context = appDelegate.managedObjectContext;
-	
-	self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:NULL cacheName:nil];
+	self.fetchedResultsController = [Route fetchAllSortedBy:@"created" ascending:NO withPredicate:nil groupBy:nil];
 }
 
 @end
