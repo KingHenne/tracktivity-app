@@ -8,12 +8,12 @@
 
 #import "TrackViewController.h"
 #import "WaypointAnnotation.h"
+#import "Activity.h"
+#import "Route.h"
+#import <RestKit/RestKit.h>
 
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM 250
-
-@interface TrackViewController ()
-@end
 
 @implementation TrackViewController
 
@@ -62,10 +62,27 @@
 	[self performSelector:@selector(createOverlayAndAnnotations) withObject:nil afterDelay:0];
 }
 
+- (IBAction)actionButtonPressed:(UIBarButtonItem *)sender
+{
+	if ([self.track isKindOfClass:[Activity class]]) {
+		Activity *activity = (Activity *) self.track;
+		if (activity.tracktivityID) {
+			NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
+			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
+			NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
+			NSString *path = [NSString stringWithFormat:@"activities/%@", activity.tracktivityID];
+			[[UIApplication sharedApplication] openURL:[appURL URLByAppendingPathComponent:path]];
+		}
+	}
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	if ([self.track isKindOfClass:[Route class]]) {
+		self.navigationItem.rightBarButtonItem = nil;
+	}
 }
 
 - (void)viewDidUnload

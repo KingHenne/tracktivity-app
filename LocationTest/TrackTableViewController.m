@@ -15,6 +15,7 @@
 #import "Activity.h"
 #import "Route.h"
 #import "AppDelegate.h"
+#import <RestKit/RestKit.h>
 
 @implementation TrackTableViewController
 
@@ -46,13 +47,16 @@
 	[self doesNotRecognizeSelector:_cmd];
 }
 
+- (void)deleteTracks
+{
+	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
+	[self saveContext];
+}
+
 - (void)deleteThumbnails
 {
-	NSArray *objects = self.fetchedResultsController.fetchedObjects;
-	for (Track *track in objects) {
-		track.thumbnail = nil;
-	}
-	[self.fetchedResultsController.managedObjectContext save:NULL];
+	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(setThumbnail:) withObject:nil];
+	[self saveContext];
 }
 
 #pragma mark - Table view data source
@@ -83,33 +87,40 @@
 	if (thumbnail == nil || ([[UIScreen mainScreen] scale] > 1 && thumbnail.size.width < 54)) {
 		cell.imageView.image = [UIImage imageNamed:@"mapThumbnail.png"];
 		NSManagedObjectID *trackObjectID = track.objectID;
-		dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
-		dispatch_async(queue, ^{
-			NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-			context.persistentStoreCoordinator = [(AppDelegate *)[[UIApplication sharedApplication] delegate] persistentStoreCoordinator];
-			[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-			Track *t = (Track *) [context objectWithID:trackObjectID];
-			if (t) {
-				NSDate *start = [NSDate date];
-				NSString *encodedPolylineString = t.encodedPolylineString;
-				NSTimeInterval time = [start timeIntervalSinceNow];
-				NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
-				UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
-				if (thumbnail) {
-					t.thumbnail = thumbnail;
-					NSError *error;
-					if ([context hasChanges] && ![context save:&error]) {
-						NSLog(@"%@", error);
+		if (trackObjectID.isTemporaryID) { // try again later
+			[self.tableView performSelector:@selector(reloadData)];
+		} else {
+			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
+			dispatch_async(queue, ^{
+				NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+				Track *t = (Track *) [context objectWithID:trackObjectID];
+				if (t) {
+					NSDate *start = [NSDate date];
+					NSString *encodedPolylineString = t.encodedPolylineString;
+					NSTimeInterval time = [start timeIntervalSinceNow];
+					NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
+					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
+					if (thumbnail) {
+						t.thumbnail = thumbnail;
+						[self saveContext];
 					}
 				}
-			}
-		});
-		dispatch_release(queue);
+			});
+			dispatch_release(queue);
+		}
 	} else {
 		cell.imageView.image = thumbnail;
 	}
     
     return cell;
+}
+
+- (void)saveContext
+{
+	NSError *error;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	}
 }
 
 // Override to support conditional editing of the table view.
@@ -125,14 +136,15 @@
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the managed object at the given index path.
 		Track *track = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		NSManagedObjectContext *context = track.managedObjectContext;
-		[track.managedObjectContext deleteObject:track];
-		// Commit the change.
-		NSError *error;
-		if (![context save:&error]) {
-			NSLog(@"%@", error);
+		// If the track is a synced activity, first delete it from the server.
+		if ([track isKindOfClass:[Activity class]]) {
+			Activity *activity = (Activity *) track;
+			if (activity.tracktivityID) {
+				[[RKObjectManager sharedManager] deleteObject:track delegate:self];
+			}
 		}
-		
+		[track deleteEntity];
+		[self saveContext];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -154,6 +166,13 @@
     return YES;
 }
 */
+
+#pragma mark RestKit Delegate Methods
+
+- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
+{
+	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+}
 
 #pragma mark Segues
 

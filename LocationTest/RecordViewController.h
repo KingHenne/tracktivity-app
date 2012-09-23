@@ -9,6 +9,6 @@
 #import "MapViewController.h"
 #import "TrackingManager.h"
 
-@interface RecordViewController : MapViewController <TrackingManagerDelegate, UIGestureRecognizerDelegate>
+@interface RecordViewController : MapViewController <TrackingManagerDelegate>
 
 @end

@@ -10,6 +10,7 @@
 #import <MapKit/MKUserLocation.h>
 #import <MapKit/MKPinAnnotationView.h>
 #import "WaypointAnnotation.h"
+#import "WildcardGestureRecognizer.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -103,27 +104,6 @@
 	if (oldPolyline) [self.mapView removeOverlay:oldPolyline];
 }
 
-#pragma mark Gesture Recognizer Methods
-
-- (IBAction)handleDiscreteGesture:(UIGestureRecognizer *)sender
-{
-	if (sender.state == UIGestureRecognizerStateRecognized) {
-		self.automaticallyCenterMapOnUser = NO;
-	}
-}
-
-- (IBAction)handleContinuousGesture:(UIGestureRecognizer *)sender
-{
-	if (sender.state == UIGestureRecognizerStateBegan) {
-		self.automaticallyCenterMapOnUser = NO;
-	}
-}
-
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
-{
-	return YES;
-}
-
 #pragma mark TrackingManagerDelegate Methods
 
 - (void)locationUpdate:(CLLocation *)location
@@ -178,6 +158,11 @@
 {
     [super viewDidLoad];
 	self.automaticallyCenterMapOnUser = YES;
+	WildcardGestureRecognizer * tapInterceptor = [[WildcardGestureRecognizer alloc] init];
+	tapInterceptor.touchesBeganCallback = ^(NSSet * touches, UIEvent * event) {
+        self.automaticallyCenterMapOnUser = NO;
+	};
+	[self.mapView addGestureRecognizer:tapInterceptor];
 }
 
 - (void)viewDidUnload

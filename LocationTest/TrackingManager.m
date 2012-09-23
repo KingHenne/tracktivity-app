@@ -12,6 +12,7 @@
 #import "Activity+Create.h"
 #import "Segment+Create.h"
 #import "Waypoint+Create.h"
+#import <RestKit/RestKit.h>
 
 // distance filter for the location manager in meters
 // use kCLDistanceFilterNone for unfiltered recording
@@ -31,6 +32,7 @@
 @property (nonatomic, strong) NSDate *stopTime;
 @property (nonatomic, strong) NSMutableArray *locations;
 @property (nonatomic) CLLocationDistance totalDistance;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation TrackingManager
@@ -43,6 +45,7 @@
 @synthesize stopTime = _stopTime;
 @synthesize locations = _locations;
 @synthesize totalDistance = _totalDistance;
+@synthesize context = _context;
 
 - (id)init
 {
@@ -54,8 +57,9 @@
 		} else {
 			self.locationManager = [[CLLocationManager alloc] init];
 			self.locationManager.delegate = self;
-			self.locationManager.distanceFilter = DISTANCE_FILTER;			
+			self.locationManager.distanceFilter = DISTANCE_FILTER;
 		}
+		self.context = [NSManagedObjectContext contextForCurrentThread];
     }
     return self;
 }
@@ -71,12 +75,19 @@
 - (void)saveActivity
 {
 	if (self.locations.count <= 1) return;
-	AppDelegate *appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-	NSManagedObjectContext *context = appDelegate.managedObjectContext;
-	Activity *activity = [Activity activityWithStart:self.startTime end:self.stopTime inManagedObjectContext:context];
-	Segment *segment = [Segment segmentWithLocations:self.locations inManagedObjectContext:context];
+	Activity *activity = [Activity activityWithStart:self.startTime end:self.stopTime inManagedObjectContext:self.context];
+	Segment *segment = [Segment segmentWithLocations:self.locations inManagedObjectContext:self.context];
 	[activity addSegmentsObject:segment];
-	[appDelegate saveContext];
+	[self saveContext];
+}
+
+- (void)saveContext
+{
+    NSError *error = nil;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
 }
 
 - (void)startUpdatingWithoutRecording

@@ -7,20 +7,15 @@
 //
 
 #import "ActivityTableViewController.h"
-#import "AppDelegate.h"
+#import "Activity.h"
+#import <RestKit/RestKit.h>
 
 @implementation ActivityTableViewController
 
 - (void)setupFetchedResultsController
 {
 	self.debug = YES;
-	NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
-	request.sortDescriptors = [NSArray arrayWithObject:[NSSortDescriptor sortDescriptorWithKey:@"start" ascending:NO]];
-	
-	AppDelegate * appDelegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-	NSManagedObjectContext *context = appDelegate.managedObjectContext;
-	
-	self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:request managedObjectContext:context sectionNameKeyPath:NULL cacheName:nil];
+	self.fetchedResultsController = [Activity fetchAllSortedBy:@"start" ascending:NO withPredicate:nil groupBy:nil];
 }
 
 @end

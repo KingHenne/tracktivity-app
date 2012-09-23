@@ -8,7 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "CoreDataTableViewController.h"
+#import <RestKit/RestKit.h>
 
-@interface TrackTableViewController : CoreDataTableViewController
+@interface TrackTableViewController : CoreDataTableViewController <RKObjectLoaderDelegate>
 
 @end
