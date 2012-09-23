@@ -81,17 +81,14 @@
 {
 	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName.lowercaseString];
 	if ([elementName.lowercaseString isEqualToString:@"trk"]) {
-		self.currentTrack = [NSEntityDescription insertNewObjectForEntityForName:@"Route"
-														  inManagedObjectContext:self.context];
+		self.currentTrack = [Route createEntity];
 		self.currentTrack.created = [NSDate date];
 	} else if ([elementName.lowercaseString isEqualToString:@"trkseg"]) {
-		self.currentSegment = [NSEntityDescription insertNewObjectForEntityForName:@"Segment"
-														 inManagedObjectContext:self.context];
+		self.currentSegment = [Segment createEntity];
 	} else if ([elementName.lowercaseString isEqualToString:@"trkpt"]) {
 		double lat = [[attributeDict objectForKey:@"lat"] doubleValue];
 		double lon = [[attributeDict objectForKey:@"lon"] doubleValue];
-		self.currentTrackPoint = [NSEntityDescription insertNewObjectForEntityForName:@"Waypoint"
-														inManagedObjectContext:self.context];
+		self.currentTrackPoint = [Waypoint createEntity];
 		self.currentTrackPoint.latitude = [NSNumber numberWithDouble:lat];
 		self.currentTrackPoint.longitude = [NSNumber numberWithDouble:lon];
 	}
@@ -114,9 +111,6 @@
 			if ([[self.elementStates objectForKey:@"time"] boolValue] == YES) {
 				ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
 				self.currentTrackPoint.time = [formatter dateFromString:string];
-				/*if (self.currentTrack.segments.count == 0 && self.currentSegment.points.count == 0) {
-					self.currentTrack.start = self.currentTrackPoint.time;
-				}*/
 			}
 		}
 	}
@@ -128,7 +122,6 @@
 {	
 	[self.elementStates setObject:[NSNumber numberWithBool:NO] forKey:elementName.lowercaseString];
 	if ([elementName.lowercaseString isEqualToString:@"trk"]) {
-		//self.currentTrack.end = self.currentTrackPoint.time;
 		if (self.currentTrack.name == nil) {
 			self.currentTrack.name = self.fileURL.fileNameWithoutExtension;
 		}
