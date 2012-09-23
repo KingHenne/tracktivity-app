@@ -13,7 +13,7 @@
 #import "GPXParser.h"
 #import "TrackTableViewController.h"
 #import "TrackViewController.h"
-#import "SegmentedControlViewController.h"
+#import "SegmentedTrackViewController.h"
 #import <RestKit/RestKit.h>
 
 @interface AppDelegate ()
@@ -82,10 +82,10 @@
 				UINavigationController *navc = (UINavigationController *) blockSelf.tbc.viewControllers.lastObject;
 				blockSelf.tbc.selectedViewController = navc;
 				[navc popToRootViewControllerAnimated:NO];
-				SegmentedControlViewController *scvc = (SegmentedControlViewController *) navc.topViewController;
-				[scvc setCurrentViewControllerWithIndex:kRouteViewController];
+				SegmentedTrackViewController *stvc = (SegmentedTrackViewController *) navc.topViewController;
+				[stvc setCurrentViewControllerWithIndex:kRouteViewController];
 				NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-				UITableViewController *tvc = scvc.currentTableViewController;
+				UITableViewController *tvc = stvc.currentTableViewController;
 				[tvc performSegueWithIdentifier:@"Show Route Details"
 										 sender:[tvc.tableView cellForRowAtIndexPath:cellIndexPath]];
 			}

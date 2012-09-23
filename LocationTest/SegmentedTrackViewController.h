@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <RestKit/RestKit.h>
 
-@interface SegmentedControlViewController : UIViewController
+@interface SegmentedTrackViewController : UIViewController <RKObjectLoaderDelegate, RKRequestDelegate, UIActionSheetDelegate>
 
 enum {
 	kActivityViewController = 0,
