@@ -14,8 +14,10 @@
 #import "Waypoint+Create.h"
 #import "RestKit/ISO8601DateFormatter.h"
 #import "NSURL+FileHelper.h"
+#import <RestKit/RestKit.h>
 
 @interface GPXParser ()
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @property NSMutableDictionary *elementStates;
 @property Route *currentTrack;
 @property Segment *currentSegment;
@@ -41,16 +43,6 @@
 @synthesize totalPointsToParse = _totalPointsToParse;
 @synthesize parseProgress = _parseProgress;
 
-- (id)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
-	self = [super init];
-	if (self) {
-		self.context = [[NSManagedObjectContext alloc] init];
-		self.context.persistentStoreCoordinator = persistentStoreCoordinator;
-	}
-	return self;
-}
-
 - (void)setParseProgress:(float)parseProgress
 {
 	if (parseProgress >= 0 && parseProgress <= 1) {
@@ -60,6 +52,7 @@
 
 - (BOOL)parseGPXFile:(NSURL *)fileURL
 {
+	self.context = [NSManagedObjectContext contextForCurrentThread];
 	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:fileURL];
 	self.fileURL = fileURL;
 	NSString *xmlFileString = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:NULL];
@@ -73,7 +66,7 @@
 - (void)saveContext
 {
     NSError *error = nil;
-	if ([self.context hasChanges] && ![self.context save:&error]) {
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		abort();
 	}

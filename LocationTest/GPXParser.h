@@ -11,11 +11,9 @@
 
 @interface GPXParser : NSObject <NSXMLParserDelegate>
 
-@property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) Track *parsedTrack;
 @property (nonatomic, readonly) float parseProgress;
 
-- (id)initWithPersistentStoreCoordinator:(NSPersistentStoreCoordinator *)persistentStoreCoordinator;
 - (BOOL)parseGPXFile:(NSURL *)fileURL;
 
 @end
