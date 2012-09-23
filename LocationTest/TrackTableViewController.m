@@ -15,6 +15,7 @@
 #import "Activity.h"
 #import "Route.h"
 #import "AppDelegate.h"
+#import <RestKit/RestKit.h>
 
 @implementation TrackTableViewController
 
@@ -46,13 +47,16 @@
 	[self doesNotRecognizeSelector:_cmd];
 }
 
+- (void)deleteTracks
+{
+	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
+	[RKManagedObjectStore.defaultObjectStore save:NULL];
+}
+
 - (void)deleteThumbnails
 {
-	NSArray *objects = self.fetchedResultsController.fetchedObjects;
-	for (Track *track in objects) {
-		track.thumbnail = nil;
-	}
-	[self.fetchedResultsController.managedObjectContext save:NULL];
+	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(setThumbnail:) withObject:nil];
+	[RKManagedObjectStore.defaultObjectStore save:NULL];
 }
 
 #pragma mark - Table view data source
