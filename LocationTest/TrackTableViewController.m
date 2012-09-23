@@ -83,28 +83,31 @@
 	if (thumbnail == nil || ([[UIScreen mainScreen] scale] > 1 && thumbnail.size.width < 54)) {
 		cell.imageView.image = [UIImage imageNamed:@"mapThumbnail.png"];
 		NSManagedObjectID *trackObjectID = track.objectID;
-		dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
-		dispatch_async(queue, ^{
-			NSManagedObjectContext *context = [[NSManagedObjectContext alloc] init];
-			context.persistentStoreCoordinator = [(AppDelegate *)[[UIApplication sharedApplication] delegate] persistentStoreCoordinator];
-			[context setMergePolicy:NSMergeByPropertyObjectTrumpMergePolicy];
-			Track *t = (Track *) [context objectWithID:trackObjectID];
-			if (t) {
-				NSDate *start = [NSDate date];
-				NSString *encodedPolylineString = t.encodedPolylineString;
-				NSTimeInterval time = [start timeIntervalSinceNow];
-				NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
-				UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
-				if (thumbnail) {
-					t.thumbnail = thumbnail;
-					NSError *error;
-					if ([context hasChanges] && ![context save:&error]) {
-						NSLog(@"%@", error);
+		if (trackObjectID.isTemporaryID) { // try again later
+			[self.tableView performSelector:@selector(reloadData)];
+		} else {
+			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
+			dispatch_async(queue, ^{
+				NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+				Track *t = (Track *) [context objectWithID:trackObjectID];
+				if (t) {
+					NSDate *start = [NSDate date];
+					NSString *encodedPolylineString = t.encodedPolylineString;
+					NSTimeInterval time = [start timeIntervalSinceNow];
+					NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
+					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPath:encodedPolylineString width:53 height:53 withLabels:NO];
+					if (thumbnail) {
+						t.thumbnail = thumbnail;
+						NSError *error;
+						if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+							NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+							abort();
+						}
 					}
 				}
-			}
-		});
-		dispatch_release(queue);
+			});
+			dispatch_release(queue);
+		}
 	} else {
 		cell.imageView.image = thumbnail;
 	}
