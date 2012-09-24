@@ -27,7 +27,6 @@
 @property int pointsParsed;
 @property int totalPointsToParse;
 @property (nonatomic) float parseProgress;
-@property NSDate *parseStart;
 @end
 
 @implementation GPXParser
@@ -43,7 +42,6 @@
 @synthesize pointsParsed = _pointsParsed;
 @synthesize totalPointsToParse = _totalPointsToParse;
 @synthesize parseProgress = _parseProgress;
-@synthesize parseStart = _parseStart;
 
 - (void)setParseProgress:(float)parseProgress
 {
@@ -55,10 +53,9 @@
 - (BOOL)parseGPXFile:(NSURL *)fileURL
 {
 	self.context = [NSManagedObjectContext contextForCurrentThread];
+	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:fileURL];
 	self.fileURL = fileURL;
 	NSString *xmlFileString = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:NULL];
-	self.parseStart = [NSDate date];
-	NSXMLParser *xmlParser = [[NSXMLParser alloc] initWithContentsOfURL:fileURL];
 	self.pointsParsed = 0;
 	self.totalPointsToParse	= [xmlFileString componentsSeparatedByString:@"<trkpt"].count - 1;
 	NSLog(@"totalPointsToParse=%d", self.totalPointsToParse);
@@ -145,8 +142,7 @@
 
 - (void)parserDidEndDocument:(NSXMLParser *)parser
 {
-	NSTimeInterval time = [self.parseStart timeIntervalSinceNow];
-	NSLog(@"Finished parsing %d points in %.2f seconds.", self.pointsParsed, time * -1);
+	NSLog(@"Finished parsing %d points.", self.pointsParsed);
 }
 
 @end
