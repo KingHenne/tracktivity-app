@@ -93,6 +93,13 @@
 	}];
 }
 
+#pragma mark RKManagedObjectStoreDelegate Methods
+
+- (void)managedObjectStore:(RKManagedObjectStore *)objectStore didFailToCreatePersistentStoreCoordinatorWithError:(NSError *)error
+{
+	[objectStore deletePersistentStore];
+}
+
 #pragma mark UIApplicationDelegate Methods
 
 - (BOOL)application:(UIApplication *)application
