@@ -30,7 +30,11 @@
 			[self.mapView addOverlay:polyline];
 			unionRect = MKMapRectUnion(unionRect, polyline.boundingMapRect);
 		}
-		[self.mapView setRegion:[self adjustRectForMinimumZoomLevel:unionRect onMapView:self.mapView] animated:NO];
+		// add a little padding
+		MKMapRect paddedRect = [self.mapView mapRectThatFits:unionRect edgePadding:UIEdgeInsetsMake(40, 20, 20, 20)];
+		// stay above minimum zoom level
+		MKCoordinateRegion adjustedRegion = [self adjustRectForMinimumZoomLevel:paddedRect onMapView:self.mapView];
+		[self.mapView setRegion:adjustedRegion animated:NO];
 		[self.mapView setNeedsDisplay];
 	}
 }
@@ -41,6 +45,7 @@
 	[self.mapView removeAnnotations:self.mapView.annotations];
 	[self.mapView addAnnotation:[WaypointAnnotation annotationForStartWaypoint:self.track.firstPoint]];
 	[self.mapView addAnnotation:[WaypointAnnotation annotationForEndWaypoint:self.track.lastPoint]];
+	[self.mapView setNeedsDisplay];
 }
 
 - (void)createOverlaysAndAnnotations
@@ -79,6 +84,11 @@
 		}
 	}
 }
+
+#pragma mark MKMapViewDelegate Methods
+
+
+#pragma mark UIViewController Methods
 
 - (void)viewDidLoad
 {
