@@ -605,7 +605,6 @@
         <class className="SegmentedTrackViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/SegmentedTrackViewController.h"/>
             <relationships>
-                <relationship kind="action" name="refreshButtonPressed:" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="refreshButton" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="trackTypeControl" candidateClass="UISegmentedControl"/>
             </relationships>
@@ -618,9 +617,6 @@
         </class>
         <class className="TrackViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
-            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
