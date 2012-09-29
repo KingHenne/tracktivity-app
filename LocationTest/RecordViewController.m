@@ -11,6 +11,7 @@
 #import <MapKit/MKPinAnnotationView.h>
 #import "WaypointAnnotation.h"
 #import "WildcardGestureRecognizer.h"
+#import "UserLocationAnnotation.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -25,6 +26,7 @@
 @property (nonatomic, strong, readonly) TrackingManager *trackingManager;
 @property (nonatomic) BOOL automaticallyCenterMapOnUser;
 @property (weak, nonatomic) IBOutlet UIButton *centerLocationButton;
+@property (nonatomic, strong) UserLocationAnnotation *userLocation;
 @end
 
 @implementation RecordViewController
@@ -35,6 +37,7 @@
 @synthesize polyline = _polyline;
 @synthesize automaticallyCenterMapOnUser = _automaticallyCenterMapOnUser;
 @synthesize centerLocationButton = _centerLocationButton;
+@synthesize userLocation = _userLocation;
 
 - (TrackingManager *)trackingManager
 {
@@ -51,6 +54,22 @@
 		_waypoints = [NSMutableArray array];
 	}
 	return _waypoints;
+}
+
+- (void)setUserLocation:(UserLocationAnnotation *)userLocation
+{
+	if (self.mapView) {
+		[self.mapView addAnnotation:userLocation];
+	}
+	_userLocation = userLocation;
+}
+
+- (UserLocationAnnotation *)userLocation
+{
+	if (_userLocation == nil) { // lazy instantiation
+		self.userLocation = [UserLocationAnnotation new];
+	}
+	return _userLocation;
 }
 
 - (void)setAutomaticallyCenterMapOnUser:(BOOL)center
@@ -116,6 +135,7 @@
 		}
 		[self updateTrackOverlay];
 	}
+	self.userLocation.coordinate = location.coordinate;
 	if (self.automaticallyCenterMapOnUser) {
 		[self centerMapOnLocation:location];
 	}
@@ -138,6 +158,27 @@
 		}
 	}
 	[self setRecordingBadge:recording];
+}
+
+#pragma mark MKMapViewDelegate Methods
+
+- (MKAnnotationView *)mapView:(MKMapView *)mapView
+			viewForAnnotation:(id<MKAnnotation>)annotation
+{
+	if ([annotation isKindOfClass:[UserLocationAnnotation class]]) {
+		// Try to dequeue an existing view first.
+		MKAnnotationView *aView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"UserLocationAnnotationView"];
+		if (!aView) {
+			// If an existing view was not available, create one.
+			aView = [[MKAnnotationView alloc] initWithAnnotation:annotation
+												 reuseIdentifier:@"UserLocationAnnotationView"];
+			aView.image = [UIImage imageNamed:@"userLocation.png"];
+			aView.centerOffset = CGPointMake(1, 0);
+			aView.canShowCallout = NO;
+		}
+		return aView;
+	}
+	return [super mapView:mapView viewForAnnotation:annotation];
 }
 
 #pragma mark UIViewController Methods

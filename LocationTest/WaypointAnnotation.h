@@ -19,7 +19,8 @@ enum {
 
 @property (nonatomic) int index;
 
-- (id)initWithCoordinate:(CLLocationCoordinate2D)coord; // designated initalizer
+// designated initalizer
+- (id)initWithCoordinate:(CLLocationCoordinate2D)coord;
 + (WaypointAnnotation *)annotationForStartWaypoint:(Waypoint *)waypoint;
 + (WaypointAnnotation *)annotationForStartLocation:(CLLocation *)location;
 + (WaypointAnnotation *)annotationForEndWaypoint:(Waypoint *)waypoint;
