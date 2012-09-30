@@ -172,6 +172,7 @@
 {
 	[self.mapView removeAnnotations:self.waypoints];
 	[self.waypoints removeAllObjects];
+	[self.mapView removeOverlays:self.mapView.overlays];
 	[self setRecordingBadge:YES];
 }
 
