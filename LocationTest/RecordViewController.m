@@ -217,18 +217,40 @@
 	return [super mapView:mapView viewForAnnotation:annotation];
 }
 
-#pragma mark UIViewController Methods
-
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidAppear
 {
 	self.trackingManager.delegate = self;
 	[self.trackingManager startUpdatingWithoutRecording];
+	if (self.trackingManager.isPaused) {
+		self.mapView.showsUserLocation = YES;
+	}
+}
+
+- (void)appDidBecomeActiveNotification:(NSNotification *)notification
+{
+	if (self.view.window) {
+		[self viewDidAppear];
+	}
+}
+
+#pragma mark UIViewController Methods
+
+- (void)viewDidAppear:(BOOL)animated
+{
+	[super viewDidAppear:animated];
+	[self viewDidAppear];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(appDidBecomeActiveNotification:)
+												 name:UIApplicationDidBecomeActiveNotification
+											   object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
 	[self.trackingManager stopUpdatingWithoutRecording];
+	self.mapView.showsUserLocation = NO;
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
