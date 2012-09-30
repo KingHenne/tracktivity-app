@@ -9,27 +9,31 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MKMapView.h>
+#import "Activity.h"
 
 @protocol TrackingManagerDelegate <NSObject>
 @optional
 - (void)locationUpdate:(CLLocation *)location;
-- (void)toggledRecording:(BOOL)recording;
+- (void)startedActivity;
+- (void)finishedActivity;
+- (void)toggledPause:(BOOL)paused;
 - (void)locationUpdateFailedWithError:(NSError *)error;
 @end
 
 @interface TrackingManager : NSObject <CLLocationManagerDelegate>
 
 @property (nonatomic, weak) id <TrackingManagerDelegate> delegate;
-@property (nonatomic, assign) BOOL recording;
+@property (nonatomic, assign, getter = isPaused) BOOL paused;
 
-- (void)toggleRecording;
-- (void)startUpdatingWithoutRecording;
-- (void)stopUpdatingWithoutRecording;
+- (BOOL)isRecordingActivity;
+- (void)togglePause;
+- (void)startActivity;
+- (void)finishActivity;
 - (CLLocation *)location;
 - (CLLocationDistance)totalDistance;
-- (NSDate *)startTime;
-- (NSDate *)stopTime;
-- (MKPolyline *)polyline;
+- (Activity *)activity;
+- (void)startUpdatingWithoutRecording;
+- (void)stopUpdatingWithoutRecording;
 
 + (TrackingManager *)sharedTrackingManager;
 

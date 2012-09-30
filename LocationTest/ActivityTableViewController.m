@@ -15,7 +15,8 @@
 - (void)setupFetchedResultsController
 {
 	self.debug = YES;
-	self.fetchedResultsController = [Activity fetchAllSortedBy:@"start" ascending:NO withPredicate:nil groupBy:nil];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recording == 0"];
+	self.fetchedResultsController = [Activity fetchAllSortedBy:@"start" ascending:NO withPredicate:predicate groupBy:nil];
 }
 
 @end

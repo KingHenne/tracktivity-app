@@ -9,8 +9,10 @@
 #import "TrackingManager.h"
 #import "AppDelegate.h"
 #import <CoreData/CoreData.h>
+#import "Track+Data.h"
 #import "Activity+Create.h"
 #import "Segment+Create.h"
+#import "Segment+Data.h"
 #import "Waypoint+Create.h"
 #import <RestKit/RestKit.h>
 
@@ -28,11 +30,11 @@
 @interface TrackingManager()
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *location;
-@property (nonatomic, strong) NSDate *startTime;
-@property (nonatomic, strong) NSDate *stopTime;
 @property (nonatomic, strong) NSMutableArray *locations;
 @property (nonatomic) CLLocationDistance totalDistance;
 @property (nonatomic, strong) NSManagedObjectContext *context;
+@property (nonatomic, strong) Activity *activity;
+@property (nonatomic, assign, getter = isRecordingActivity) BOOL recording;
 @end
 
 @implementation TrackingManager
@@ -40,12 +42,12 @@
 @synthesize locationManager = _locationManager;
 @synthesize delegate = _delegate;
 @synthesize recording = _recording;
+@synthesize paused = _paused;
 @synthesize location = _location;
-@synthesize startTime = _startTime;
-@synthesize stopTime = _stopTime;
 @synthesize locations = _locations;
 @synthesize totalDistance = _totalDistance;
 @synthesize context = _context;
+@synthesize activity = _activity;
 
 - (id)init
 {
@@ -58,27 +60,20 @@
 			self.locationManager = [[CLLocationManager alloc] init];
 			self.locationManager.delegate = self;
 			self.locationManager.distanceFilter = DISTANCE_FILTER;
+			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 		}
 		self.context = [NSManagedObjectContext contextForCurrentThread];
+		_paused = YES;
+		_recording = NO;
     }
     return self;
 }
 
 - (void)reset
 {
-	self.stopTime = nil;
 	self.totalDistance = 0.0;
 	self.location = nil;
 	[self.locations removeAllObjects];
-}
-
-- (void)saveActivity
-{
-	if (self.locations.count <= 1) return;
-	Activity *activity = [Activity activityWithStart:self.startTime end:self.stopTime inManagedObjectContext:self.context];
-	Segment *segment = [Segment segmentWithLocations:self.locations inManagedObjectContext:self.context];
-	[activity addSegmentsObject:segment];
-	[self saveContext];
 }
 
 - (void)saveContext
@@ -90,37 +85,46 @@
 	}
 }
 
-- (void)startUpdatingWithoutRecording
+- (void)startActivity
 {
-	if (!self.recording) {
-		self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-		[self.locationManager startUpdatingLocation];
+	self.activity = [Activity createEntity];
+	self.activity.recording = [NSNumber numberWithBool:YES];
+	self.activity.start = [NSDate date];
+	self.recording = YES;
+	self.paused = NO;
+	if ([self.delegate respondsToSelector:@selector(startedActivity)]) {
+		[self.delegate startedActivity];
 	}
 }
 
-- (void)stopUpdatingWithoutRecording
+- (void)finishActivity
 {
-	if (!self.recording) {
-		[self.locationManager stopUpdatingLocation];
+	self.paused = YES;
+	self.recording = NO;
+	if (self.activity.numberOfTotalPoints < 2) {
+		[self.activity deleteEntity];
+	} else {
+		self.activity.end = [NSDate date];
+		self.activity.recording = [NSNumber numberWithBool:NO];
+	}
+	[self saveContext];
+	if ([self.delegate respondsToSelector:@selector(finishedActivity)]) {
+		[self.delegate finishedActivity];
 	}
 }
 
-- (void)setRecording:(BOOL)recording
+- (void)setPaused:(BOOL)paused
 {
-	if (_recording != recording) {
-		_recording = recording;
-		if (_recording) {
-			[self reset];
-			self.startTime = [NSDate date];
-			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
+	_paused = paused;
+	if (!paused && !self.isRecordingActivity) {
+		[self startActivity];
+	} else {
+		if (!paused) {
+			[self.activity addSegmentsObject:[Segment createEntity]];
 			[self.locationManager startUpdatingLocation];
-		} else {
-			self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters;
-			self.stopTime = [NSDate date];
-			[self saveActivity];
 		}
-		if ([self.delegate respondsToSelector:@selector(toggledRecording:)]) {
-			[self.delegate toggledRecording:_recording];
+		if ([self.delegate respondsToSelector:@selector(toggledPause:)]) {
+			[self.delegate toggledPause:paused];
 		}
 	}
 }
@@ -140,29 +144,27 @@
 	}
 	self.location = newLocation;
 	[self.locations addObject:newLocation];
+	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
+	[self.activity.segments.lastObject addPointsObject:newPoint];
 }
 
-- (MKPolyline *)polyline
+- (void)togglePause
 {
-	MKPolyline *polyline;
-	int numPoints = self.locations.count;
-	if (numPoints > 1)
-	{
-		CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-		for (int i = 0; i < numPoints; i++)
-		{
-			CLLocation* current = [self.locations objectAtIndex:i];
-			coords[i] = current.coordinate;
-		}
-		polyline = [MKPolyline polylineWithCoordinates:coords count:numPoints];
-		free(coords);
+	self.paused = !self.isPaused;
+}
+
+- (void)startUpdatingWithoutRecording
+{
+	if (self.isPaused) {
+		[self.locationManager startUpdatingLocation];
 	}
-	return polyline;
 }
 
-- (void)toggleRecording
+- (void)stopUpdatingWithoutRecording
 {
-	self.recording = !self.recording;
+	if (self.isPaused) {
+		[self.locationManager stopUpdatingLocation];
+	}
 }
 
 - (void)locationManager:(CLLocationManager *)manager
@@ -171,7 +173,7 @@
 {
 	NSTimeInterval howRecent = [newLocation.timestamp timeIntervalSinceNow];
 	if (abs(howRecent) < EXPIRY_TIME_INTERVAL) {
-		if (self.recording && newLocation.horizontalAccuracy < ACCURACY_FILTER) {
+		if (self.isRecordingActivity && !self.isPaused && newLocation.horizontalAccuracy < ACCURACY_FILTER) {
 			[self recordLocation:newLocation];
 		}
 		// publish location update to current delegate
