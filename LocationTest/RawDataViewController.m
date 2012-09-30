@@ -81,8 +81,8 @@
 
 - (void)updateTimeRelatedViews
 {
-	self.elapsedTimeLabel.text = [self.trackingManager.startTime formattedTimeIntervalSinceNow];
-	double totalTimeInSeconds = abs([self.trackingManager.startTime timeIntervalSinceNow]);
+	self.elapsedTimeLabel.text = [self.trackingManager.activity.start formattedTimeIntervalSinceNow];
+	double totalTimeInSeconds = abs([self.trackingManager.activity.start timeIntervalSinceNow]);
 	CLLocationDistance totalDistanceInKm = self.trackingManager.totalDistance / 1000.0;
 	double averageSpeedInKph = totalDistanceInKm / totalTimeInSeconds * 3600;
 	self.averageSpeedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"SpeedFormat", @"SpeedFormat"), averageSpeedInKph];
@@ -122,7 +122,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	self.trackingManager.delegate = self;
-	if (self.trackingManager.recording) {
+	if (self.trackingManager.isRecordingActivity && !self.trackingManager.isPaused) {
 		[self startUpdateTimer];
 	}
 	[self updateViewsWithLocation:self.trackingManager.location];

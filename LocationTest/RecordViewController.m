@@ -12,17 +12,21 @@
 #import "WaypointAnnotation.h"
 #import "WildcardGestureRecognizer.h"
 #import "UserLocationAnnotation.h"
+#import "Segment+Data.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
 
 #define BTN_RECORD_START NSLocalizedString(@"RecordButtonStart", @"record button label for start action")
-#define BTN_RECORD_STOP NSLocalizedString(@"RecordButtonStop", @"record button label for stop action")
+#define BTN_RECORD_PAUSE NSLocalizedString(@"RecordButtonPause", @"record button label for pause action")
+#define BTN_RECORD_CONTINUE NSLocalizedString(@"RecordButtonContinue", @"record button label for continue action")
 
 @interface RecordViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *recordButton;
+@property (nonatomic, weak) IBOutlet UIButton *finishButton;
 @property (nonatomic, strong) NSMutableArray *waypoints;
 @property (nonatomic, strong) MKPolyline *polyline;
+@property (nonatomic, strong) Segment *currentSegment;
 @property (nonatomic, strong, readonly) TrackingManager *trackingManager;
 @property (nonatomic) BOOL automaticallyCenterMapOnUser;
 @property (weak, nonatomic) IBOutlet UIButton *centerLocationButton;
@@ -35,6 +39,7 @@
 @synthesize trackingManager = _trackingManager;
 @synthesize waypoints = _waypoints;
 @synthesize polyline = _polyline;
+@synthesize currentSegment = _currentSegment;
 @synthesize automaticallyCenterMapOnUser = _automaticallyCenterMapOnUser;
 @synthesize centerLocationButton = _centerLocationButton;
 @synthesize userLocation = _userLocation;
@@ -76,7 +81,6 @@
 {
 	_automaticallyCenterMapOnUser = center;
 	if (center) {
-		//[self centerMapOnLocation:self.trackingManager.location];
 		[self.centerLocationButton setTitleColor:[UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f] forState:UIControlStateNormal];
 	} else {
 		[self.centerLocationButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
@@ -91,15 +95,30 @@
 
 - (IBAction)recordButtonPressed:(UIButton *)sender
 {
-	[self.trackingManager toggleRecording];
+	if (self.trackingManager.isRecordingActivity) {
+		[self.trackingManager togglePause];
+		if (self.trackingManager.isPaused) {
+			[self setRecordButtonTitle:BTN_RECORD_CONTINUE];
+		} else {
+			[self setRecordButtonTitle:BTN_RECORD_PAUSE];
+		}
+	} else {
+		[self.trackingManager startActivity];
+		[self setRecordButtonTitle:BTN_RECORD_PAUSE];
+		self.finishButton.alpha = 1;
+	}
 }
 
-- (void)setRecordButtonTitle:(BOOL)recording
+- (IBAction)finishButtonPressed:(UIButton *)sender
 {
-	if (self.view.window) {
-		NSString *buttonTitle = recording ? BTN_RECORD_STOP : BTN_RECORD_START;
-		[self.recordButton setTitle:buttonTitle forState:UIControlStateNormal];
-	}
+	self.finishButton.alpha = 0;
+	[self setRecordButtonTitle:BTN_RECORD_START];
+	[self.trackingManager finishActivity];
+}
+
+- (void)setRecordButtonTitle:(NSString *)title
+{
+	[self.recordButton setTitle:title forState:UIControlStateNormal];
 }
 
 - (IBAction)locationCenterButtonPressed:(UIButton *)sender
@@ -114,50 +133,67 @@
 
 - (void)updateTrackOverlay
 {
-	MKPolyline *oldPolyline = self.polyline;
-	self.polyline = self.trackingManager.polyline;
-	if (self.polyline) {
-		[self.mapView addOverlay:self.polyline];
+	Segment *lastSegment = self.trackingManager.activity.segments.lastObject;
+	MKPolyline *polyline = lastSegment.polyline;
+	if (polyline) {
+		[self.mapView addOverlay:polyline];
 		[self.mapView setNeedsDisplay];
 	}
-	if (oldPolyline) [self.mapView removeOverlay:oldPolyline];
+	if (self.currentSegment == lastSegment && self.polyline) {
+		[self.mapView removeOverlay:self.polyline];
+	}
+	self.currentSegment = lastSegment;
+	self.polyline = polyline;
 }
 
 #pragma mark TrackingManagerDelegate Methods
 
 - (void)locationUpdate:(CLLocation *)location
 {
-	if (self.trackingManager.recording) {
+	if (self.trackingManager.isRecordingActivity && !self.trackingManager.isPaused) {
 		if (!self.waypoints.count) {
+			// Add start waypoint to the map.
 			WaypointAnnotation *startAnnotation = [WaypointAnnotation annotationForStartLocation:location];
 			[self.waypoints addObject:startAnnotation];
 			[self.mapView addAnnotation:startAnnotation];
 		}
 		[self updateTrackOverlay];
+		self.userLocation.coordinate = location.coordinate;
+		if (![self.mapView.annotations containsObject:self.userLocation]) {
+			[self.mapView addAnnotation:self.userLocation];
+		}
 	}
-	self.userLocation.coordinate = location.coordinate;
 	if (self.automaticallyCenterMapOnUser) {
 		[self centerMapOnLocation:location];
 	}
 }
 
-- (void)toggledRecording:(BOOL)recording
+- (void)startedActivity
 {
-	if (self.view.window) {
-		[self setRecordButtonTitle:recording];
-		if (recording) {
-			// Add start waypoint to the map.
-			[self.mapView removeAnnotations:self.waypoints];
-			[self.waypoints removeAllObjects];
-		} else {
-			// Add end waypoint to the map.
-			WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndLocation:self.trackingManager.location];
-			[self.waypoints addObject:endAnnotation];
-			[self.mapView addAnnotation:endAnnotation];
-			[self.mapView selectAnnotation:endAnnotation animated:YES];
-		}
+	[self.mapView removeAnnotations:self.waypoints];
+	[self.waypoints removeAllObjects];
+	[self setRecordingBadge:YES];
+}
+
+- (void)finishedActivity
+{
+	[self setRecordingBadge:NO];
+	// Add end waypoint to the map.
+	WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndLocation:self.trackingManager.location];
+	[self.waypoints addObject:endAnnotation];
+	[self.mapView addAnnotation:endAnnotation];
+	[self.mapView selectAnnotation:endAnnotation animated:YES];
+}
+
+- (void)toggledPause:(BOOL)paused
+{
+	if (paused) {
+		[self.mapView removeAnnotation:self.userLocation];
+		self.mapView.showsUserLocation = YES;
+		self.polyline = nil;
+	} else {
+		self.mapView.showsUserLocation = NO;
 	}
-	[self setRecordingBadge:recording];
 }
 
 #pragma mark MKMapViewDelegate Methods
@@ -198,6 +234,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+	self.finishButton.alpha = 0;
 	self.automaticallyCenterMapOnUser = YES;
 	WildcardGestureRecognizer * tapInterceptor = [[WildcardGestureRecognizer alloc] init];
 	tapInterceptor.touchesBeganCallback = ^(NSSet * touches, UIEvent * event) {
@@ -209,6 +246,7 @@
 - (void)viewDidUnload
 {
 	[self setRecordButton:nil];
+	[self setFinishButton:nil];
 	[self setCenterLocationButton:nil];
     [super viewDidUnload];
 }

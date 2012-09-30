@@ -7,12 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA215CDBF790070FA11 /* Track.m */; };
-		B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA615CDBF7A0070FA11 /* Segment.m */; };
-		B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDA915CDBF7A0070FA11 /* Waypoint.m */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
-		B10BFDBC15CE9C250070FA11 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBB15CE9C240070FA11 /* Route.m */; };
 		B10BFDBF15CECBA40070FA11 /* SegmentedTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBE15CECBA40070FA11 /* SegmentedTrackViewController.m */; };
 		B10BFDC215CECF100070FA11 /* ActivityTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDC115CECF0F0070FA11 /* ActivityTableViewController.m */; };
 		B10BFDC515CECF300070FA11 /* RouteTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */; };
@@ -45,6 +41,11 @@
 		B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A515B36311005B372D /* TrackOverlayView.m */; };
 		B174D6831617AA480098B433 /* userLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6811617AA480098B433 /* userLocation.png */; };
 		B174D6841617AA480098B433 /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6821617AA480098B433 /* userLocation@2x.png */; };
+		B174D6A11618E1330098B433 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B174D6A01618E1330098B433 /* Waypoint.m */; };
+		B174D6A41618E1340098B433 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B174D6A31618E1340098B433 /* Track.m */; };
+		B174D6A71618E1340098B433 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B174D6A61618E1340098B433 /* Route.m */; };
+		B174D6AA1618E1340098B433 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B174D6A91618E1340098B433 /* Segment.m */; };
+		B174D6B31618E30F0098B433 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B174D6B21618E30F0098B433 /* Activity.m */; };
 		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
 		B17D39E115BDDAF900F28FA8 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */; };
 		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
@@ -69,7 +70,6 @@
 		B1A59B29160FA2D3000FFD92 /* libTBXML-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */; };
 		B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
-		B1E5A46D160909C9003443C3 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E5A46C160909C9003443C3 /* Activity.m */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
 		B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298215D7B74000CF1574 /* gpxFile@2x.png */; };
 		B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E9298615D7B87D00CF1574 /* ImportViewController.m */; };
@@ -161,18 +161,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		B10BFDA115CDBF790070FA11 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
-		B10BFDA215CDBF790070FA11 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
-		B10BFDA515CDBF7A0070FA11 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
-		B10BFDA615CDBF7A0070FA11 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
-		B10BFDA815CDBF7A0070FA11 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
-		B10BFDA915CDBF7A0070FA11 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
 		B10BFDB115CDC04C0070FA11 /* Activity+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Create.h"; sourceTree = "<group>"; };
 		B10BFDB215CDC04C0070FA11 /* Activity+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Create.m"; sourceTree = "<group>"; };
 		B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+FileHelper.h"; sourceTree = "<group>"; };
 		B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+FileHelper.m"; sourceTree = "<group>"; };
-		B10BFDBA15CE9C230070FA11 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		B10BFDBB15CE9C240070FA11 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		B10BFDBD15CECBA30070FA11 /* SegmentedTrackViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SegmentedTrackViewController.h; sourceTree = "<group>"; };
 		B10BFDBE15CECBA40070FA11 /* SegmentedTrackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SegmentedTrackViewController.m; sourceTree = "<group>"; };
 		B10BFDC015CECF0E0070FA11 /* ActivityTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewController.h; sourceTree = "<group>"; };
@@ -223,6 +215,16 @@
 		B16A04A515B36311005B372D /* TrackOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackOverlayView.m; sourceTree = "<group>"; };
 		B174D6811617AA480098B433 /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = userLocation.png; path = LocationTest/userLocation.png; sourceTree = "<group>"; };
 		B174D6821617AA480098B433 /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "userLocation@2x.png"; path = "LocationTest/userLocation@2x.png"; sourceTree = "<group>"; };
+		B174D69F1618E1330098B433 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
+		B174D6A01618E1330098B433 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
+		B174D6A21618E1340098B433 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
+		B174D6A31618E1340098B433 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
+		B174D6A51618E1340098B433 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		B174D6A61618E1340098B433 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
+		B174D6A81618E1340098B433 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
+		B174D6A91618E1340098B433 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
+		B174D6B11618E30F0098B433 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		B174D6B21618E30F0098B433 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
 		B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackTableViewController.m; sourceTree = "<group>"; };
 		B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -260,8 +262,6 @@
 		B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLocationAnnotation.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
-		B1E5A46B160909C9003443C3 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
-		B1E5A46C160909C9003443C3 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = LocationTest/gpxFile.png; sourceTree = "<group>"; };
 		B1E9298215D7B74000CF1574 /* gpxFile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gpxFile@2x.png"; path = "LocationTest/gpxFile@2x.png"; sourceTree = "<group>"; };
 		B1E9298515D7B87C00CF1574 /* ImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportViewController.h; sourceTree = "<group>"; };
@@ -477,17 +477,17 @@
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B10BFDA515CDBF7A0070FA11 /* Segment.h */,
-				B10BFDA615CDBF7A0070FA11 /* Segment.m */,
-				B10BFDA815CDBF7A0070FA11 /* Waypoint.h */,
-				B10BFDA915CDBF7A0070FA11 /* Waypoint.m */,
-				B10BFDA115CDBF790070FA11 /* Track.h */,
-				B10BFDA215CDBF790070FA11 /* Track.m */,
-				B10BFDBA15CE9C230070FA11 /* Route.h */,
-				B10BFDBB15CE9C240070FA11 /* Route.m */,
+				B174D6A81618E1340098B433 /* Segment.h */,
+				B174D6A91618E1340098B433 /* Segment.m */,
+				B174D6A51618E1340098B433 /* Route.h */,
+				B174D6A61618E1340098B433 /* Route.m */,
+				B174D6A21618E1340098B433 /* Track.h */,
+				B174D6A31618E1340098B433 /* Track.m */,
+				B174D69F1618E1330098B433 /* Waypoint.h */,
+				B174D6A01618E1330098B433 /* Waypoint.m */,
+				B174D6B11618E30F0098B433 /* Activity.h */,
+				B174D6B21618E30F0098B433 /* Activity.m */,
 				B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */,
-				B1E5A46B160909C9003443C3 /* Activity.h */,
-				B1E5A46C160909C9003443C3 /* Activity.m */,
 				B1A59B02160F6E22000FFD92 /* MultiPolyline.h */,
 				B1A59B03160F6E22000FFD92 /* MultiPolyline.m */,
 			);
@@ -729,22 +729,22 @@
 				B1976E4815C9B1E7008BCDCF /* GoogleStaticMapsFetcher.m in Sources */,
 				B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */,
 				B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */,
-				B10BFDA315CDBF7A0070FA11 /* Track.m in Sources */,
-				B10BFDA715CDBF7A0070FA11 /* Segment.m in Sources */,
-				B10BFDAA15CDBF7A0070FA11 /* Waypoint.m in Sources */,
 				B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */,
 				B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */,
-				B10BFDBC15CE9C250070FA11 /* Route.m in Sources */,
 				B10BFDBF15CECBA40070FA11 /* SegmentedTrackViewController.m in Sources */,
 				B10BFDC215CECF100070FA11 /* ActivityTableViewController.m in Sources */,
 				B10BFDC515CECF300070FA11 /* RouteTableViewController.m in Sources */,
 				B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */,
 				B1E9298A15D7C31500CF1574 /* TabBarController.m in Sources */,
-				B1E5A46D160909C9003443C3 /* Activity.m in Sources */,
 				B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */,
 				B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */,
 				B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */,
 				B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */,
+				B174D6A11618E1330098B433 /* Waypoint.m in Sources */,
+				B174D6A41618E1340098B433 /* Track.m in Sources */,
+				B174D6A71618E1340098B433 /* Route.m in Sources */,
+				B174D6AA1618E1340098B433 /* Segment.m in Sources */,
+				B174D6B31618E30F0098B433 /* Activity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

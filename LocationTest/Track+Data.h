@@ -17,5 +17,6 @@
 - (NSArray *)encodedPolylineStrings;
 - (Waypoint *)firstPoint;
 - (Waypoint *)lastPoint;
+- (int)numberOfTotalPoints;
 
 @end
