@@ -30,7 +30,6 @@
 @interface TrackingManager()
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *location;
-@property (nonatomic, strong) NSMutableArray *locations;
 @property (nonatomic) CLLocationDistance totalDistance;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) Activity *activity;
@@ -44,7 +43,6 @@
 @synthesize recording = _recording;
 @synthesize paused = _paused;
 @synthesize location = _location;
-@synthesize locations = _locations;
 @synthesize totalDistance = _totalDistance;
 @synthesize context = _context;
 @synthesize activity = _activity;
@@ -73,7 +71,6 @@
 {
 	self.totalDistance = 0.0;
 	self.location = nil;
-	[self.locations removeAllObjects];
 }
 
 - (void)saveContext
@@ -87,6 +84,7 @@
 
 - (void)startActivity
 {
+	[self reset];
 	self.activity = [Activity createEntity];
 	self.activity.recording = [NSNumber numberWithBool:YES];
 	self.activity.start = [NSDate date];
@@ -129,21 +127,12 @@
 	}
 }
 
-- (NSMutableArray *)locations
-{
-	if (_locations == nil) { // lazy instantiation
-		_locations = [[NSMutableArray alloc] init];
-	}
-	return _locations;
-}
-
 - (void)recordLocation:(CLLocation *)newLocation
 {
 	if (self.location) {
 		self.totalDistance += [newLocation distanceFromLocation:self.location];
 	}
 	self.location = newLocation;
-	[self.locations addObject:newLocation];
 	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
 	[self.activity.segments.lastObject addPointsObject:newPoint];
 }
