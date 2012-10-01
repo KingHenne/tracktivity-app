@@ -81,10 +81,12 @@
 {
 	_automaticallyCenterMapOnUser = center;
 	if (center) {
-		if (self.trackingManager.isPaused) {
-			[self centerMapOnLocation:self.mapView.userLocation.location];
-		} else {
-			[self centerMapOnLocation:self.trackingManager.location];
+		if (self.view.window) {
+			if (self.trackingManager.isPaused) {
+				[self centerMapOnLocation:self.mapView.userLocation.location];
+			} else {
+				[self centerMapOnLocation:self.trackingManager.location];
+			}
 		}
 		[self.centerLocationButton setTitleColor:[UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f] forState:UIControlStateNormal];
 	} else {
