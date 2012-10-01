@@ -62,6 +62,7 @@
 		B1976E6615C9CB8D008BCDCF /* mapThumbnail.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6415C9CB8D008BCDCF /* mapThumbnail.png */; };
 		B1976E6715C9CB8D008BCDCF /* mapThumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */; };
 		B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E6915CC201B008BCDCF /* FileHelper.m */; };
+		B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0C79161A402D0068B601 /* FinishActivityViewController.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
 		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
 		B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B00160F6165000FFD92 /* Segment+Data.m */; };
@@ -249,6 +250,8 @@
 		B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapThumbnail@2x.png"; path = "LocationTest/mapThumbnail@2x.png"; sourceTree = "<group>"; };
 		B1976E6815CC201B008BCDCF /* FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileHelper.h; sourceTree = "<group>"; };
 		B1976E6915CC201B008BCDCF /* FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelper.m; sourceTree = "<group>"; };
+		B19C0C78161A402D0068B601 /* FinishActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishActivityViewController.h; sourceTree = "<group>"; };
+		B19C0C79161A402D0068B601 /* FinishActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishActivityViewController.m; sourceTree = "<group>"; };
 		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
 		B1A0225915CD4FF70054C2D7 /* GPXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXParser.h; sourceTree = "<group>"; };
 		B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Cyclemeter-Cycle-20120701-0953.gpx"; sourceTree = "<group>"; };
@@ -451,6 +454,8 @@
 			isa = PBXGroup;
 			children = (
 				BE3633E015DBE13B00D81B35 /* NavigationControllers */,
+				B19C0C78161A402D0068B601 /* FinishActivityViewController.h */,
+				B19C0C79161A402D0068B601 /* FinishActivityViewController.m */,
 				B17D39EE15BDF60900F28FA8 /* TrackHandler.h */,
 				B16A049915B343F6005B372D /* MapViewController.h */,
 				B16A049A15B343F6005B372D /* MapViewController.m */,
@@ -745,6 +750,7 @@
 				B174D6A71618E1340098B433 /* Route.m in Sources */,
 				B174D6AA1618E1340098B433 /* Segment.m in Sources */,
 				B174D6B31618E30F0098B433 /* Activity.m in Sources */,
+				B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,7 @@
 #import "WildcardGestureRecognizer.h"
 #import "UserLocationAnnotation.h"
 #import "Segment+Data.h"
+#import "TrackHandler.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -186,11 +187,21 @@
 - (void)finishedActivity
 {
 	[self setRecordingBadge:NO];
-	// Add end waypoint to the map.
-	WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndLocation:self.trackingManager.location];
-	[self.waypoints addObject:endAnnotation];
-	[self.mapView addAnnotation:endAnnotation];
-	[self.mapView selectAnnotation:endAnnotation animated:YES];
+	if (self.trackingManager.activity) {
+		// Add end waypoint to the map.
+		WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndLocation:self.trackingManager.location];
+		[self.waypoints addObject:endAnnotation];
+		[self.mapView addAnnotation:endAnnotation];
+		[self.mapView selectAnnotation:endAnnotation animated:YES];
+		[self performSelector:@selector(showFinishActivityView) withObject:nil afterDelay:1];
+	} else {
+		[self.mapView removeAnnotations:self.waypoints];
+	}
+}
+
+- (void)showFinishActivityView
+{
+	[self performSegueWithIdentifier:@"Finish Activity" sender:self];
 }
 
 - (void)toggledPause:(BOOL)paused
@@ -242,6 +253,13 @@
 }
 
 #pragma mark UIViewController Methods
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+	if ([segue.destinationViewController conformsToProtocol:@protocol(TrackHandler)]) {
+		[segue.destinationViewController performSelector:@selector(setTrack:) withObject:self.trackingManager.activity];
+	}
+}
 
 - (void)viewDidAppear:(BOOL)animated
 {

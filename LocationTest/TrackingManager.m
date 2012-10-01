@@ -101,6 +101,7 @@
 	self.recording = NO;
 	if (self.activity.numberOfTotalPoints < 2) {
 		[self.activity deleteEntity];
+		self.activity = nil;
 	} else {
 		self.activity.end = [NSDate date];
 		self.activity.recording = [NSNumber numberWithBool:NO];
