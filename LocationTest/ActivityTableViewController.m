@@ -10,11 +10,13 @@
 #import "Activity.h"
 #import <RestKit/RestKit.h>
 
-@interface ActivityTableViewController ()
+@interface ActivityTableViewController () <RKObjectLoaderDelegate, RKRequestDelegate>
 @property (nonatomic, strong) UIBarButtonItem *refreshButton;
 @end
 
 @implementation ActivityTableViewController
+
+@synthesize refreshButton = _refreshButton;
 
 - (void)setupFetchedResultsController
 {

@@ -232,6 +232,7 @@
 		B17D39EB15BDECE300F28FA8 /* Track+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Data.h"; sourceTree = "<group>"; };
 		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
 		B17D39EE15BDF60900F28FA8 /* WrappedTrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrackHandler.h; sourceTree = "<group>"; };
+		B181FBC7161CF58800D734C0 /* SplitViewDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitViewDetailController.h; sourceTree = "<group>"; };
 		B187CEDF1607AF33008F6236 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -471,6 +472,7 @@
 				B12D4BD715B1CCA6001490B3 /* RecordViewController.m */,
 				B17D39E815BDE83500F28FA8 /* TrackViewController.h */,
 				B17D39E915BDE83500F28FA8 /* TrackViewController.m */,
+				B181FBC7161CF58800D734C0 /* SplitViewDetailController.h */,
 				B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */,
 				B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */,
 				B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */,

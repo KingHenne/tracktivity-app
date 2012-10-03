@@ -16,8 +16,9 @@
 #import "Route.h"
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
+#import "SplitViewDetailController.h"
 
-@interface TrackTableViewController ()
+@interface TrackTableViewController () <RKObjectLoaderDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) UIActionSheet *deleteActionSheet;
 @end
 
@@ -197,6 +198,30 @@
 }
 */
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	self.wrappedTrackHandlingSplitViewDetailController.wrappedTrack = wrappedTrack;
+}
+
+- (id <SplitViewDetailController, WrappedTrackHandler>)wrappedTrackHandlingSplitViewDetailController
+{
+	id vc = self.splitViewDetailController;
+	if (![vc conformsToProtocol:@protocol(WrappedTrackHandler)]) {
+		vc = nil;
+	}
+	return vc;
+}
+
+- (id <SplitViewDetailController>)splitViewDetailController
+{
+	id svdc = self.splitViewController.viewControllers.lastObject;
+	if (![svdc conformsToProtocol:@protocol(SplitViewDetailController)]) {
+		svdc = nil;
+	}
+	return svdc;
+}
+
 #pragma mark RestKit Delegate Methods
 
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
@@ -226,6 +251,30 @@
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+}
+
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+	self.splitViewController.delegate = self;
+}
+
+#pragma mark UISplitViewControllerDelegate Methods
+
+- (void)splitViewController:(UISplitViewController *)svc
+	 willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+	self.splitViewDetailController.splitViewBarButtonItem = nil;
+}
+
+- (void)splitViewController:(UISplitViewController *)svc
+	 willHideViewController:(UIViewController *)aViewController
+		  withBarButtonItem:(UIBarButtonItem *)barButtonItem
+	   forPopoverController:(UIPopoverController *)pc
+{
+	barButtonItem.title = self.title;
+	self.splitViewDetailController.splitViewBarButtonItem = barButtonItem;
 }
 
 #pragma mark Segues

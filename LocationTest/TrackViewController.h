@@ -8,7 +8,8 @@
 
 #import "MapViewController.h"
 #import "WrappedTrackHandler.h"
+#import "SplitViewDetailController.h"
 
-@interface TrackViewController : MapViewController <WrappedTrackHandler>
+@interface TrackViewController : MapViewController <WrappedTrackHandler, SplitViewDetailController>
 
 @end

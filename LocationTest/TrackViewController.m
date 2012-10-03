@@ -16,9 +16,25 @@
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM 250
 
+@interface TrackViewController ()
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@end
+
 @implementation TrackViewController
 
 @synthesize wrappedTrack = _wrappedTrack;
+@synthesize toolbar = _toolbar;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+	if (_splitViewBarButtonItem == splitViewBarButtonItem) return;
+	NSMutableArray *toolbarItems = self.toolbar.items.mutableCopy;
+	if (_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
+	if (splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
+	self.toolbar.items = toolbarItems;
+	_splitViewBarButtonItem = splitViewBarButtonItem;
+}
 
 - (void)createOverlays
 {
@@ -69,6 +85,7 @@
 {
 	if (_wrappedTrack == wrappedTrack) return;
 	_wrappedTrack = wrappedTrack;
+	//[self createOverlaysAndAnnotations];
 	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
 
@@ -102,6 +119,7 @@
 
 - (void)viewDidUnload
 {
+	[self setToolbar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
