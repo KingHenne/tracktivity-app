@@ -14,6 +14,7 @@
 @interface WrappedTrack : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) NSDate * updated;
 @property (nonatomic, retain) Track *track;
 
 @end

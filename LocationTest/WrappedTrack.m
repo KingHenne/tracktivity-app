@@ -13,6 +13,7 @@
 @implementation WrappedTrack
 
 @dynamic name;
+@dynamic updated;
 @dynamic track;
 
 @end

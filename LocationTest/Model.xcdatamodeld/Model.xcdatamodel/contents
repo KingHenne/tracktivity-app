@@ -41,6 +41,7 @@
     </entity>
     <entity name="WrappedTrack" representedClassName="WrappedTrack" isAbstract="YES" syncable="YES">
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="updated" optional="YES" attributeType="Date" syncable="YES"/>
         <relationship name="track" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Track" inverseName="parent" inverseEntity="Track" syncable="YES"/>
     </entity>
     <fetchRequest name="FinishedActivities" entity="Activity" predicateString="recording == 0"/>
@@ -50,6 +51,6 @@
         <element name="Segment" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Track" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Waypoint" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="WrappedTrack" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="WrappedTrack" positionX="160" positionY="192" width="128" height="90"/>
     </elements>
 </model>

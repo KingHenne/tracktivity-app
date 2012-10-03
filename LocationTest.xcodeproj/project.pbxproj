@@ -29,6 +29,7 @@
 		B12D4BEB15B1CDC2001490B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */; };
 		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
 		B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */; };
+		B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B148B69B161C962B003B9DDC /* WrappedTrack.m */; };
 		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
 		B16A047215B20FC1005B372D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16A046F15B20FC1005B372D /* Localizable.strings */; };
 		B16A047715B21CA3005B372D /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047615B21CA3005B372D /* ExternalAccessory.framework */; };
@@ -61,7 +62,6 @@
 		B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD3161C7A5E0068B601 /* Segment.m */; };
 		B19C0CD7161C7A5E0068B601 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD6161C7A5E0068B601 /* Track.m */; };
 		B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD9161C7A5E0068B601 /* Waypoint.m */; };
-		B19C0CDD161C7A5F0068B601 /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */; };
 		B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CDF161C7A5F0068B601 /* Activity.m */; };
 		B19C0CE3161C7A5F0068B601 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CE2161C7A5F0068B601 /* Route.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
@@ -195,6 +195,8 @@
 		B12D4BEC15B1CDC7001490B3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B13BCC38160E3B7A001E7486 /* WildcardGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildcardGestureRecognizer.h; sourceTree = "<group>"; };
 		B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildcardGestureRecognizer.m; sourceTree = "<group>"; };
+		B148B69A161C962B003B9DDC /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
+		B148B69B161C962B003B9DDC /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
 		B164D56515B74F110061E562 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
 		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -249,8 +251,6 @@
 		B19C0CD6161C7A5E0068B601 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
 		B19C0CD8161C7A5E0068B601 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
 		B19C0CD9161C7A5E0068B601 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
-		B19C0CDB161C7A5F0068B601 /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
-		B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
 		B19C0CDE161C7A5F0068B601 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		B19C0CDF161C7A5F0068B601 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B19C0CE1161C7A5F0068B601 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
@@ -485,12 +485,12 @@
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B148B69A161C962B003B9DDC /* WrappedTrack.h */,
+				B148B69B161C962B003B9DDC /* WrappedTrack.m */,
 				B19C0CE1161C7A5F0068B601 /* Route.h */,
 				B19C0CE2161C7A5F0068B601 /* Route.m */,
 				B19C0CDE161C7A5F0068B601 /* Activity.h */,
 				B19C0CDF161C7A5F0068B601 /* Activity.m */,
-				B19C0CDB161C7A5F0068B601 /* WrappedTrack.h */,
-				B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */,
 				B19C0CD8161C7A5E0068B601 /* Waypoint.h */,
 				B19C0CD9161C7A5E0068B601 /* Waypoint.m */,
 				B19C0CD5161C7A5E0068B601 /* Track.h */,
@@ -754,9 +754,9 @@
 				B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */,
 				B19C0CD7161C7A5E0068B601 /* Track.m in Sources */,
 				B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */,
-				B19C0CDD161C7A5F0068B601 /* WrappedTrack.m in Sources */,
 				B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */,
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
+				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

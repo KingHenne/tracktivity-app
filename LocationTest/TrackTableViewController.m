@@ -104,6 +104,7 @@
 					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPaths:encodedPolylineStrings width:53 height:53 withLabels:NO];
 					if (thumbnail) {
 						wt.track.thumbnail = thumbnail;
+						wt.updated = [NSDate date];
 						[self saveContext];
 					}
 				}
