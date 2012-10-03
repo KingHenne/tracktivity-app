@@ -87,7 +87,7 @@
 				SegmentedTrackViewController *stvc = (SegmentedTrackViewController *) navc.topViewController;
 				[stvc setCurrentViewControllerWithIndex:kRouteViewController];
 				NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
-				UITableViewController *tvc = stvc.currentTableViewController;
+				TrackTableViewController *tvc = stvc.currentViewController;
 				[tvc performSegueWithIdentifier:@"Show Route Details"
 										 sender:[tvc.tableView cellForRowAtIndexPath:cellIndexPath]];
 			}

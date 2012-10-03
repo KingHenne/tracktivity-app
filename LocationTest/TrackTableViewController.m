@@ -17,29 +17,13 @@
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
 
+@interface TrackTableViewController ()
+@property (nonatomic, strong) UIActionSheet *deleteActionSheet;
+@end
+
 @implementation TrackTableViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
- 
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-	
-	[self performSelectorOnMainThread:@selector(setupFetchedResultsController) withObject:nil waitUntilDone:NO];
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
-}
+@synthesize deleteActionSheet = _deleteActionSheet;
 
 - (void)setupFetchedResultsController
 {
@@ -51,14 +35,54 @@
 {
 	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
 	[self saveContext];
+//	dispatch_queue_t queue = dispatch_queue_create("delete track queue", NULL);
+//	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+//		NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
+//		dispatch_async(queue, ^{
+//			NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+//			WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
+//			if (wt) {
+//				[wt deleteEntity];
+//				NSError *error;
+//				if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+//					NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+//				}
+//			}
+//		});
+//	}
+//	dispatch_release(queue);
 }
 
 - (void)deleteThumbnails
 {
 	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
 		wrappedTrack.track.thumbnail = nil;
+		wrappedTrack.updated = [NSDate date];
 	}
 	[self saveContext];
+}
+
+- (IBAction)trashButtonPressed:(UIBarButtonItem *)sender
+{
+	if (self.deleteActionSheet) return;
+	NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
+	NSString *destructiveButtonTitle = [NSString stringWithFormat:NSLocalizedString(@"ActionSheetDeleteTracksFormat", @"action sheet button label for deleting activities"), self.title];
+	NSString *otherButtonTitle = NSLocalizedString(@"ActionSheetDeleteThumbnails", @"action sheet button label for deleting thumbnails");
+	self.deleteActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:otherButtonTitle, nil];
+	[self.deleteActionSheet showFromBarButtonItem:sender animated:YES];
+}
+
+#pragma mark UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == actionSheet.destructiveButtonIndex) {
+		[self performSelector:@selector(deleteTracks) withObject:nil afterDelay:0];
+		//[self deleteTracks];
+	} else if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+		[self performSelector:@selector(deleteThumbnails) withObject:nil afterDelay:0];
+	}
+	self.deleteActionSheet = nil;
 }
 
 #pragma mark - Table view data source
@@ -92,7 +116,7 @@
 		if (wrappedTrackObjectID.isTemporaryID) { // try again later
 			[self.tableView performSelector:@selector(reloadData)];
 		} else {
-			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
+			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);
 			dispatch_async(queue, ^{
 				NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
 				WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
@@ -105,7 +129,10 @@
 					if (thumbnail) {
 						wt.track.thumbnail = thumbnail;
 						wt.updated = [NSDate date];
-						[self saveContext];
+						NSError *error;
+						if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+							NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+						}
 					}
 				}
 			});
@@ -175,6 +202,30 @@
 - (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
 {
 	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+}
+
+#pragma mark UIViewController Methods
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+	
+    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+	
+	[self performSelectorOnMainThread:@selector(setupFetchedResultsController) withObject:nil waitUntilDone:NO];
+}
+
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
 }
 
 #pragma mark Segues

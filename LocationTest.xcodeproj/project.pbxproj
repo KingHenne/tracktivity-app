@@ -30,6 +30,7 @@
 		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
 		B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */; };
 		B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B148B69B161C962B003B9DDC /* WrappedTrack.m */; };
+		B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B148B6B2161C9CD3003B9DDC /* iPad.storyboard */; };
 		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
 		B16A047215B20FC1005B372D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16A046F15B20FC1005B372D /* Localizable.strings */; };
 		B16A047715B21CA3005B372D /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047615B21CA3005B372D /* ExternalAccessory.framework */; };
@@ -197,6 +198,7 @@
 		B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildcardGestureRecognizer.m; sourceTree = "<group>"; };
 		B148B69A161C962B003B9DDC /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
 		B148B69B161C962B003B9DDC /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
+		B148B6B2161C9CD3003B9DDC /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
 		B164D56515B74F110061E562 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
 		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -373,6 +375,7 @@
 				BE3633DE15DBE09500D81B35 /* GPX */,
 				B12D4BE915B1CD78001490B3 /* Images */,
 				B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */,
+				B148B6B2161C9CD3003B9DDC /* iPad.storyboard */,
 				B12D4BCD15B1CCA6001490B3 /* AppDelegate.h */,
 				B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */,
 				B16A046F15B20FC1005B372D /* Localizable.strings */,
@@ -707,6 +710,7 @@
 				B187CEE01607AF33008F6236 /* Default-568h@2x.png in Resources */,
 				B174D6831617AA480098B433 /* userLocation.png in Resources */,
 				B174D6841617AA480098B433 /* userLocation@2x.png in Resources */,
+				B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,7 +897,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -919,7 +923,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

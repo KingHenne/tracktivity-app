@@ -8,6 +8,8 @@
 
 #import "TrackTableViewController.h"
 
-@interface ActivityTableViewController : TrackTableViewController
+@interface ActivityTableViewController : TrackTableViewController <RKObjectLoaderDelegate, RKRequestDelegate>
+
+- (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
 
 @end
