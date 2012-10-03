@@ -14,7 +14,7 @@
 #import "UserLocationAnnotation.h"
 #import "Segment+Data.h"
 #import "WrappedTrackHandler.h"
-#import "Track.h"
+#import "Track+Data.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -190,7 +190,8 @@
 	[self setRecordingBadge:NO];
 	if (self.trackingManager.activity) {
 		// Add end waypoint to the map.
-		WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndLocation:self.trackingManager.location];
+		Waypoint *lastPoint = self.trackingManager.activity.track.lastPoint;
+		WaypointAnnotation *endAnnotation = [WaypointAnnotation annotationForEndWaypoint:lastPoint];
 		[self.waypoints addObject:endAnnotation];
 		[self.mapView addAnnotation:endAnnotation];
 		[self.mapView selectAnnotation:endAnnotation animated:YES];
