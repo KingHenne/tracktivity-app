@@ -86,6 +86,7 @@
 {
 	[self reset];
 	self.activity = [Activity createEntity];
+	self.activity.track = [Track createEntity];
 	self.activity.recording = [NSNumber numberWithBool:YES];
 	self.activity.start = [NSDate date];
 	self.recording = YES;
@@ -99,7 +100,7 @@
 {
 	self.paused = YES;
 	self.recording = NO;
-	if (self.activity.numberOfTotalPoints < 2) {
+	if (self.activity.track.numberOfTotalPoints < 2) {
 		[self.activity deleteEntity];
 		self.activity = nil;
 	} else {
@@ -119,7 +120,7 @@
 		[self startActivity];
 	} else {
 		if (!paused) {
-			[self.activity addSegmentsObject:[Segment createEntity]];
+			[self.activity.track addSegmentsObject:[Segment createEntity]];
 			[self.locationManager startUpdatingLocation];
 		}
 		if ([self.delegate respondsToSelector:@selector(toggledPause:)]) {
@@ -135,7 +136,7 @@
 	}
 	self.location = newLocation;
 	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
-	[self.activity.segments.lastObject addPointsObject:newPoint];
+	[self.activity.track.segments.lastObject addPointsObject:newPoint];
 }
 
 - (void)togglePause

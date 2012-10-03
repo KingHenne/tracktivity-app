@@ -8,7 +8,7 @@
 
 #import "TrackTableViewController.h"
 #import "Track+Data.h"
-#import "TrackHandler.h"
+#import "WrappedTrackHandler.h"
 #import <MapKit/MapKit.h>
 #import <QuartzCore/CALayer.h>
 #import "GoogleStaticMapsFetcher.h"
@@ -55,7 +55,9 @@
 
 - (void)deleteThumbnails
 {
-	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(setThumbnail:) withObject:nil];
+	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+		wrappedTrack.track.thumbnail = nil;
+	}
 	[self saveContext];
 }
 
@@ -66,42 +68,43 @@
 	static NSString *CellIdentifier = @"Recorded Activity Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
-    Track *track = [self.fetchedResultsController objectAtIndexPath:indexPath];
+    WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	if ([track isKindOfClass:[Activity class]]) {
-		Activity *activity = (Activity *) track;
-		if (track.name) {
-			cell.textLabel.text = track.name;
+	if ([wrappedTrack isKindOfClass:[Activity class]]) {
+		Activity *activity = (Activity *) wrappedTrack;
+		if (activity.name) {
+			cell.textLabel.text = activity.name;
 			cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 		} else {
 			cell.textLabel.text = [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 			cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:activity.end dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 		}
-	} else if ([track isKindOfClass:[Route class]]) {
-		Route *route = (Route *) track;
+	} else if ([wrappedTrack isKindOfClass:[Route class]]) {
+		Route *route = (Route *) wrappedTrack;
 		cell.textLabel.text = route.name;
 		cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:route.created dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 	}
-	UIImage *thumbnail = track.thumbnail;
+	UIImage *thumbnail = wrappedTrack.track.thumbnail;
 	// Fetch the image again, if this is a retina screen and the saved image was fetched on non-retina device.
 	if (thumbnail == nil || ([[UIScreen mainScreen] scale] > 1 && thumbnail.size.width < 54)) {
 		cell.imageView.image = [UIImage imageNamed:@"mapThumbnail.png"];
-		NSManagedObjectID *trackObjectID = track.objectID;
-		if (trackObjectID.isTemporaryID) { // try again later
+		NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
+		if (wrappedTrackObjectID.isTemporaryID) { // try again later
 			[self.tableView performSelector:@selector(reloadData)];
 		} else {
 			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);;
 			dispatch_async(queue, ^{
 				NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
-				Track *t = (Track *) [context objectWithID:trackObjectID];
-				if (t) {
+				WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
+				if (wt) {
 					NSDate *start = [NSDate date];
-					NSArray *encodedPolylineStrings = t.encodedPolylineStrings;
+					NSArray *encodedPolylineStrings = wt.track.encodedPolylineStrings;
 					NSTimeInterval time = [start timeIntervalSinceNow];
 					NSLog(@"Encoded polyline string in %.0f milliseconds.", time * -1000);
 					UIImage *thumbnail = [GoogleStaticMapsFetcher mapImageForEncodedPaths:encodedPolylineStrings width:53 height:53 withLabels:NO];
 					if (thumbnail) {
-						t.thumbnail = thumbnail;
+						wt.track.thumbnail = thumbnail;
+						wt.updated = [NSDate date];
 						[self saveContext];
 					}
 				}
@@ -135,15 +138,15 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the managed object at the given index path.
-		Track *track = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		// If the track is a synced activity, first delete it from the server.
-		if ([track isKindOfClass:[Activity class]]) {
-			Activity *activity = (Activity *) track;
+		WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
+		// If the wrapped track is a synced activity, first delete it from the server.
+		if ([wrappedTrack isKindOfClass:[Activity class]]) {
+			Activity *activity = (Activity *) wrappedTrack;
 			if (activity.tracktivityID) {
-				[[RKObjectManager sharedManager] deleteObject:track delegate:self];
+				[[RKObjectManager sharedManager] deleteObject:activity delegate:self];
 			}
 		}
-		[track deleteEntity];
+		[wrappedTrack deleteEntity];
 		[self saveContext];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
@@ -179,13 +182,13 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
-	Track *track = [self.fetchedResultsController objectAtIndexPath:indexPath];
-	if ([segue.destinationViewController conformsToProtocol:@protocol(TrackHandler)]) {
-		UIViewController <TrackHandler> *trackHandler = (UIViewController <TrackHandler> *) segue.destinationViewController;
-		trackHandler.track = track;
+	WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
+	if ([segue.destinationViewController conformsToProtocol:@protocol(WrappedTrackHandler)]) {
+		UIViewController <WrappedTrackHandler> *wrappedTrackHandler = (UIViewController <WrappedTrackHandler> *) segue.destinationViewController;
+		wrappedTrackHandler.wrappedTrack = wrappedTrack;
 		if ([sender isKindOfClass:[UITableViewCell class]]) {
 			UITableViewCell *cell = (UITableViewCell *) sender;
-			trackHandler.title = cell.textLabel.text;
+			wrappedTrackHandler.title = cell.textLabel.text;
 			//trackHandler.title = cell.detailTextLabel.text;
 		}
 	}

@@ -2,12 +2,13 @@
 //  Waypoint.m
 //  LocationTest
 //
-//  Created by Hendrik on 30.09.12.
+//  Created by Hendrik on 03.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
 #import "Waypoint.h"
 #import "Segment.h"
+#import "Track.h"
 
 
 @implementation Waypoint
@@ -18,6 +19,7 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic time;
-@dynamic segment;
+@dynamic pointInSegment;
+@dynamic waypointInTrack;
 
 @end

@@ -15,7 +15,9 @@
 #import "TrackViewController.h"
 #import "SegmentedTrackViewController.h"
 #import "Activity.h"
+#import "Track.h"
 #import "Segment.h"
+#import "Waypoint.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/ISO8601DateFormatter.h>
 
@@ -77,8 +79,8 @@
 	__block __typeof__(self) blockSelf = self;
 	[self.tbc dismissViewControllerAnimated:YES completion:^{
 		if (alertView.firstOtherButtonIndex == buttonIndex) {
-			Track *importedTrack = blockSelf.gpxParser.parsedTrack;
-			if (importedTrack != nil) {
+			Route *importedRoute = blockSelf.gpxParser.parsedRoute;
+			if (importedRoute != nil) {
 				UINavigationController *navc = (UINavigationController *) blockSelf.tbc.viewControllers.lastObject;
 				blockSelf.tbc.selectedViewController = navc;
 				[navc popToRootViewControllerAnimated:NO];
@@ -140,22 +142,24 @@
 	[router routeClass:[Activity class] toResourcePath:@"/activities/:tracktivityID" forMethod:RKRequestMethodDELETE];
 	
 	// Configure a (serialization) mapping for the Activity class.
-	RKManagedObjectMapping* activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping* segmentMapping = [RKManagedObjectMapping mappingForClass:[Segment class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping* pointMapping = [RKManagedObjectMapping mappingForClass:[Waypoint class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *trackMapping = [RKManagedObjectMapping mappingForClass:[Track class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *segmentMapping = [RKManagedObjectMapping mappingForClass:[Segment class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *pointMapping = [RKManagedObjectMapping mappingForClass:[Waypoint class] inManagedObjectStore:objectStore];
 	[pointMapping mapKeyPathsToAttributes:
 		@"time", @"time",
 		@"lat", @"latitude",
 		@"lon", @"longitude",
 		@"ele", @"elevation", nil];
 	[segmentMapping mapKeyPath:@"points" toRelationship:@"points" withMapping:pointMapping];
+	[trackMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
 	[activityMapping mapKeyPathsToAttributes:
 		@"id", @"tracktivityID",
 		@"type", @"type",
 		@"name", @"name",
 		@"created", @"start", nil];
 	activityMapping.primaryKeyAttribute = @"tracktivityID";
-	[activityMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
+	[activityMapping mapKeyPath:@"track" toRelationship:@"track" withMapping:trackMapping];
 	// Set the object mapping so that the response after posting an activity will be mapped correctly.
 	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities"];
 	// Set the object mapping for getting activities.

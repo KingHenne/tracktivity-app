@@ -2,21 +2,21 @@
 //  Track.h
 //  LocationTest
 //
-//  Created by Hendrik on 30.09.12.
+//  Created by Hendrik on 03.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Segment;
+@class Segment, Waypoint, WrappedTrack;
 
 @interface Track : NSManagedObject
 
-@property (nonatomic, retain) NSString * desc;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSOrderedSet *segments;
+@property (nonatomic, retain) WrappedTrack *parent;
+@property (nonatomic, retain) NSOrderedSet *waypoints;
 @end
 
 @interface Track (CoreDataGeneratedAccessors)
@@ -31,4 +31,14 @@
 - (void)removeSegmentsObject:(Segment *)value;
 - (void)addSegments:(NSOrderedSet *)values;
 - (void)removeSegments:(NSOrderedSet *)values;
+- (void)insertObject:(Waypoint *)value inWaypointsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromWaypointsAtIndex:(NSUInteger)idx;
+- (void)insertWaypoints:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeWaypointsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInWaypointsAtIndex:(NSUInteger)idx withObject:(Waypoint *)value;
+- (void)replaceWaypointsAtIndexes:(NSIndexSet *)indexes withWaypoints:(NSArray *)values;
+- (void)addWaypointsObject:(Waypoint *)value;
+- (void)removeWaypointsObject:(Waypoint *)value;
+- (void)addWaypoints:(NSOrderedSet *)values;
+- (void)removeWaypoints:(NSOrderedSet *)values;
 @end

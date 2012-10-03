@@ -13,7 +13,8 @@
 #import "WildcardGestureRecognizer.h"
 #import "UserLocationAnnotation.h"
 #import "Segment+Data.h"
-#import "TrackHandler.h"
+#import "WrappedTrackHandler.h"
+#import "Track.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -141,7 +142,7 @@
 
 - (void)updateTrackOverlay
 {
-	Segment *lastSegment = self.trackingManager.activity.segments.lastObject;
+	Segment *lastSegment = self.trackingManager.activity.track.segments.lastObject;
 	MKPolyline *polyline = lastSegment.polyline;
 	if (polyline) {
 		[self.mapView addOverlay:polyline];
@@ -256,7 +257,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-	if ([segue.destinationViewController conformsToProtocol:@protocol(TrackHandler)]) {
+	if ([segue.destinationViewController conformsToProtocol:@protocol(WrappedTrackHandler)]) {
 		[segue.destinationViewController performSelector:@selector(setTrack:) withObject:self.trackingManager.activity];
 	}
 }

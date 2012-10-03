@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "Activity.h"
-#import "TrackHandler.h"
+#import "WrappedTrackHandler.h"
 
-@interface FinishActivityViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, TrackHandler>
+@interface FinishActivityViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, WrappedTrackHandler>
 
 @property (nonatomic, strong) Activity *activity;
 

@@ -2,14 +2,14 @@
 //  Waypoint.h
 //  LocationTest
 //
-//  Created by Hendrik on 30.09.12.
+//  Created by Hendrik on 03.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Segment;
+@class Segment, Track;
 
 @interface Waypoint : NSManagedObject
 
@@ -19,6 +19,7 @@
 @property (nonatomic, retain) NSNumber * latitude;
 @property (nonatomic, retain) NSNumber * longitude;
 @property (nonatomic, retain) NSDate * time;
-@property (nonatomic, retain) Segment *segment;
+@property (nonatomic, retain) Segment *pointInSegment;
+@property (nonatomic, retain) Track *waypointInTrack;
 
 @end

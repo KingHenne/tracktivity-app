@@ -11,18 +11,19 @@
 #import "Activity.h"
 #import "Route.h"
 #import <RestKit/RestKit.h>
+#import "Track+Data.h"
 
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM 250
 
 @implementation TrackViewController
 
-@synthesize track = _track;
+@synthesize wrappedTrack = _wrappedTrack;
 
 - (void)createOverlays
 {
-	if (self.track == nil) return;
-	MultiPolyline *multiPolyline = self.track.multiPolyline;
+	if (self.wrappedTrack == nil) return;
+	MultiPolyline *multiPolyline = self.wrappedTrack.track.multiPolyline;
 	if (multiPolyline) {
 		[self.mapView removeOverlays:self.mapView.overlays];
 		MKMapRect unionRect = MKMapRectNull;
@@ -41,10 +42,10 @@
 
 - (void)createAnnotations
 {
-	if (self.track == nil) return;
+	if (self.wrappedTrack == nil) return;
 	[self.mapView removeAnnotations:self.mapView.annotations];
-	[self.mapView addAnnotation:[WaypointAnnotation annotationForStartWaypoint:self.track.firstPoint]];
-	[self.mapView addAnnotation:[WaypointAnnotation annotationForEndWaypoint:self.track.lastPoint]];
+	[self.mapView addAnnotation:[WaypointAnnotation annotationForStartWaypoint:self.wrappedTrack.track.firstPoint]];
+	[self.mapView addAnnotation:[WaypointAnnotation annotationForEndWaypoint:self.wrappedTrack.track.lastPoint]];
 	[self.mapView setNeedsDisplay];
 }
 
@@ -64,17 +65,17 @@
 	return actualRegion;
 }
 
-- (void)setTrack:(Track *)track
+- (void)setWrappedTrack:(WrappedTrack *)wrappedTrack
 {
-	if (_track == track) return;
-	_track = track;
+	if (_wrappedTrack == wrappedTrack) return;
+	_wrappedTrack = wrappedTrack;
 	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
 
 - (IBAction)actionButtonPressed:(UIBarButtonItem *)sender
 {
-	if ([self.track isKindOfClass:[Activity class]]) {
-		Activity *activity = (Activity *) self.track;
+	if ([self.wrappedTrack isKindOfClass:[Activity class]]) {
+		Activity *activity = (Activity *) self.wrappedTrack;
 		if (activity.tracktivityID) {
 			NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
 			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
@@ -94,7 +95,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	if ([self.track isKindOfClass:[Route class]]) {
+	if ([self.wrappedTrack isKindOfClass:[Route class]]) {
 		self.navigationItem.rightBarButtonItem = nil;
 	}
 }

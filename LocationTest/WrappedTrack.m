@@ -1,19 +1,19 @@
 //
-//  Segment.m
+//  WrappedTrack.m
 //  LocationTest
 //
 //  Created by Hendrik on 03.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
-#import "Segment.h"
+#import "WrappedTrack.h"
 #import "Track.h"
-#import "Waypoint.h"
 
 
-@implementation Segment
+@implementation WrappedTrack
 
-@dynamic points;
-@dynamic parentTrack;
+@dynamic name;
+@dynamic updated;
+@dynamic track;
 
 @end

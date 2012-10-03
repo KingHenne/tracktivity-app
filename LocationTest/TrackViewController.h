@@ -7,9 +7,8 @@
 //
 
 #import "MapViewController.h"
-#import "Track+Data.h"
-#import "TrackHandler.h"
+#import "WrappedTrackHandler.h"
 
-@interface TrackViewController : MapViewController <TrackHandler>
+@interface TrackViewController : MapViewController <WrappedTrackHandler>
 
 @end
