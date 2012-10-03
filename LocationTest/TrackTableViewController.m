@@ -33,24 +33,24 @@
 
 - (void)deleteTracks
 {
-	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
-	[self saveContext];
-//	dispatch_queue_t queue = dispatch_queue_create("delete track queue", NULL);
-//	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
-//		NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
-//		dispatch_async(queue, ^{
-//			NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
-//			WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
-//			if (wt) {
-//				[wt deleteEntity];
-//				NSError *error;
-//				if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-//					NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-//				}
-//			}
-//		});
-//	}
-//	dispatch_release(queue);
+	//[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
+	//[self saveContext];
+	dispatch_queue_t queue = dispatch_queue_create("delete track queue", NULL);
+	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+		NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
+		dispatch_async(queue, ^{
+			NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+			WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
+			if (wt) {
+				[wt deleteEntity];
+				NSError *error;
+				if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+					NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				}
+			}
+		});
+	}
+	dispatch_release(queue);
 }
 
 - (void)deleteThumbnails
@@ -240,7 +240,6 @@
 		if ([sender isKindOfClass:[UITableViewCell class]]) {
 			UITableViewCell *cell = (UITableViewCell *) sender;
 			wrappedTrackHandler.title = cell.textLabel.text;
-			//trackHandler.title = cell.detailTextLabel.text;
 		}
 	}
 }
