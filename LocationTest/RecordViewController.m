@@ -259,7 +259,7 @@
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.destinationViewController conformsToProtocol:@protocol(WrappedTrackHandler)]) {
-		[segue.destinationViewController performSelector:@selector(setTrack:) withObject:self.trackingManager.activity];
+		[segue.destinationViewController performSelector:@selector(setWrappedTrack:) withObject:self.trackingManager.activity];
 	}
 }
 
