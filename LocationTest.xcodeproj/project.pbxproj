@@ -227,7 +227,7 @@
 		B17D39E915BDE83500F28FA8 /* TrackViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackViewController.m; sourceTree = "<group>"; };
 		B17D39EB15BDECE300F28FA8 /* Track+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Data.h"; sourceTree = "<group>"; };
 		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
-		B17D39EE15BDF60900F28FA8 /* TrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackHandler.h; sourceTree = "<group>"; };
+		B17D39EE15BDF60900F28FA8 /* WrappedTrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrackHandler.h; sourceTree = "<group>"; };
 		B187CEDF1607AF33008F6236 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -459,7 +459,7 @@
 				BE3633E015DBE13B00D81B35 /* NavigationControllers */,
 				B19C0C78161A402D0068B601 /* FinishActivityViewController.h */,
 				B19C0C79161A402D0068B601 /* FinishActivityViewController.m */,
-				B17D39EE15BDF60900F28FA8 /* TrackHandler.h */,
+				B17D39EE15BDF60900F28FA8 /* WrappedTrackHandler.h */,
 				B16A049915B343F6005B372D /* MapViewController.h */,
 				B16A049A15B343F6005B372D /* MapViewController.m */,
 				B12D4BDD15B1CCA6001490B3 /* RawDataViewController.h */,

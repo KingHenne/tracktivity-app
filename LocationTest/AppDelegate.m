@@ -16,6 +16,7 @@
 #import "SegmentedTrackViewController.h"
 #import "Activity.h"
 #import "Segment.h"
+#import "Waypoint.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/ISO8601DateFormatter.h>
 
@@ -77,8 +78,8 @@
 	__block __typeof__(self) blockSelf = self;
 	[self.tbc dismissViewControllerAnimated:YES completion:^{
 		if (alertView.firstOtherButtonIndex == buttonIndex) {
-			Track *importedTrack = blockSelf.gpxParser.parsedTrack;
-			if (importedTrack != nil) {
+			Route *importedRoute = blockSelf.gpxParser.parsedRoute;
+			if (importedRoute != nil) {
 				UINavigationController *navc = (UINavigationController *) blockSelf.tbc.viewControllers.lastObject;
 				blockSelf.tbc.selectedViewController = navc;
 				[navc popToRootViewControllerAnimated:NO];

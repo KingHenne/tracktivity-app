@@ -7,9 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "WrappedTrack.h"
 
-@protocol TrackHandler <NSObject>
+@protocol WrappedTrackHandler <NSObject>
 
-@property (nonatomic, strong) Track *track;
+@property (nonatomic, strong) WrappedTrack *wrappedTrack;
 
 @end

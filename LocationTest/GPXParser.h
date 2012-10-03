@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Track.h"
+#import "Route.h"
 
 @interface GPXParser : NSObject <NSXMLParserDelegate>
 
-@property (nonatomic, strong) Track *parsedTrack;
+@property (nonatomic, strong) Route *parsedRoute;
 @property (nonatomic, readonly) float parseProgress;
 
 - (BOOL)parseGPXFile:(NSURL *)fileURL;

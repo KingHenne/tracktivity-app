@@ -7,6 +7,7 @@
 //
 
 #import "FinishActivityViewController.h"
+#import "Activity.h"
 
 @interface FinishActivityViewController ()
 @property (weak, nonatomic) IBOutlet UIPickerView *activityTypePicker;
@@ -19,7 +20,7 @@
 @synthesize activityTypePicker = _activityTypePicker;
 @synthesize activityTypes = _activityTypes;
 @synthesize activity = _activity;
-@synthesize track = _track;
+@synthesize wrappedTrack = _wrappedTrack;
 
 - (NSArray *)activityTypes
 {
@@ -44,11 +45,11 @@
 }
 
 
-- (void)setTrack:(Track *)track
+- (void)setWrappedTrack:(WrappedTrack *)wrappedTrack
 {
-	NSAssert([track isKindOfClass:[Activity class]], @"The given track needs to be an activity.");
-	_track = track;
-	self.activity = (Activity *) track;
+	NSAssert([wrappedTrack isKindOfClass:[Activity class]], @"The given wrapped track needs to be an activity.");
+	_wrappedTrack = wrappedTrack;
+	self.activity = (Activity *) wrappedTrack;
 }
 
 - (void)setActivity:(Activity *)activity
