@@ -31,7 +31,7 @@
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
         <relationship name="parent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="NamedTrack" inverseName="track" inverseEntity="NamedTrack" syncable="YES"/>
         <relationship name="segments" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Segment" inverseName="parentTrack" inverseEntity="Segment" syncable="YES"/>
-        <relationship name="waypoints" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Waypoint" inverseName="waypointInTrack" inverseEntity="Waypoint" syncable="YES"/>
+        <relationship name="waypoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Waypoint" inverseName="waypointInTrack" inverseEntity="Waypoint" syncable="YES"/>
     </entity>
     <entity name="Waypoint" representedClassName="Waypoint" syncable="YES">
         <attribute name="cadence" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>

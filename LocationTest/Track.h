@@ -16,7 +16,7 @@
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSOrderedSet *segments;
 @property (nonatomic, retain) NamedTrack *parent;
-@property (nonatomic, retain) NSSet *waypoints;
+@property (nonatomic, retain) NSOrderedSet *waypoints;
 @end
 
 @interface Track (CoreDataGeneratedAccessors)
@@ -31,9 +31,14 @@
 - (void)removeSegmentsObject:(Segment *)value;
 - (void)addSegments:(NSOrderedSet *)values;
 - (void)removeSegments:(NSOrderedSet *)values;
+- (void)insertObject:(Waypoint *)value inWaypointsAtIndex:(NSUInteger)idx;
+- (void)removeObjectFromWaypointsAtIndex:(NSUInteger)idx;
+- (void)insertWaypoints:(NSArray *)value atIndexes:(NSIndexSet *)indexes;
+- (void)removeWaypointsAtIndexes:(NSIndexSet *)indexes;
+- (void)replaceObjectInWaypointsAtIndex:(NSUInteger)idx withObject:(Waypoint *)value;
+- (void)replaceWaypointsAtIndexes:(NSIndexSet *)indexes withWaypoints:(NSArray *)values;
 - (void)addWaypointsObject:(Waypoint *)value;
 - (void)removeWaypointsObject:(Waypoint *)value;
-- (void)addWaypoints:(NSSet *)values;
-- (void)removeWaypoints:(NSSet *)values;
-
+- (void)addWaypoints:(NSOrderedSet *)values;
+- (void)removeWaypoints:(NSOrderedSet *)values;
 @end
