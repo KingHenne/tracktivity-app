@@ -7,12 +7,16 @@
 //
 
 #import "Track.h"
+#import "NamedTrack.h"
 #import "Segment.h"
+#import "Waypoint.h"
 
 
 @implementation Track
 
 @dynamic thumbnail;
 @dynamic segments;
+@dynamic parent;
+@dynamic waypoints;
 
 @end

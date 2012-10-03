@@ -7,7 +7,6 @@
 //
 
 #import "Activity.h"
-#import "Track.h"
 
 
 @implementation Activity
@@ -17,7 +16,5 @@
 @dynamic start;
 @dynamic tracktivityID;
 @dynamic type;
-@dynamic name;
-@dynamic track;
 
 @end

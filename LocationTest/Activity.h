@@ -8,17 +8,15 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "NamedTrack.h"
 
-@class Track;
 
-@interface Activity : NSManagedObject
+@interface Activity : NamedTrack
 
 @property (nonatomic, retain) NSDate * end;
 @property (nonatomic, retain) NSNumber * recording;
 @property (nonatomic, retain) NSDate * start;
 @property (nonatomic, retain) NSString * tracktivityID;
 @property (nonatomic, retain) NSString * type;
-@property (nonatomic, retain) NSString * name;
-@property (nonatomic, retain) Track *track;
 
 @end

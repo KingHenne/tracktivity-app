@@ -14,7 +14,7 @@
 @interface Segment : NSManagedObject
 
 @property (nonatomic, retain) NSOrderedSet *points;
-@property (nonatomic, retain) Track *track;
+@property (nonatomic, retain) Track *parentTrack;
 @end
 
 @interface Segment (CoreDataGeneratedAccessors)

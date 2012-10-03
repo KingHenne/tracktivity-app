@@ -8,6 +8,7 @@
 
 #import "Waypoint.h"
 #import "Segment.h"
+#import "Track.h"
 
 
 @implementation Waypoint
@@ -18,6 +19,7 @@
 @dynamic latitude;
 @dynamic longitude;
 @dynamic time;
-@dynamic segment;
+@dynamic pointInSegment;
+@dynamic waypointInTrack;
 
 @end

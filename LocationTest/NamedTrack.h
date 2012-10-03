@@ -1,5 +1,5 @@
 //
-//  Route.h
+//  NamedTrack.h
 //  LocationTest
 //
 //  Created by Hendrik on 03.10.12.
@@ -8,12 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NamedTrack.h"
 
+@class Track;
 
-@interface Route : NamedTrack
+@interface NamedTrack : NSManagedObject
 
-@property (nonatomic, retain) NSDate * created;
-@property (nonatomic, retain) NSData * originalFile;
+@property (nonatomic, retain) NSString * name;
+@property (nonatomic, retain) Track *track;
 
 @end

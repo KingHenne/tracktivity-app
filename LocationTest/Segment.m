@@ -14,6 +14,6 @@
 @implementation Segment
 
 @dynamic points;
-@dynamic track;
+@dynamic parentTrack;
 
 @end

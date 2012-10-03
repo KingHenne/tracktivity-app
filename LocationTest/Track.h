@@ -9,12 +9,14 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class Segment;
+@class NamedTrack, Segment, Waypoint;
 
 @interface Track : NSManagedObject
 
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSOrderedSet *segments;
+@property (nonatomic, retain) NamedTrack *parent;
+@property (nonatomic, retain) NSSet *waypoints;
 @end
 
 @interface Track (CoreDataGeneratedAccessors)
@@ -29,4 +31,9 @@
 - (void)removeSegmentsObject:(Segment *)value;
 - (void)addSegments:(NSOrderedSet *)values;
 - (void)removeSegments:(NSOrderedSet *)values;
+- (void)addWaypointsObject:(Waypoint *)value;
+- (void)removeWaypointsObject:(Waypoint *)value;
+- (void)addWaypoints:(NSSet *)values;
+- (void)removeWaypoints:(NSSet *)values;
+
 @end
