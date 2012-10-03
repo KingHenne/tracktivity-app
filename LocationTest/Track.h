@@ -2,7 +2,7 @@
 //  Track.h
 //  LocationTest
 //
-//  Created by Hendrik on 30.09.12.
+//  Created by Hendrik on 03.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
@@ -13,8 +13,6 @@
 
 @interface Track : NSManagedObject
 
-@property (nonatomic, retain) NSString * desc;
-@property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSOrderedSet *segments;
 @end
