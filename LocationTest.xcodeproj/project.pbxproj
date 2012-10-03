@@ -58,12 +58,12 @@
 		B1976E6715C9CB8D008BCDCF /* mapThumbnail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1976E6515C9CB8D008BCDCF /* mapThumbnail@2x.png */; };
 		B1976E6A15CC201C008BCDCF /* FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B1976E6915CC201B008BCDCF /* FileHelper.m */; };
 		B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0C79161A402D0068B601 /* FinishActivityViewController.m */; };
-		B19C0C9E161C76540068B601 /* NamedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0C9D161C76540068B601 /* NamedTrack.m */; };
-		B19C0CA1161C76550068B601 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CA0161C76550068B601 /* Activity.m */; };
-		B19C0CA4161C76550068B601 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CA3161C76550068B601 /* Segment.m */; };
-		B19C0CA7161C76550068B601 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CA6161C76550068B601 /* Waypoint.m */; };
-		B19C0CAA161C76550068B601 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CA9161C76550068B601 /* Route.m */; };
-		B19C0CAD161C76550068B601 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CAC161C76550068B601 /* Track.m */; };
+		B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD3161C7A5E0068B601 /* Segment.m */; };
+		B19C0CD7161C7A5E0068B601 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD6161C7A5E0068B601 /* Track.m */; };
+		B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD9161C7A5E0068B601 /* Waypoint.m */; };
+		B19C0CDD161C7A5F0068B601 /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */; };
+		B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CDF161C7A5F0068B601 /* Activity.m */; };
+		B19C0CE3161C7A5F0068B601 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CE2161C7A5F0068B601 /* Route.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
 		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
 		B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B00160F6165000FFD92 /* Segment+Data.m */; };
@@ -243,18 +243,18 @@
 		B1976E6915CC201B008BCDCF /* FileHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FileHelper.m; sourceTree = "<group>"; };
 		B19C0C78161A402D0068B601 /* FinishActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FinishActivityViewController.h; sourceTree = "<group>"; };
 		B19C0C79161A402D0068B601 /* FinishActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FinishActivityViewController.m; sourceTree = "<group>"; };
-		B19C0C9C161C76540068B601 /* NamedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NamedTrack.h; sourceTree = "<group>"; };
-		B19C0C9D161C76540068B601 /* NamedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NamedTrack.m; sourceTree = "<group>"; };
-		B19C0C9F161C76550068B601 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
-		B19C0CA0161C76550068B601 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
-		B19C0CA2161C76550068B601 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
-		B19C0CA3161C76550068B601 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
-		B19C0CA5161C76550068B601 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
-		B19C0CA6161C76550068B601 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
-		B19C0CA8161C76550068B601 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		B19C0CA9161C76550068B601 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
-		B19C0CAB161C76550068B601 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
-		B19C0CAC161C76550068B601 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
+		B19C0CD2161C7A5E0068B601 /* Segment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Segment.h; sourceTree = "<group>"; };
+		B19C0CD3161C7A5E0068B601 /* Segment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Segment.m; sourceTree = "<group>"; };
+		B19C0CD5161C7A5E0068B601 /* Track.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Track.h; sourceTree = "<group>"; };
+		B19C0CD6161C7A5E0068B601 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
+		B19C0CD8161C7A5E0068B601 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
+		B19C0CD9161C7A5E0068B601 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
+		B19C0CDB161C7A5F0068B601 /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
+		B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
+		B19C0CDE161C7A5F0068B601 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		B19C0CDF161C7A5F0068B601 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
+		B19C0CE1161C7A5F0068B601 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		B19C0CE2161C7A5F0068B601 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
 		B1A0225915CD4FF70054C2D7 /* GPXParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GPXParser.h; sourceTree = "<group>"; };
 		B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Cyclemeter-Cycle-20120701-0953.gpx"; sourceTree = "<group>"; };
@@ -485,18 +485,18 @@
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B19C0CAB161C76550068B601 /* Track.h */,
-				B19C0CAC161C76550068B601 /* Track.m */,
-				B19C0CA8161C76550068B601 /* Route.h */,
-				B19C0CA9161C76550068B601 /* Route.m */,
-				B19C0CA5161C76550068B601 /* Waypoint.h */,
-				B19C0CA6161C76550068B601 /* Waypoint.m */,
-				B19C0CA2161C76550068B601 /* Segment.h */,
-				B19C0CA3161C76550068B601 /* Segment.m */,
-				B19C0C9F161C76550068B601 /* Activity.h */,
-				B19C0CA0161C76550068B601 /* Activity.m */,
-				B19C0C9C161C76540068B601 /* NamedTrack.h */,
-				B19C0C9D161C76540068B601 /* NamedTrack.m */,
+				B19C0CE1161C7A5F0068B601 /* Route.h */,
+				B19C0CE2161C7A5F0068B601 /* Route.m */,
+				B19C0CDE161C7A5F0068B601 /* Activity.h */,
+				B19C0CDF161C7A5F0068B601 /* Activity.m */,
+				B19C0CDB161C7A5F0068B601 /* WrappedTrack.h */,
+				B19C0CDC161C7A5F0068B601 /* WrappedTrack.m */,
+				B19C0CD8161C7A5E0068B601 /* Waypoint.h */,
+				B19C0CD9161C7A5E0068B601 /* Waypoint.m */,
+				B19C0CD5161C7A5E0068B601 /* Track.h */,
+				B19C0CD6161C7A5E0068B601 /* Track.m */,
+				B19C0CD2161C7A5E0068B601 /* Segment.h */,
+				B19C0CD3161C7A5E0068B601 /* Segment.m */,
 				B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */,
 				B1A59B02160F6E22000FFD92 /* MultiPolyline.h */,
 				B1A59B03160F6E22000FFD92 /* MultiPolyline.m */,
@@ -751,12 +751,12 @@
 				B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */,
 				B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */,
 				B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */,
-				B19C0C9E161C76540068B601 /* NamedTrack.m in Sources */,
-				B19C0CA1161C76550068B601 /* Activity.m in Sources */,
-				B19C0CA4161C76550068B601 /* Segment.m in Sources */,
-				B19C0CA7161C76550068B601 /* Waypoint.m in Sources */,
-				B19C0CAA161C76550068B601 /* Route.m in Sources */,
-				B19C0CAD161C76550068B601 /* Track.m in Sources */,
+				B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */,
+				B19C0CD7161C7A5E0068B601 /* Track.m in Sources */,
+				B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */,
+				B19C0CDD161C7A5F0068B601 /* WrappedTrack.m in Sources */,
+				B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */,
+				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

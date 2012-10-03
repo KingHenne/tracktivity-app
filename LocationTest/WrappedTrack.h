@@ -1,5 +1,5 @@
 //
-//  NamedTrack.h
+//  WrappedTrack.h
 //  LocationTest
 //
 //  Created by Hendrik on 03.10.12.
@@ -11,7 +11,7 @@
 
 @class Track;
 
-@interface NamedTrack : NSManagedObject
+@interface WrappedTrack : NSManagedObject
 
 @property (nonatomic, retain) NSString * name;
 @property (nonatomic, retain) Track *track;

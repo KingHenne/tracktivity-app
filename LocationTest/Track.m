@@ -7,9 +7,9 @@
 //
 
 #import "Track.h"
-#import "NamedTrack.h"
 #import "Segment.h"
 #import "Waypoint.h"
+#import "WrappedTrack.h"
 
 
 @implementation Track

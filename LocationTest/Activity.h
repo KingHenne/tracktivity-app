@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NamedTrack.h"
+#import "WrappedTrack.h"
 
 
-@interface Activity : NamedTrack
+@interface Activity : WrappedTrack
 
 @property (nonatomic, retain) NSDate * end;
 @property (nonatomic, retain) NSNumber * recording;

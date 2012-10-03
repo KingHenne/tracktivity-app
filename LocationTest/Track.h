@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
 
-@class NamedTrack, Segment, Waypoint;
+@class Segment, Waypoint, WrappedTrack;
 
 @interface Track : NSManagedObject
 
 @property (nonatomic, retain) id thumbnail;
 @property (nonatomic, retain) NSOrderedSet *segments;
-@property (nonatomic, retain) NamedTrack *parent;
+@property (nonatomic, retain) WrappedTrack *parent;
 @property (nonatomic, retain) NSOrderedSet *waypoints;
 @end
 

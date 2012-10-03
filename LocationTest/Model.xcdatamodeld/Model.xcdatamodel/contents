@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1810" systemVersion="12C54" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="Activity" representedClassName="Activity" parentEntity="NamedTrack" syncable="YES">
+    <entity name="Activity" representedClassName="Activity" parentEntity="WrappedTrack" syncable="YES">
         <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="recording" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
@@ -15,11 +15,7 @@
             </compoundIndex>
         </compoundIndexes>
     </entity>
-    <entity name="NamedTrack" representedClassName="NamedTrack" isAbstract="YES" syncable="YES">
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="track" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Track" inverseName="parent" inverseEntity="Track" syncable="YES"/>
-    </entity>
-    <entity name="Route" representedClassName="Route" parentEntity="NamedTrack" syncable="YES">
+    <entity name="Route" representedClassName="Route" parentEntity="WrappedTrack" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="originalFile" optional="YES" attributeType="Binary" storedInTruthFile="YES" syncable="YES"/>
     </entity>
@@ -29,7 +25,7 @@
     </entity>
     <entity name="Track" representedClassName="Track" syncable="YES">
         <attribute name="thumbnail" optional="YES" attributeType="Transformable" valueTransformerName="" syncable="YES"/>
-        <relationship name="parent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="NamedTrack" inverseName="track" inverseEntity="NamedTrack" syncable="YES"/>
+        <relationship name="parent" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="WrappedTrack" inverseName="track" inverseEntity="WrappedTrack" syncable="YES"/>
         <relationship name="segments" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Segment" inverseName="parentTrack" inverseEntity="Segment" syncable="YES"/>
         <relationship name="waypoints" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Waypoint" inverseName="waypointInTrack" inverseEntity="Waypoint" syncable="YES"/>
     </entity>
@@ -43,6 +39,10 @@
         <relationship name="pointInSegment" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Segment" inverseName="points" inverseEntity="Segment" syncable="YES"/>
         <relationship name="waypointInTrack" optional="YES" minCount="1" maxCount="1" deletionRule="Nullify" destinationEntity="Track" inverseName="waypoints" inverseEntity="Track" syncable="YES"/>
     </entity>
+    <entity name="WrappedTrack" representedClassName="WrappedTrack" isAbstract="YES" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="track" optional="YES" minCount="1" maxCount="1" deletionRule="Cascade" destinationEntity="Track" inverseName="parent" inverseEntity="Track" syncable="YES"/>
+    </entity>
     <fetchRequest name="FinishedActivities" entity="Activity" predicateString="recording == 0"/>
     <elements>
         <element name="Activity" positionX="0" positionY="0" width="128" height="120"/>
@@ -50,6 +50,6 @@
         <element name="Segment" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Track" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Waypoint" positionX="0" positionY="0" width="128" height="165"/>
-        <element name="NamedTrack" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="WrappedTrack" positionX="160" positionY="192" width="128" height="75"/>
     </elements>
 </model>

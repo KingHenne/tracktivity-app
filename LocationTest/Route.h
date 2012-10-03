@@ -8,10 +8,10 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
-#import "NamedTrack.h"
+#import "WrappedTrack.h"
 
 
-@interface Route : NamedTrack
+@interface Route : WrappedTrack
 
 @property (nonatomic, retain) NSDate * created;
 @property (nonatomic, retain) NSData * originalFile;
