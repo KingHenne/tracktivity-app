@@ -55,7 +55,9 @@
 
 - (void)deleteThumbnails
 {
-	[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(setThumbnail:) withObject:nil];
+	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+		wrappedTrack.track.thumbnail = nil;
+	}
 	[self saveContext];
 }
 
