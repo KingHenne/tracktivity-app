@@ -206,6 +206,9 @@
 - (id <SplitViewDetailController>)splitViewDetailController
 {
 	id svdc = self.splitViewController.viewControllers.lastObject;
+	if ([svdc isKindOfClass:[UINavigationController class]]) {
+		svdc = [svdc performSelector:@selector(topViewController)];
+	}
 	if (![svdc conformsToProtocol:@protocol(SplitViewDetailController)]) {
 		svdc = nil;
 	}

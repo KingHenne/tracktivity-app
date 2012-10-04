@@ -17,20 +17,15 @@
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM 250
 
-@interface TrackViewController ()
-@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
-@end
-
 @implementation TrackViewController
 
 @synthesize wrappedTrack = _wrappedTrack;
-@synthesize navigationBar = _navigationBar;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
 {
 	if (_splitViewBarButtonItem == splitViewBarButtonItem) return;
-	self.navigationBar.topItem.leftBarButtonItem = splitViewBarButtonItem;
+	self.navigationItem.leftBarButtonItem = splitViewBarButtonItem;
 	_splitViewBarButtonItem = splitViewBarButtonItem;
 }
 
@@ -118,7 +113,6 @@
 
 - (void)viewDidUnload
 {
-	[self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

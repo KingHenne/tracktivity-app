@@ -4,56 +4,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1926"/>
     </dependencies>
     <scenes>
-        <!--Track View Controller-->
-        <scene sceneID="IzK-4L-K4Q">
-            <objects>
-                <viewController id="uaF-kF-D6L" customClass="TrackViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ukw-WA-qtk">
-                        <rect key="frame" x="0.0" y="20" width="768" height="1004"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xbw-q7-fcN">
-                                <connections>
-                                    <outlet property="delegate" destination="uaF-kF-D6L" id="rAA-x8-f9Q"/>
-                                </connections>
-                            </mapView>
-                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqi-mw-Tbi">
-                                <items>
-                                    <navigationItem title="Title" id="EO7-TU-ZhN">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="sHC-n2-CEb">
-                                            <connections>
-                                                <action selector="actionButtonPressed:" destination="uaF-kF-D6L" id="1VJ-so-GQB"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                                <connections>
-                                    <outlet property="delegate" destination="uaF-kF-D6L" id="MQe-DL-zp1"/>
-                                </connections>
-                            </navigationBar>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="top" secondItem="ukw-WA-qtk" secondAttribute="top" type="default" id="FOK-xv-04q"/>
-                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="leading" secondItem="ukw-WA-qtk" secondAttribute="leading" type="default" id="Hta-R0-N9P"/>
-                            <constraint firstItem="Xbw-q7-fcN" firstAttribute="leading" secondItem="ukw-WA-qtk" secondAttribute="leading" type="default" id="NsW-Uq-9ui"/>
-                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="bottom" secondItem="Xbw-q7-fcN" secondAttribute="top" type="default" id="iDa-vY-gWR"/>
-                            <constraint firstItem="Xbw-q7-fcN" firstAttribute="bottom" secondItem="ukw-WA-qtk" secondAttribute="bottom" type="default" id="jpy-HM-ln9"/>
-                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="trailing" secondItem="ukw-WA-qtk" secondAttribute="trailing" type="default" id="tBe-w1-e5c"/>
-                            <constraint firstItem="Xbw-q7-fcN" firstAttribute="trailing" secondItem="ukw-WA-qtk" secondAttribute="trailing" type="default" id="ytZ-Vw-YWh"/>
-                        </constraints>
-                    </view>
-                    <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="mapView" destination="Xbw-q7-fcN" id="GR7-1J-bSF"/>
-                        <outlet property="navigationBar" destination="tqi-mw-Tbi" id="6bm-3b-BkW"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="io8-mX-5bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-560" y="-339"/>
-        </scene>
         <!--Activity Table View Controller - Aktivitäten-->
         <scene sceneID="75Q-j0-Zvs">
             <objects>
@@ -133,12 +83,67 @@
                     <toolbarItems/>
                     <connections>
                         <segue destination="z4o-Bo-iUC" kind="relationship" relationship="masterViewController" id="oxJ-Yw-XuB"/>
-                        <segue destination="uaF-kF-D6L" kind="relationship" relationship="detailViewController" id="qng-5E-r9I"/>
+                        <segue destination="Dxg-vx-M06" kind="relationship" relationship="detailViewController" id="qng-5E-r9I"/>
                     </connections>
                 </splitViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qmu-ZV-mLN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2618" y="-339"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fyT-Db-Pca">
+            <objects>
+                <navigationController id="Dxg-vx-M06" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6J5-5O-TMt">
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="n0c-63-k0j" kind="relationship" relationship="rootViewController" id="Qxw-FQ-0aK"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Asm-8Y-nba" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-560" y="-339"/>
+        </scene>
+        <!--Track View Controller-->
+        <scene sceneID="iew-Kd-abq">
+            <objects>
+                <viewController id="n0c-63-k0j" customClass="TrackViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dcD-cC-dTj">
+                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="58a-U5-Lyz">
+                                <connections>
+                                    <outlet property="delegate" destination="n0c-63-k0j" id="1AP-DR-xwa"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="trailing" secondItem="dcD-cC-dTj" secondAttribute="trailing" type="default" id="35Q-b4-Pjx"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="leading" secondItem="dcD-cC-dTj" secondAttribute="leading" type="default" id="PnS-GQ-xE8"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="bottom" secondItem="dcD-cC-dTj" secondAttribute="bottom" type="default" id="gnS-Sc-DcT"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="top" secondItem="dcD-cC-dTj" secondAttribute="top" type="default" id="lxj-ZJ-KMU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="zXA-sz-jHH">
+                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="wL8-hf-ugn">
+                            <connections>
+                                <action selector="actionButtonPressed:" destination="n0c-63-k0j" id="BpC-Kk-i8a"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="58a-U5-Lyz" id="PTJ-gb-inu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3hs-8y-knY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="319" y="-339"/>
         </scene>
     </scenes>
     <resources>
@@ -171,9 +176,6 @@
         </class>
         <class className="TrackViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
-            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
