@@ -115,4 +115,19 @@
 	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 }
 
+- (void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
+{
+	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	NSString *localizedErrorMessage = [error.userInfo objectForKey:@"NSLocalizedDescription"];
+	NSString *cancelButtonTitle = NSLocalizedString(@"AlertViewOK", @"alert view ok button label");
+	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:localizedErrorMessage delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles: nil];
+	[alertView show];
+	self.refreshButton.enabled = YES;
+}
+
+- (void)requestDidTimeout:(RKRequest *)request
+{
+	self.refreshButton.enabled = YES;
+}
+
 @end
