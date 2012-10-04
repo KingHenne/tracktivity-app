@@ -17,6 +17,7 @@
 #import "AppDelegate.h"
 #import <RestKit/RestKit.h>
 #import "SplitViewDetailController.h"
+#import "WrappedTrack+Info.h"
 
 @interface TrackTableViewController () <RKObjectLoaderDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) UIActionSheet *deleteActionSheet;
@@ -95,20 +96,9 @@
     
     WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	
-	if ([wrappedTrack isKindOfClass:[Activity class]]) {
-		Activity *activity = (Activity *) wrappedTrack;
-		if (activity.name) {
-			cell.textLabel.text = activity.name;
-			cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-		} else {
-			cell.textLabel.text = [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-			cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:activity.end dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-		}
-	} else if ([wrappedTrack isKindOfClass:[Route class]]) {
-		Route *route = (Route *) wrappedTrack;
-		cell.textLabel.text = route.name;
-		cell.detailTextLabel.text = [NSDateFormatter localizedStringFromDate:route.created dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
-	}
+	cell.textLabel.text = wrappedTrack.title;
+	cell.detailTextLabel.text = wrappedTrack.subTitle;
+	
 	UIImage *thumbnail = wrappedTrack.track.thumbnail;
 	// Fetch the image again, if this is a retina screen and the saved image was fetched on non-retina device.
 	if (thumbnail == nil || ([[UIScreen mainScreen] scale] > 1 && thumbnail.size.width < 54)) {
@@ -284,12 +274,7 @@
 	NSIndexPath *indexPath = [self.tableView indexPathForCell:sender];
 	WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
 	if ([segue.destinationViewController conformsToProtocol:@protocol(WrappedTrackHandler)]) {
-		UIViewController <WrappedTrackHandler> *wrappedTrackHandler = (UIViewController <WrappedTrackHandler> *) segue.destinationViewController;
-		wrappedTrackHandler.wrappedTrack = wrappedTrack;
-		if ([sender isKindOfClass:[UITableViewCell class]]) {
-			UITableViewCell *cell = (UITableViewCell *) sender;
-			wrappedTrackHandler.title = cell.textLabel.text;
-		}
+		[segue.destinationViewController performSelector:@selector(setWrappedTrack:) withObject:wrappedTrack];
 	}
 }
 

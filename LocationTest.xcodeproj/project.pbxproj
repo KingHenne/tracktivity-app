@@ -48,6 +48,7 @@
 		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
 		B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E915BDE83500F28FA8 /* TrackViewController.m */; };
 		B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39EC15BDECE300F28FA8 /* Track+Data.m */; };
+		B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */; };
 		B187CEE01607AF33008F6236 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B187CEDF1607AF33008F6236 /* Default-568h@2x.png */; };
 		B1904FFA15FD2D5E00B225E2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FEE15FD25CE00B225E2 /* libRestKit.a */; };
 		B1904FFC15FD2D8400B225E2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */; };
@@ -233,6 +234,8 @@
 		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
 		B17D39EE15BDF60900F28FA8 /* WrappedTrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrackHandler.h; sourceTree = "<group>"; };
 		B181FBC7161CF58800D734C0 /* SplitViewDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitViewDetailController.h; sourceTree = "<group>"; };
+		B181FBC8161D0A2B00D734C0 /* WrappedTrack+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WrappedTrack+Info.h"; sourceTree = "<group>"; };
+		B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WrappedTrack+Info.m"; sourceTree = "<group>"; };
 		B187CEDF1607AF33008F6236 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -410,6 +413,8 @@
 		B16A049815B32119005B372D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B181FBC8161D0A2B00D734C0 /* WrappedTrack+Info.h */,
+				B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */,
 				B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */,
 				B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */,
 				B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */,
@@ -763,6 +768,7 @@
 				B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */,
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
 				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
+				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

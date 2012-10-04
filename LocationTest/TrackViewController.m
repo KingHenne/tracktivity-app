@@ -12,27 +12,25 @@
 #import "Route.h"
 #import <RestKit/RestKit.h>
 #import "Track+Data.h"
+#import "WrappedTrack+Info.h"
 
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM 250
 
 @interface TrackViewController ()
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
+@property (weak, nonatomic) IBOutlet UINavigationBar *navigationBar;
 @end
 
 @implementation TrackViewController
 
 @synthesize wrappedTrack = _wrappedTrack;
-@synthesize toolbar = _toolbar;
+@synthesize navigationBar = _navigationBar;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
 {
 	if (_splitViewBarButtonItem == splitViewBarButtonItem) return;
-	NSMutableArray *toolbarItems = self.toolbar.items.mutableCopy;
-	if (_splitViewBarButtonItem) [toolbarItems removeObject:_splitViewBarButtonItem];
-	if (splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
-	self.toolbar.items = toolbarItems;
+	self.navigationBar.topItem.leftBarButtonItem = splitViewBarButtonItem;
 	_splitViewBarButtonItem = splitViewBarButtonItem;
 }
 
@@ -85,6 +83,7 @@
 {
 	if (_wrappedTrack == wrappedTrack) return;
 	_wrappedTrack = wrappedTrack;
+	self.title = wrappedTrack.title;
 	//[self createOverlaysAndAnnotations];
 	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
@@ -119,7 +118,7 @@
 
 - (void)viewDidUnload
 {
-	[self setToolbar:nil];
+	[self setNavigationBar:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

@@ -17,25 +17,29 @@
                                     <outlet property="delegate" destination="uaF-kF-D6L" id="rAA-x8-f9Q"/>
                                 </connections>
                             </mapView>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FlM-9C-XDE">
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tqi-mw-Tbi">
                                 <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="IHk-dJ-Lcz"/>
-                                    <barButtonItem systemItem="action" id="clc-Ba-Qxi">
-                                        <connections>
-                                            <action selector="actionButtonPressed:" destination="uaF-kF-D6L" id="heL-us-pjy"/>
-                                        </connections>
-                                    </barButtonItem>
+                                    <navigationItem title="Title" id="EO7-TU-ZhN">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="sHC-n2-CEb">
+                                            <connections>
+                                                <action selector="actionButtonPressed:" destination="uaF-kF-D6L" id="1VJ-so-GQB"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
                                 </items>
-                            </toolbar>
+                                <connections>
+                                    <outlet property="delegate" destination="uaF-kF-D6L" id="MQe-DL-zp1"/>
+                                </connections>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="FlM-9C-XDE" firstAttribute="bottom" secondItem="Xbw-q7-fcN" secondAttribute="top" type="default" id="2eN-tN-8nP"/>
+                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="top" secondItem="ukw-WA-qtk" secondAttribute="top" type="default" id="FOK-xv-04q"/>
+                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="leading" secondItem="ukw-WA-qtk" secondAttribute="leading" type="default" id="Hta-R0-N9P"/>
                             <constraint firstItem="Xbw-q7-fcN" firstAttribute="leading" secondItem="ukw-WA-qtk" secondAttribute="leading" type="default" id="NsW-Uq-9ui"/>
-                            <constraint firstItem="FlM-9C-XDE" firstAttribute="top" secondItem="ukw-WA-qtk" secondAttribute="top" type="default" id="O8d-9J-iVf"/>
-                            <constraint firstItem="FlM-9C-XDE" firstAttribute="trailing" secondItem="ukw-WA-qtk" secondAttribute="trailing" type="default" id="ekm-S3-FHt"/>
+                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="bottom" secondItem="Xbw-q7-fcN" secondAttribute="top" type="default" id="iDa-vY-gWR"/>
                             <constraint firstItem="Xbw-q7-fcN" firstAttribute="bottom" secondItem="ukw-WA-qtk" secondAttribute="bottom" type="default" id="jpy-HM-ln9"/>
-                            <constraint firstItem="FlM-9C-XDE" firstAttribute="leading" secondItem="ukw-WA-qtk" secondAttribute="leading" type="default" id="oiz-zZ-hah"/>
+                            <constraint firstItem="tqi-mw-Tbi" firstAttribute="trailing" secondItem="ukw-WA-qtk" secondAttribute="trailing" type="default" id="tBe-w1-e5c"/>
                             <constraint firstItem="Xbw-q7-fcN" firstAttribute="trailing" secondItem="ukw-WA-qtk" secondAttribute="trailing" type="default" id="ytZ-Vw-YWh"/>
                         </constraints>
                     </view>
@@ -43,7 +47,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="Xbw-q7-fcN" id="GR7-1J-bSF"/>
-                        <outlet property="toolbar" destination="FlM-9C-XDE" id="FLR-qS-yfH"/>
+                        <outlet property="navigationBar" destination="tqi-mw-Tbi" id="6bm-3b-BkW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="io8-mX-5bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -168,7 +172,7 @@
         <class className="TrackViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackViewController.h"/>
             <relationships>
-                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="navigationBar" candidateClass="UINavigationBar"/>
             </relationships>
         </class>
     </classes>
