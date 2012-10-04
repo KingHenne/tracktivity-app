@@ -49,7 +49,11 @@
 		MKMapRect paddedRect = [self.mapView mapRectThatFits:unionRect edgePadding:padding];
 		// stay above minimum zoom level
 		MKCoordinateRegion adjustedRegion = [self adjustRectForMinimumZoomLevel:paddedRect onMapView:self.mapView];
-		[self.mapView setRegion:adjustedRegion animated:NO];
+		if (IPAD) {
+			[self.mapView setRegion:adjustedRegion animated:YES];
+		} else {
+			[self.mapView setRegion:adjustedRegion animated:NO];
+		}
 		[self.mapView setNeedsDisplay];
 	}
 }
