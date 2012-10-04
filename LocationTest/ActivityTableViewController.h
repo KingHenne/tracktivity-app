@@ -10,4 +10,6 @@
 
 @interface ActivityTableViewController : TrackTableViewController
 
+- (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender;
+
 @end

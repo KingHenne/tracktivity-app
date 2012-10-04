@@ -10,6 +10,8 @@
 #import "CoreDataTableViewController.h"
 #import <RestKit/RestKit.h>
 
-@interface TrackTableViewController : CoreDataTableViewController <RKObjectLoaderDelegate>
+@interface TrackTableViewController : CoreDataTableViewController <UISplitViewControllerDelegate>
+
+- (IBAction)trashButtonPressed:(UIBarButtonItem *)sender;
 
 @end

@@ -12,7 +12,7 @@
 
 @interface SegmentedTrackViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *trackTypeControl;
-@property (strong, nonatomic) UIViewController *currentViewController;
+@property (strong, nonatomic) TrackTableViewController *currentViewController;
 @property (strong, nonatomic) NSArray *childViewControllers;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @end
@@ -33,15 +33,7 @@
 	return _childViewControllers;
 }
 
-- (UITableViewController *)currentTableViewController
-{
-	if ([self.currentViewController isKindOfClass:[UITableViewController class]]) {
-		return (UITableViewController *) self.currentViewController;
-	}
-	return nil;
-}
-
-- (void)setCurrentViewController:(UIViewController *)currentViewController
+- (void)setCurrentViewController:(TrackTableViewController *)currentViewController
 {
 	[_currentViewController.view removeFromSuperview];
 	currentViewController.view.frame = self.view.bounds;
@@ -70,100 +62,14 @@
 
 - (IBAction)trashButtonPressed:(UIBarButtonItem *)sender
 {
-	NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
-	NSString *destructiveButtonTitle = [NSString stringWithFormat:NSLocalizedString(@"ActionSheetDeleteTracksFormat", @"action sheet button label for deleting activities"), self.title];
-	NSString *otherButtonTitle = NSLocalizedString(@"ActionSheetDeleteThumbnails", @"action sheet button label for deleting thumbnails");
-	UIActionSheet *deleteActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:otherButtonTitle, nil];
-	[deleteActionSheet showFromBarButtonItem:sender animated:YES];
+	[self.currentViewController trashButtonPressed:sender];
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender
 {
-	[self uploadNewActivities];
-	[self fetchActivityList];
-}
-
-- (void)uploadNewActivities
-{
-	NSArray *newActivities = [Activity findByAttribute:@"tracktivityID" withValue:nil];
-	for (Activity *newActivity in newActivities) {
-		[[RKObjectManager sharedManager] postObject:newActivity delegate:self];
+	if ([self.currentViewController respondsToSelector:@selector(refreshButtonPressed:)]) {
+		[self.currentViewController performSelector:@selector(refreshButtonPressed:) withObject:sender];
 	}
-}
-
-- (void)fetchActivityList
-{
-	[[[RKObjectManager sharedManager] client] get:@"/users/hendrik/activities" delegate:self];
-}
-
-// activityIDs must be an array of dictionaries with a key 'id'
-- (void)downloadNewActivities:(NSArray *)activityIDs
-{
-	for (NSDictionary *activity in activityIDs) {
-		NSString *tracktivityID = [activity valueForKey:@"id"];
-		if (tracktivityID && [Activity findByPrimaryKey:tracktivityID] == nil) {
-			NSLog(@"Loading activity %@ from the server...", tracktivityID);
-			NSString *path = [NSString stringWithFormat:@"/activities/%@", tracktivityID];
-			[[RKObjectManager sharedManager] loadObjectsAtResourcePath:path delegate:self];
-		}
-	}
-}
-
-- (void)deleteActivitiesNotIncludedInList:(NSArray *)activityIDs
-{
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID != nil"];
-	NSArray *activities = [Activity findAllWithPredicate:predicate];
-	for (Activity *activity in activities) {
-		NSDictionary *testDict = [NSDictionary dictionaryWithObject:activity.tracktivityID forKey:@"id"];
-		if (![activityIDs containsObject:testDict]) {
-			NSLog(@"Deleting activity %@ now.", activity.tracktivityID);
-			[activity deleteEntity];
-			[self saveContext];
-		}
-	}
-}
-
-- (void)saveContext
-{
-	NSError *error;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	}
-}
-
-#pragma mark UIActionSheetDelegate Methods
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-	if (buttonIndex == actionSheet.destructiveButtonIndex) {
-		[self.currentViewController performSelector:@selector(deleteTracks)];
-	} else if (buttonIndex == actionSheet.firstOtherButtonIndex) {
-		[self.currentViewController performSelector:@selector(deleteThumbnails)];
-	}
-}
-
-#pragma mark RestKit Delegate Methods
-
-- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
-{
-	if (request.method == RKRequestMethodGET && response.isJSON) {
-		NSError * error;
-		NSDictionary *responseBody = [response parsedBody:&error];
-		if (responseBody) {
-			NSArray *activityIDs = [responseBody valueForKey:@"activities"];
-			if (activityIDs) {
-				[self downloadNewActivities:activityIDs];
-				[self deleteActivitiesNotIncludedInList:activityIDs];
-			}
-		} else {
-			NSLog(@"Error parsing response: %@, %@", error, [error userInfo]);
-		}
-	}
-}
-
-- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 }
 
 #pragma mark UIViewController Methods
@@ -179,7 +85,7 @@
 	
 	NSInteger segmentIndex = self.trackTypeControl.selectedSegmentIndex;
 	
-	UIViewController *vc = [self.childViewControllers objectAtIndex:segmentIndex];
+	TrackTableViewController *vc = [self.childViewControllers objectAtIndex:segmentIndex];
     vc.view.frame = self.view.bounds;
     [self.view addSubview:vc.view];
     _currentViewController = vc;

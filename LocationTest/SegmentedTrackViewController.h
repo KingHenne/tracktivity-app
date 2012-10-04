@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
+#import "TrackTableViewController.h"
 
-@interface SegmentedTrackViewController : UIViewController <RKObjectLoaderDelegate, RKRequestDelegate, UIActionSheetDelegate>
+@interface SegmentedTrackViewController : UIViewController
 
 enum {
 	kActivityViewController = 0,
@@ -17,6 +18,6 @@ enum {
 };
 
 - (void)setCurrentViewControllerWithIndex:(int)viewControllerIndex;
-- (UITableViewController *)currentTableViewController;
+- (TrackTableViewController *)currentViewController;
 
 @end

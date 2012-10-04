@@ -12,13 +12,23 @@
 #import "Route.h"
 #import <RestKit/RestKit.h>
 #import "Track+Data.h"
+#import "WrappedTrack+Info.h"
 
+#define IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 // minimum zoom (i.e. region width/height) in meters
-#define MIN_ZOOM 250
+#define MIN_ZOOM (IPAD ? 600 : 250)
 
 @implementation TrackViewController
 
 @synthesize wrappedTrack = _wrappedTrack;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+
+- (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
+{
+	if (_splitViewBarButtonItem == splitViewBarButtonItem) return;
+	self.navigationItem.leftBarButtonItem = splitViewBarButtonItem;
+	_splitViewBarButtonItem = splitViewBarButtonItem;
+}
 
 - (void)createOverlays
 {
@@ -32,7 +42,11 @@
 			unionRect = MKMapRectUnion(unionRect, polyline.boundingMapRect);
 		}
 		// add a little padding
-		MKMapRect paddedRect = [self.mapView mapRectThatFits:unionRect edgePadding:UIEdgeInsetsMake(40, 20, 20, 20)];
+		UIEdgeInsets padding = UIEdgeInsetsMake(40, 20, 20, 20);
+		if (IPAD) {
+			padding = UIEdgeInsetsMake(60, 40, 40, 40);
+		}
+		MKMapRect paddedRect = [self.mapView mapRectThatFits:unionRect edgePadding:padding];
 		// stay above minimum zoom level
 		MKCoordinateRegion adjustedRegion = [self adjustRectForMinimumZoomLevel:paddedRect onMapView:self.mapView];
 		[self.mapView setRegion:adjustedRegion animated:NO];
@@ -69,6 +83,8 @@
 {
 	if (_wrappedTrack == wrappedTrack) return;
 	_wrappedTrack = wrappedTrack;
+	self.title = wrappedTrack.title;
+	//[self createOverlaysAndAnnotations];
 	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
 

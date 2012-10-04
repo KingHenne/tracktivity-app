@@ -30,6 +30,7 @@
 		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
 		B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */; };
 		B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B148B69B161C962B003B9DDC /* WrappedTrack.m */; };
+		B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B148B6B2161C9CD3003B9DDC /* iPad.storyboard */; };
 		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
 		B16A047215B20FC1005B372D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B16A046F15B20FC1005B372D /* Localizable.strings */; };
 		B16A047715B21CA3005B372D /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B16A047615B21CA3005B372D /* ExternalAccessory.framework */; };
@@ -47,6 +48,7 @@
 		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
 		B17D39EA15BDE83500F28FA8 /* TrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E915BDE83500F28FA8 /* TrackViewController.m */; };
 		B17D39ED15BDECE300F28FA8 /* Track+Data.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39EC15BDECE300F28FA8 /* Track+Data.m */; };
+		B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */ = {isa = PBXBuildFile; fileRef = B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */; };
 		B187CEE01607AF33008F6236 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B187CEDF1607AF33008F6236 /* Default-568h@2x.png */; };
 		B1904FFA15FD2D5E00B225E2 /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FEE15FD25CE00B225E2 /* libRestKit.a */; };
 		B1904FFC15FD2D8400B225E2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */; };
@@ -197,6 +199,7 @@
 		B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildcardGestureRecognizer.m; sourceTree = "<group>"; };
 		B148B69A161C962B003B9DDC /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
 		B148B69B161C962B003B9DDC /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
+		B148B6B2161C9CD3003B9DDC /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
 		B164D56515B74F110061E562 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
 		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -230,6 +233,9 @@
 		B17D39EB15BDECE300F28FA8 /* Track+Data.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Track+Data.h"; sourceTree = "<group>"; };
 		B17D39EC15BDECE300F28FA8 /* Track+Data.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Track+Data.m"; sourceTree = "<group>"; };
 		B17D39EE15BDF60900F28FA8 /* WrappedTrackHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrackHandler.h; sourceTree = "<group>"; };
+		B181FBC7161CF58800D734C0 /* SplitViewDetailController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SplitViewDetailController.h; sourceTree = "<group>"; };
+		B181FBC8161D0A2B00D734C0 /* WrappedTrack+Info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WrappedTrack+Info.h"; sourceTree = "<group>"; };
+		B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WrappedTrack+Info.m"; sourceTree = "<group>"; };
 		B187CEDF1607AF33008F6236 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B1904FE215FD25CE00B225E2 /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		B1904FFB15FD2D8400B225E2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
@@ -373,6 +379,7 @@
 				BE3633DE15DBE09500D81B35 /* GPX */,
 				B12D4BE915B1CD78001490B3 /* Images */,
 				B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */,
+				B148B6B2161C9CD3003B9DDC /* iPad.storyboard */,
 				B12D4BCD15B1CCA6001490B3 /* AppDelegate.h */,
 				B12D4BCE15B1CCA6001490B3 /* AppDelegate.m */,
 				B16A046F15B20FC1005B372D /* Localizable.strings */,
@@ -406,6 +413,8 @@
 		B16A049815B32119005B372D /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				B181FBC8161D0A2B00D734C0 /* WrappedTrack+Info.h */,
+				B181FBC9161D0A2B00D734C0 /* WrappedTrack+Info.m */,
 				B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */,
 				B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */,
 				B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */,
@@ -468,6 +477,7 @@
 				B12D4BD715B1CCA6001490B3 /* RecordViewController.m */,
 				B17D39E815BDE83500F28FA8 /* TrackViewController.h */,
 				B17D39E915BDE83500F28FA8 /* TrackViewController.m */,
+				B181FBC7161CF58800D734C0 /* SplitViewDetailController.h */,
 				B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */,
 				B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */,
 				B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */,
@@ -707,6 +717,7 @@
 				B187CEE01607AF33008F6236 /* Default-568h@2x.png in Resources */,
 				B174D6831617AA480098B433 /* userLocation.png in Resources */,
 				B174D6841617AA480098B433 /* userLocation@2x.png in Resources */,
+				B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -757,6 +768,7 @@
 				B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */,
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
 				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
+				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,7 +905,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -919,7 +931,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
