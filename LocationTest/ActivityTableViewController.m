@@ -35,7 +35,8 @@
 
 - (void)uploadNewActivities
 {
-	NSArray *newActivities = [Activity findByAttribute:@"tracktivityID" withValue:nil];
+	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(tracktivityID == nil) AND (recording == 0)"];
+	NSArray *newActivities = [Activity findAllWithPredicate:predicate];
 	for (Activity *newActivity in newActivities) {
 		[[RKObjectManager sharedManager] postObject:newActivity delegate:self];
 	}
