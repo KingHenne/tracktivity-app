@@ -8,30 +8,27 @@
 
 #import "FinishActivityViewController.h"
 #import "Activity.h"
+#import "ActivityType.h"
 
 @interface FinishActivityViewController ()
 @property (weak, nonatomic) IBOutlet UIPickerView *activityTypePicker;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (nonatomic, strong) NSArray *activityTypes;
+@property (nonatomic, strong) NSDictionary *localizedLabels;
 @end
 
 @implementation FinishActivityViewController
 
 @synthesize activityTypePicker = _activityTypePicker;
-@synthesize activityTypes = _activityTypes;
 @synthesize activity = _activity;
 @synthesize wrappedTrack = _wrappedTrack;
+@synthesize localizedLabels = _localizedLabels;
 
-- (NSArray *)activityTypes
+- (NSDictionary *)localizedLabels
 {
-	if (_activityTypes == nil) {
-		_activityTypes = [NSArray arrayWithObjects:
-						  NSLocalizedString(@"activity.cycling", @"activity type cycling"),
-						  NSLocalizedString(@"activity.running", @"activity type running"),
-						  NSLocalizedString(@"activity.hiking", @"activity type hiking"),
-						  nil];
+	if (_localizedLabels == nil) {
+		_localizedLabels = [ActivityType localizedLabels];
 	}
-	return _activityTypes;
+	return _localizedLabels;
 }
 
 - (void)updateTextFieldText
@@ -43,7 +40,6 @@
 		self.nameTextField.text = [NSDateFormatter localizedStringFromDate:self.activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 	}
 }
-
 
 - (void)setWrappedTrack:(WrappedTrack *)wrappedTrack
 {
@@ -71,13 +67,29 @@
 	}
 }
 
+- (IBAction)finishButtonPressed:(UIButton *)sender
+{
+	self.activity.name = self.nameTextField.text;
+	if (self.activity.type < 0) {
+		self.activity.type = [self.localizedLabels objectForKey:[NSNumber numberWithInt:0]];
+	}
+	[self.delegate finishActivityViewController:self didFinishActivity:self.activity];
+}
+
 #pragma mark UIPickerViewDelegate Methods
 
 - (NSString *)pickerView:(UIPickerView *)pickerView
 			 titleForRow:(NSInteger)row
 			forComponent:(NSInteger)component
 {
-	return [self.activityTypes objectAtIndex:row];
+	return [self.localizedLabels objectForKey:[NSNumber numberWithInt:row]];
+}
+
+- (void)pickerView:(UIPickerView *)pickerView
+	  didSelectRow:(NSInteger)row
+	   inComponent:(NSInteger)component
+{
+	self.activity.type = [NSNumber numberWithInt:row];
 }
 
 #pragma mark UIPickerViewDataSource Methods
@@ -90,7 +102,7 @@
 - (NSInteger)pickerView:(UIPickerView *)pickerView
 numberOfRowsInComponent:(NSInteger)component
 {
-	return self.activityTypes.count;
+	return self.localizedLabels.count;
 }
 
 #pragma mark UIViewController Methods

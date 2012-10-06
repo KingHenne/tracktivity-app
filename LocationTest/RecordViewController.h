@@ -8,7 +8,8 @@
 
 #import "MapViewController.h"
 #import "TrackingManager.h"
+#import "FinishActivityViewController.h"
 
-@interface RecordViewController : MapViewController <TrackingManagerDelegate>
+@interface RecordViewController : MapViewController <TrackingManagerDelegate, FinishActivityViewControllerPresenter>
 
 @end

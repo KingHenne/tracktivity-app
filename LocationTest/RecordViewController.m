@@ -15,6 +15,7 @@
 #import "Segment+Data.h"
 #import "WrappedTrackHandler.h"
 #import "Track+Data.h"
+#import "FinishActivityViewController.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -244,7 +245,15 @@
 	[self.trackingManager startUpdatingWithoutRecording];
 	if (self.trackingManager.isPaused) {
 		self.mapView.showsUserLocation = YES;
+	} else {
+		[self.mapView setNeedsDisplay];
 	}
+}
+
+- (void)stopUsingLocationServices
+{
+	[self.trackingManager stopUpdatingWithoutRecording];
+	self.mapView.showsUserLocation = NO;
 }
 
 - (void)appDidBecomeActiveNotification:(NSNotification *)notification
@@ -254,12 +263,31 @@
 	}
 }
 
+- (void)appDidEnterBackgroundNotification:(NSNotification *)notification
+{
+	[self stopUsingLocationServices];
+}
+
+#pragma mark FinishActivityViewControllerPresenter Methods
+
+- (void)finishActivityViewController:(FinishActivityViewController *)sender
+				   didFinishActivity:(Activity *)activity
+{
+	[self dismissViewControllerAnimated:YES completion:^{
+		
+	}];
+}
+
 #pragma mark UIViewController Methods
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
 	if ([segue.destinationViewController conformsToProtocol:@protocol(WrappedTrackHandler)]) {
 		[segue.destinationViewController performSelector:@selector(setWrappedTrack:) withObject:self.trackingManager.activity];
+	}
+	if ([segue.identifier isEqualToString:@"Finish Activity"]) {
+		FinishActivityViewController *favc = (FinishActivityViewController *) segue.destinationViewController;
+		favc.delegate = self;
 	}
 }
 
@@ -271,14 +299,17 @@
 											 selector:@selector(appDidBecomeActiveNotification:)
 												 name:UIApplicationDidBecomeActiveNotification
 											   object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(appDidEnterBackgroundNotification:)
+												 name:UIApplicationDidEnterBackgroundNotification
+											   object:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	[self.trackingManager stopUpdatingWithoutRecording];
-	self.mapView.showsUserLocation = NO;
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[self stopUsingLocationServices];
 }
 
 - (void)viewDidLoad

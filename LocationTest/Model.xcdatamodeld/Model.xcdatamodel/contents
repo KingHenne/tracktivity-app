@@ -4,16 +4,8 @@
         <attribute name="end" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="recording" optional="YES" attributeType="Boolean" defaultValueString="NO" indexed="YES" syncable="YES"/>
         <attribute name="start" optional="YES" attributeType="Date" syncable="YES"/>
-        <attribute name="tracktivityID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="type" optional="YES" attributeType="String" syncable="YES"/>
-        <compoundIndexes>
-            <compoundIndex>
-                <index value="tracktivityID"/>
-            </compoundIndex>
-            <compoundIndex>
-                <index value="recording"/>
-            </compoundIndex>
-        </compoundIndexes>
+        <attribute name="tracktivityID" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="type" optional="YES" attributeType="Integer 16" defaultValueString="-1" indexed="YES" syncable="YES"/>
     </entity>
     <entity name="Route" representedClassName="Route" parentEntity="WrappedTrack" syncable="YES">
         <attribute name="created" optional="YES" attributeType="Date" syncable="YES"/>

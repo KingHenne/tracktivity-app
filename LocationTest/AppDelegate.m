@@ -155,7 +155,7 @@
 	[trackMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
 	[activityMapping mapKeyPathsToAttributes:
 		@"id", @"tracktivityID",
-		@"type", @"type",
+		@"type", @"typeString",
 		@"name", @"name",
 		@"created", @"start", nil];
 	activityMapping.primaryKeyAttribute = @"tracktivityID";

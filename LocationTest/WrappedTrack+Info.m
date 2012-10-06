@@ -8,6 +8,7 @@
 
 #import "WrappedTrack+Info.h"
 #import "Activity.h"
+#import "ActivityType.h"
 #import "Route.h"
 
 @implementation WrappedTrack (Info)
@@ -26,12 +27,17 @@
 {
 	if ([self isKindOfClass:[Activity class]]) {
 		Activity *activity = (Activity *) self;
+		NSString *date;
 		if (self.name) {
-			return [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
+			date = [NSDateFormatter localizedStringFromDate:activity.start dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 		} else {
-			return [NSDateFormatter localizedStringFromDate:activity.end dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
+			date = [NSDateFormatter localizedStringFromDate:activity.end dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 		}
-		
+		NSString *emoji = [ActivityType emojiIconForActivity:activity.type.intValue];
+		if (emoji) {
+			return [NSString stringWithFormat:@"%@ %@", emoji, date];
+		}
+		return date;
 	} else if ([self isKindOfClass:[Route class]]) {
 		Route *route = (Route *) self;
 		return [NSDateFormatter localizedStringFromDate:route.created dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];

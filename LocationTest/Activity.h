@@ -17,6 +17,6 @@
 @property (nonatomic, retain) NSNumber * recording;
 @property (nonatomic, retain) NSDate * start;
 @property (nonatomic, retain) NSString * tracktivityID;
-@property (nonatomic, retain) NSString * type;
+@property (nonatomic, retain) NSNumber * type;
 
 @end

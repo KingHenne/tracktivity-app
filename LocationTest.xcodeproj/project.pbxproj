@@ -41,6 +41,8 @@
 		B16A049B15B343F6005B372D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049A15B343F6005B372D /* MapViewController.m */; };
 		B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A115B34639005B372D /* WaypointAnnotation.m */; };
 		B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A515B36311005B372D /* TrackOverlayView.m */; };
+		B16EF37516206333004DEB47 /* Activity+Type.m in Sources */ = {isa = PBXBuildFile; fileRef = B16EF37416206333004DEB47 /* Activity+Type.m */; };
+		B16EF378162068C4004DEB47 /* ActivityType.m in Sources */ = {isa = PBXBuildFile; fileRef = B16EF377162068C4004DEB47 /* ActivityType.m */; };
 		B174D6831617AA480098B433 /* userLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6811617AA480098B433 /* userLocation.png */; };
 		B174D6841617AA480098B433 /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6821617AA480098B433 /* userLocation@2x.png */; };
 		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
@@ -220,6 +222,10 @@
 		B16A04A315B35784005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		B16A04A415B36311005B372D /* TrackOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackOverlayView.h; sourceTree = "<group>"; };
 		B16A04A515B36311005B372D /* TrackOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackOverlayView.m; sourceTree = "<group>"; };
+		B16EF37316206333004DEB47 /* Activity+Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Type.h"; sourceTree = "<group>"; };
+		B16EF37416206333004DEB47 /* Activity+Type.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Type.m"; sourceTree = "<group>"; };
+		B16EF376162068C4004DEB47 /* ActivityType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityType.h; sourceTree = "<group>"; };
+		B16EF377162068C4004DEB47 /* ActivityType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityType.m; sourceTree = "<group>"; };
 		B174D6811617AA480098B433 /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = userLocation.png; path = LocationTest/userLocation.png; sourceTree = "<group>"; };
 		B174D6821617AA480098B433 /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "userLocation@2x.png"; path = "LocationTest/userLocation@2x.png"; sourceTree = "<group>"; };
 		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
@@ -425,6 +431,8 @@
 				B1A59B00160F6165000FFD92 /* Segment+Data.m */,
 				B17D39E215BDDD6A00F28FA8 /* Track+Create.h */,
 				B17D39E315BDDD6A00F28FA8 /* Track+Create.m */,
+				B16EF37316206333004DEB47 /* Activity+Type.h */,
+				B16EF37416206333004DEB47 /* Activity+Type.m */,
 				B10BFDB115CDC04C0070FA11 /* Activity+Create.h */,
 				B10BFDB215CDC04C0070FA11 /* Activity+Create.m */,
 				B1FB1B7215BC66D300B51E16 /* Waypoint+Create.h */,
@@ -495,6 +503,8 @@
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				B16EF376162068C4004DEB47 /* ActivityType.h */,
+				B16EF377162068C4004DEB47 /* ActivityType.m */,
 				B148B69A161C962B003B9DDC /* WrappedTrack.h */,
 				B148B69B161C962B003B9DDC /* WrappedTrack.m */,
 				B19C0CE1161C7A5F0068B601 /* Route.h */,
@@ -769,6 +779,8 @@
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
 				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
 				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
+				B16EF37516206333004DEB47 /* Activity+Type.m in Sources */,
+				B16EF378162068C4004DEB47 /* ActivityType.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,8 +10,18 @@
 #import "Activity.h"
 #import "WrappedTrackHandler.h"
 
+@class FinishActivityViewController;
+
+@protocol FinishActivityViewControllerPresenter <NSObject>
+
+- (void)finishActivityViewController:(FinishActivityViewController *)sender
+				   didFinishActivity:(Activity *)activity;
+
+@end
+
 @interface FinishActivityViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, WrappedTrackHandler>
 
 @property (nonatomic, strong) Activity *activity;
+@property (nonatomic, weak) id <FinishActivityViewControllerPresenter> delegate;
 
 @end
