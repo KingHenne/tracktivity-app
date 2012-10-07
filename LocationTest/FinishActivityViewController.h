@@ -13,13 +13,13 @@
 @class FinishActivityViewController;
 
 @protocol FinishActivityViewControllerPresenter <NSObject>
-
 - (void)finishActivityViewController:(FinishActivityViewController *)sender
 				   didFinishActivity:(Activity *)activity;
-
+- (void)finishActivityViewController:(FinishActivityViewController *)sender
+				   didAbortActivity:(Activity *)activity;
 @end
 
-@interface FinishActivityViewController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate, WrappedTrackHandler>
+@interface FinishActivityViewController : UITableViewController <WrappedTrackHandler, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource>
 
 @property (nonatomic, strong) Activity *activity;
 @property (nonatomic, weak) id <FinishActivityViewControllerPresenter> delegate;

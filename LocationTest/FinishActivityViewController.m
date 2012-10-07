@@ -11,17 +11,22 @@
 #import "ActivityType.h"
 
 @interface FinishActivityViewController ()
-@property (weak, nonatomic) IBOutlet UIPickerView *activityTypePicker;
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
 @property (nonatomic, strong) NSDictionary *localizedLabels;
+@property (weak, nonatomic) IBOutlet UITableViewCell *nameCell;
 @end
 
 @implementation FinishActivityViewController
 
-@synthesize activityTypePicker = _activityTypePicker;
 @synthesize activity = _activity;
 @synthesize wrappedTrack = _wrappedTrack;
 @synthesize localizedLabels = _localizedLabels;
+
+- (void)awakeFromNib
+{
+	[super awakeFromNib];
+	self.nameTextField.delegate = self;
+}
 
 - (NSDictionary *)localizedLabels
 {
@@ -60,49 +65,88 @@
 	[self updateTextFieldText];
 }
 
-- (IBAction)handleTap:(UITapGestureRecognizer *)sender
-{
-	if (sender.state == UIGestureRecognizerStateEnded) {
-		[self.nameTextField resignFirstResponder];
-	}
-}
-
-- (IBAction)finishButtonPressed:(UIButton *)sender
+- (IBAction)saveButtonPressed:(id)sender
 {
 	self.activity.name = self.nameTextField.text;
-	if (self.activity.type < 0) {
-		self.activity.type = [self.localizedLabels objectForKey:[NSNumber numberWithInt:0]];
+	if (self.activity.type.intValue < 0) {
+		self.activity.type = [NSNumber numberWithInt:0];
 	}
 	[self.delegate finishActivityViewController:self didFinishActivity:self.activity];
 }
 
-#pragma mark UIPickerViewDelegate Methods
-
-- (NSString *)pickerView:(UIPickerView *)pickerView
-			 titleForRow:(NSInteger)row
-			forComponent:(NSInteger)component
+- (IBAction)abortButtonPressed:(id)sender
 {
-	return [self.localizedLabels objectForKey:[NSNumber numberWithInt:row]];
+	NSString *alertTitle = NSLocalizedString(@"AlertTitleDeleteActivity", @"delete activity");
+	NSString *alertMessage = NSLocalizedString(@"AlertMessageDeleteActivity", @"delete activity confirm question");
+	UIAlertView *abortConfirm = [[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:self cancelButtonTitle:NSLocalizedString(@"AlertBtnCancel", @"Alert Button, Cancel") otherButtonTitles:NSLocalizedString(@"AlertBtnDelete", @"Alert Button, Delete"), nil];
+	[abortConfirm show];
 }
 
-- (void)pickerView:(UIPickerView *)pickerView
-	  didSelectRow:(NSInteger)row
-	   inComponent:(NSInteger)component
+#pragma mark UIAlertViewDelegate Methods
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-	self.activity.type = [NSNumber numberWithInt:row];
+	if (alertView.firstOtherButtonIndex == buttonIndex) {
+		[self.delegate finishActivityViewController:self didAbortActivity:self.activity];
+	}
 }
 
-#pragma mark UIPickerViewDataSource Methods
+#pragma mark UITextFieldDelegate Methods
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-	return 1;
+	[textField resignFirstResponder];
+	return YES;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView
-numberOfRowsInComponent:(NSInteger)component
+#pragma mark UITableView Delegate/DataSource Methods
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-	return self.localizedLabels.count;
+	[self.nameTextField resignFirstResponder];
+	if (indexPath.section == 1) {
+		for (int row = 0; row < [tableView numberOfRowsInSection:indexPath.section]; row++) {
+			NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
+			UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
+			if (row == indexPath.row) {
+				self.activity.type = [NSNumber numberWithInt:row];
+				cell.accessoryType = UITableViewCellAccessoryCheckmark;
+				[cell setSelected:NO animated:YES];
+			} else {
+				cell.accessoryType = UITableViewCellAccessoryNone;
+			}
+		}
+	}
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	if (indexPath.section == 0) {
+		return self.nameCell;
+	}
+	static NSString *CellIdentifier = @"Activity Type Cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+	if (cell == nil) {
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+	}
+	cell.textLabel.text = [self.localizedLabels objectForKey:[NSNumber numberWithInt:indexPath.row]];
+	if (indexPath.row == 0) {
+		cell.accessoryType = UITableViewCellAccessoryCheckmark;
+	} else {
+		cell.accessoryType = UITableViewCellAccessoryNone;
+	}
+	return cell;
+}
+
+- (int)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	switch (section) {
+		case 1:
+			return ActivityType.localizedLabels.count;
+			break;
+		default:
+			return 1;
+	}
 }
 
 #pragma mark UIViewController Methods
@@ -113,15 +157,9 @@ numberOfRowsInComponent:(NSInteger)component
 	// Do any additional setup after loading the view.
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
 - (void)viewDidUnload {
-	[self setActivityTypePicker:nil];
 	[self setNameTextField:nil];
+	[self setNameCell:nil];
 	[super viewDidUnload];
 }
 @end

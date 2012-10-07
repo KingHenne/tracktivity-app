@@ -16,6 +16,7 @@
 #import "WrappedTrackHandler.h"
 #import "Track+Data.h"
 #import "FinishActivityViewController.h"
+#import <RestKit/RestKit.h>
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -178,11 +179,16 @@
 	}
 }
 
-- (void)startedActivity
+- (void)reset
 {
 	[self.mapView removeAnnotations:self.waypoints];
 	[self.waypoints removeAllObjects];
 	[self.mapView removeOverlays:self.mapView.overlays];
+}
+
+- (void)startedActivity
+{
+	[self reset];
 	[self setRecordingBadge:YES];
 }
 
@@ -215,6 +221,14 @@
 		self.polyline = nil;
 	} else {
 		self.mapView.showsUserLocation = NO;
+	}
+}
+
+- (void)saveContext
+{
+	NSError *error;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 	}
 }
 
@@ -275,6 +289,17 @@
 {
 	[self dismissViewControllerAnimated:YES completion:^{
 		
+	}];
+}
+
+- (void)finishActivityViewController:(FinishActivityViewController *)sender
+					didAbortActivity:(Activity *)activity
+{
+	__block __typeof__(self) blockSelf = self;
+	[self dismissViewControllerAnimated:YES completion:^{
+		[activity deleteEntity];
+		[blockSelf saveContext];
+		[blockSelf reset];
 	}];
 }
 
