@@ -2,11 +2,12 @@
 //  Activity.m
 //  LocationTest
 //
-//  Created by Hendrik on 03.10.12.
+//  Created by Hendrik on 07.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
 #import "Activity.h"
+#import "ActivityType.h"
 
 
 @implementation Activity

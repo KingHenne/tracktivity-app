@@ -41,8 +41,6 @@
 		B16A049B15B343F6005B372D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049A15B343F6005B372D /* MapViewController.m */; };
 		B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A115B34639005B372D /* WaypointAnnotation.m */; };
 		B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A515B36311005B372D /* TrackOverlayView.m */; };
-		B16EF37516206333004DEB47 /* Activity+Type.m in Sources */ = {isa = PBXBuildFile; fileRef = B16EF37416206333004DEB47 /* Activity+Type.m */; };
-		B16EF378162068C4004DEB47 /* ActivityType.m in Sources */ = {isa = PBXBuildFile; fileRef = B16EF377162068C4004DEB47 /* ActivityType.m */; };
 		B174D6831617AA480098B433 /* userLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6811617AA480098B433 /* userLocation.png */; };
 		B174D6841617AA480098B433 /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6821617AA480098B433 /* userLocation@2x.png */; };
 		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
@@ -66,7 +64,6 @@
 		B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD3161C7A5E0068B601 /* Segment.m */; };
 		B19C0CD7161C7A5E0068B601 /* Track.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD6161C7A5E0068B601 /* Track.m */; };
 		B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CD9161C7A5E0068B601 /* Waypoint.m */; };
-		B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CDF161C7A5F0068B601 /* Activity.m */; };
 		B19C0CE3161C7A5F0068B601 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = B19C0CE2161C7A5F0068B601 /* Route.m */; };
 		B1A0225715CD4EC80054C2D7 /* GPXParser.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A0225615CD4EC80054C2D7 /* GPXParser.m */; };
 		B1A0225D15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx in Resources */ = {isa = PBXBuildFile; fileRef = B1A0225C15CD65500054C2D7 /* Cyclemeter-Cycle-20120701-0953.gpx */; };
@@ -74,6 +71,10 @@
 		B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B03160F6E22000FFD92 /* MultiPolyline.m */; };
 		B1A59B27160FA152000FFD92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B26160FA152000FFD92 /* libz.dylib */; };
 		B1A59B29160FA2D3000FFD92 /* libTBXML-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */; };
+		B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D1451621E6D500926E42 /* ActivityType.m */; };
+		B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1471622024A00926E42 /* ActivityTypes.json */; };
+		B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */; };
+		B1A8D150162221DD00926E42 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D14F162221DD00926E42 /* Activity.m */; };
 		B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
@@ -222,10 +223,6 @@
 		B16A04A315B35784005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		B16A04A415B36311005B372D /* TrackOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackOverlayView.h; sourceTree = "<group>"; };
 		B16A04A515B36311005B372D /* TrackOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackOverlayView.m; sourceTree = "<group>"; };
-		B16EF37316206333004DEB47 /* Activity+Type.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Type.h"; sourceTree = "<group>"; };
-		B16EF37416206333004DEB47 /* Activity+Type.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Type.m"; sourceTree = "<group>"; };
-		B16EF376162068C4004DEB47 /* ActivityType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityType.h; sourceTree = "<group>"; };
-		B16EF377162068C4004DEB47 /* ActivityType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityType.m; sourceTree = "<group>"; };
 		B174D6811617AA480098B433 /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = userLocation.png; path = LocationTest/userLocation.png; sourceTree = "<group>"; };
 		B174D6821617AA480098B433 /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "userLocation@2x.png"; path = "LocationTest/userLocation@2x.png"; sourceTree = "<group>"; };
 		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
@@ -263,8 +260,6 @@
 		B19C0CD6161C7A5E0068B601 /* Track.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Track.m; sourceTree = "<group>"; };
 		B19C0CD8161C7A5E0068B601 /* Waypoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Waypoint.h; sourceTree = "<group>"; };
 		B19C0CD9161C7A5E0068B601 /* Waypoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Waypoint.m; sourceTree = "<group>"; };
-		B19C0CDE161C7A5F0068B601 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
-		B19C0CDF161C7A5F0068B601 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B19C0CE1161C7A5F0068B601 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
 		B19C0CE2161C7A5F0068B601 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		B1A0225615CD4EC80054C2D7 /* GPXParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GPXParser.m; sourceTree = "<group>"; };
@@ -276,6 +271,12 @@
 		B1A59B03160F6E22000FFD92 /* MultiPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiPolyline.m; sourceTree = "<group>"; };
 		B1A59B10160F9BF9000FFD92 /* TBXML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TBXML.xcodeproj; path = TBXML/TBXML.xcodeproj; sourceTree = "<group>"; };
 		B1A59B26160FA152000FFD92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		B1A8D1441621E6D500926E42 /* ActivityType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityType.h; sourceTree = "<group>"; };
+		B1A8D1451621E6D500926E42 /* ActivityType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityType.m; sourceTree = "<group>"; };
+		B1A8D1471622024A00926E42 /* ActivityTypes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ActivityTypes.json; sourceTree = "<group>"; };
+		B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = RKSeedDatabase.sqlite; sourceTree = "<group>"; };
+		B1A8D14E162221DD00926E42 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
+		B1A8D14F162221DD00926E42 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
 		B1B4DBDD1617715800579B90 /* UserLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLocationAnnotation.h; sourceTree = "<group>"; };
 		B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLocationAnnotation.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
@@ -393,6 +394,8 @@
 				B12D4BC715B1CCA6001490B3 /* InfoPlist.strings */,
 				B12D4BCA15B1CCA6001490B3 /* main.m */,
 				B12D4BCC15B1CCA6001490B3 /* LocationTest-Prefix.pch */,
+				B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */,
+				B1A8D1471622024A00926E42 /* ActivityTypes.json */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -431,8 +434,6 @@
 				B1A59B00160F6165000FFD92 /* Segment+Data.m */,
 				B17D39E215BDDD6A00F28FA8 /* Track+Create.h */,
 				B17D39E315BDDD6A00F28FA8 /* Track+Create.m */,
-				B16EF37316206333004DEB47 /* Activity+Type.h */,
-				B16EF37416206333004DEB47 /* Activity+Type.m */,
 				B10BFDB115CDC04C0070FA11 /* Activity+Create.h */,
 				B10BFDB215CDC04C0070FA11 /* Activity+Create.m */,
 				B1FB1B7215BC66D300B51E16 /* Waypoint+Create.h */,
@@ -503,14 +504,12 @@
 		BE3633DB15DBDE7F00D81B35 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B16EF376162068C4004DEB47 /* ActivityType.h */,
-				B16EF377162068C4004DEB47 /* ActivityType.m */,
+				B1A8D14E162221DD00926E42 /* Activity.h */,
+				B1A8D14F162221DD00926E42 /* Activity.m */,
 				B148B69A161C962B003B9DDC /* WrappedTrack.h */,
 				B148B69B161C962B003B9DDC /* WrappedTrack.m */,
 				B19C0CE1161C7A5F0068B601 /* Route.h */,
 				B19C0CE2161C7A5F0068B601 /* Route.m */,
-				B19C0CDE161C7A5F0068B601 /* Activity.h */,
-				B19C0CDF161C7A5F0068B601 /* Activity.m */,
 				B19C0CD8161C7A5E0068B601 /* Waypoint.h */,
 				B19C0CD9161C7A5E0068B601 /* Waypoint.m */,
 				B19C0CD5161C7A5E0068B601 /* Track.h */,
@@ -518,6 +517,8 @@
 				B19C0CD2161C7A5E0068B601 /* Segment.h */,
 				B19C0CD3161C7A5E0068B601 /* Segment.m */,
 				B1FB1B0B15BC0F3600B51E16 /* Model.xcdatamodeld */,
+				B1A8D1441621E6D500926E42 /* ActivityType.h */,
+				B1A8D1451621E6D500926E42 /* ActivityType.m */,
 				B1A59B02160F6E22000FFD92 /* MultiPolyline.h */,
 				B1A59B03160F6E22000FFD92 /* MultiPolyline.m */,
 			);
@@ -728,6 +729,8 @@
 				B174D6831617AA480098B433 /* userLocation.png in Resources */,
 				B174D6841617AA480098B433 /* userLocation@2x.png in Resources */,
 				B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */,
+				B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */,
+				B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,12 +778,11 @@
 				B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */,
 				B19C0CD7161C7A5E0068B601 /* Track.m in Sources */,
 				B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */,
-				B19C0CE0161C7A5F0068B601 /* Activity.m in Sources */,
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
 				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
 				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
-				B16EF37516206333004DEB47 /* Activity+Type.m in Sources */,
-				B16EF378162068C4004DEB47 /* ActivityType.m in Sources */,
+				B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */,
+				B1A8D150162221DD00926E42 /* Activity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -905,6 +907,7 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "LocationTest/LocationTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
 					"TBXML/**",

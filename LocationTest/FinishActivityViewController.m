@@ -9,6 +9,7 @@
 #import "FinishActivityViewController.h"
 #import "Activity.h"
 #import "ActivityType.h"
+#import <RestKit/RestKit.h>
 
 @interface FinishActivityViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
@@ -31,7 +32,7 @@
 - (NSDictionary *)localizedLabels
 {
 	if (_localizedLabels == nil) {
-		_localizedLabels = [ActivityType localizedLabels];
+		//_localizedLabels = [ActivityType localizedLabels];
 	}
 	return _localizedLabels;
 }
@@ -68,8 +69,8 @@
 - (IBAction)saveButtonPressed:(id)sender
 {
 	self.activity.name = self.nameTextField.text;
-	if (self.activity.type.intValue < 0) {
-		self.activity.type = [NSNumber numberWithInt:0];
+	if (self.activity.type == nil) {
+		//self.activity.type = [NSNumber numberWithInt:0];
 	}
 	[self.delegate finishActivityViewController:self didFinishActivity:self.activity];
 }
@@ -109,7 +110,7 @@
 			NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
 			UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
 			if (row == indexPath.row) {
-				self.activity.type = [NSNumber numberWithInt:row];
+				//self.activity.type = [NSNumber numberWithInt:row];
 				cell.accessoryType = UITableViewCellAccessoryCheckmark;
 				[cell setSelected:NO animated:YES];
 			} else {
@@ -142,7 +143,7 @@
 {
 	switch (section) {
 		case 1:
-			return ActivityType.localizedLabels.count;
+			return [ActivityType count:nil];
 			break;
 		default:
 			return 1;

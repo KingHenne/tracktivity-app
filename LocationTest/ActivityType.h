@@ -2,25 +2,29 @@
 //  ActivityType.h
 //  LocationTest
 //
-//  Created by Hendrik on 06.10.12.
+//  Created by Hendrik on 07.10.12.
 //  Copyright (c) 2012 SinnerSchrader. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreData/CoreData.h>
 
-@interface ActivityType : NSObject
+@class Activity;
 
-typedef enum {
-	CYCLING = 0,
-	HIKING  = 1,
-	RUNNING = 2,
-	INLINE  = 3
-} ActivityTypeCode;
+@interface ActivityType : NSManagedObject
 
-+ (ActivityTypeCode)codeForStringValue:(NSString *)value;
-+ (NSString *)stringValueForActivity:(ActivityTypeCode)code;
-+ (NSString *)localizedLabelForActivity:(ActivityTypeCode)code;
-+ (NSString *)emojiIconForActivity:(ActivityTypeCode)code;
-+ (NSDictionary *)localizedLabels;
+@property (nonatomic, retain) NSString * stringValue;
+@property (nonatomic, retain) NSString * emojiIcon;
+@property (nonatomic, retain) NSNumber * displayOrder;
+@property (nonatomic, retain) NSString * localizedString;
+@property (nonatomic, retain) NSSet *activities;
+@end
+
+@interface ActivityType (CoreDataGeneratedAccessors)
+
+- (void)addActivitiesObject:(Activity *)value;
+- (void)removeActivitiesObject:(Activity *)value;
+- (void)addActivities:(NSSet *)values;
+- (void)removeActivities:(NSSet *)values;
 
 @end

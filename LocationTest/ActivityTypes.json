@@ -1,0 +1,22 @@
+[
+	{
+		"stringValue": "CYCLING",
+		"emojiIcon": "🚴",
+		"displayOrder": 0
+	},
+	{
+		"stringValue": "HIKING",
+		"emojiIcon": "🚶",
+		"displayOrder": 2
+	},
+	{
+		"stringValue": "RUNNING",
+		"emojiIcon": "🏃",
+		"displayOrder": 1
+	},
+	{
+		"stringValue": "INLINE",
+		"emojiIcon": "🏃",
+		"displayOrder": 3
+	}
+]
