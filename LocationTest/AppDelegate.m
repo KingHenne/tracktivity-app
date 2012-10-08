@@ -146,6 +146,9 @@
 	RKManagedObjectStore *objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self];
 	objectManager.objectStore = objectStore;
 	
+	// Uncomment this line for one run if you want to reset the database.
+	//[objectStore deletePersistentStoreUsingSeedDatabaseName:seedDatabaseName];
+	
 	// Globally use JSON as the wire format for POST/PUT operations.
 	objectManager.serializationMIMEType = RKMIMETypeJSON;
 	
