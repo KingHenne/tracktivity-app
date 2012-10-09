@@ -16,7 +16,7 @@
 @property (nonatomic, retain) NSString * stringValue;
 @property (nonatomic, retain) NSString * emojiIcon;
 @property (nonatomic, retain) NSNumber * displayOrder;
-@property (nonatomic, retain) NSString * localizedString;
+@property (nonatomic, retain) NSString * localizedLabel;
 @property (nonatomic, retain) NSSet *activities;
 @end
 

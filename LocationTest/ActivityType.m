@@ -15,7 +15,13 @@
 @dynamic stringValue;
 @dynamic emojiIcon;
 @dynamic displayOrder;
-@dynamic localizedString;
+@dynamic localizedLabel;
 @dynamic activities;
+
+- (NSString *)localizedLabel
+{
+	NSString *key = [NSString stringWithFormat:@"activity.%@", self.stringValue];
+	return [[NSBundle mainBundle] localizedStringForKey:(key) value:@"" table:nil];
+}
 
 @end

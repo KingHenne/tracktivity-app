@@ -10,7 +10,7 @@
     <entity name="ActivityType" representedClassName="ActivityType" syncable="YES">
         <attribute name="displayOrder" optional="YES" attributeType="Integer 16" defaultValueString="-1" syncable="YES"/>
         <attribute name="emojiIcon" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="localizedString" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
+        <attribute name="localizedLabel" optional="YES" transient="YES" attributeType="String" syncable="YES"/>
         <attribute name="stringValue" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
         <relationship name="activities" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="Activity" inverseName="type" inverseEntity="Activity" syncable="YES"/>
     </entity>
@@ -46,11 +46,11 @@
     <fetchRequest name="FinishedActivities" entity="Activity" predicateString="recording == 0"/>
     <elements>
         <element name="Activity" positionX="0" positionY="0" width="128" height="120"/>
+        <element name="ActivityType" positionX="160" positionY="192" width="128" height="120"/>
         <element name="Route" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Segment" positionX="0" positionY="0" width="128" height="75"/>
         <element name="Track" positionX="0" positionY="0" width="128" height="105"/>
         <element name="Waypoint" positionX="0" positionY="0" width="128" height="165"/>
         <element name="WrappedTrack" positionX="160" positionY="192" width="128" height="90"/>
-        <element name="ActivityType" positionX="160" positionY="192" width="128" height="120"/>
     </elements>
 </model>
