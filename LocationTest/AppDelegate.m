@@ -123,9 +123,9 @@
     // Override point for customization after application launch.
 	
 	// Activate logging.
-	//RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-	//RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelInfo);
-    //RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
+//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+//  RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
 	
 	// Initialize RestKit.
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://mackie-messer.local:8080/api"];
@@ -192,10 +192,16 @@
 	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities"];
 	// Set the object mapping for getting activities.
 	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities/:tracktivityID"];
+	
+	// Adjust the inverse mapping (because of ActivityType).
+	RKObjectMapping *inverseMapping = [activityMapping inverseMapping];
+	[inverseMapping removeMappingForKeyPath:@"type"];
+	[inverseMapping mapKeyPath:@"type.stringValue" toAttribute:@"type"];
 	// Set the object mapping for serializing/posting activities.
-	[objectManager.mappingProvider setSerializationMapping:[activityMapping inverseMapping] forClass:[Activity class]];
+	[objectManager.mappingProvider setSerializationMapping:inverseMapping forClass:[Activity class]];
 	
 #ifdef RESTKIT_GENERATE_SEED_DB
+	// TODO: set a different activityTypeMapping here
 	// Create a seed database with all activity types.
 	RKManagedObjectSeeder *objectSeeder = [RKManagedObjectSeeder objectSeederWithObjectManager:objectManager];
 	[objectSeeder seedObjectsFromFile:@"ActivityTypes.json" withObjectMapping:activityTypeMapping];
