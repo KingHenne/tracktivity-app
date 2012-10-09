@@ -33,7 +33,7 @@
 		} else {
 			date = [NSDateFormatter localizedStringFromDate:activity.end dateStyle:NSDateFormatterMediumStyle timeStyle:NSDateFormatterMediumStyle];
 		}
-		NSString *emoji = [ActivityType emojiIconForActivity:activity.type.intValue];
+		NSString *emoji = activity.type.emojiIcon;
 		if (emoji) {
 			return [NSString stringWithFormat:@"%@ %@", emoji, date];
 		}

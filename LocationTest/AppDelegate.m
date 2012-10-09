@@ -15,6 +15,7 @@
 #import "TrackViewController.h"
 #import "SegmentedTrackViewController.h"
 #import "Activity.h"
+#import "ActivityType.h"
 #import "Track.h"
 #import "Segment.h"
 #import "Waypoint.h"
@@ -121,15 +122,32 @@
 {
     // Override point for customization after application launch.
 	
+	// Activate logging.
+//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+//  RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
+	
 	// Initialize RestKit.
     RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://mackie-messer.local:8080/api"];
 	
     // Enable automatic network activity indicator management.
     objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
 	
+	// Initialize object store
+#ifdef RESTKIT_GENERATE_SEED_DB
+	NSString *seedDatabaseName = nil;
+	NSString *databaseName = RKDefaultSeedDatabaseFileName;
+#else
+	NSString *seedDatabaseName = RKDefaultSeedDatabaseFileName;
+	NSString *databaseName = @"CoreData.sqlite";
+#endif
+	
     // Initialize object store.
-	RKManagedObjectStore *objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:@"LocationTest.sqlite" usingSeedDatabaseName:nil managedObjectModel:nil delegate:self];
+	RKManagedObjectStore *objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self];
 	objectManager.objectStore = objectStore;
+	
+	// Uncomment this line for one run if you want to reset the database.
+	//[objectStore deletePersistentStoreUsingSeedDatabaseName:seedDatabaseName];
 	
 	// Globally use JSON as the wire format for POST/PUT operations.
 	objectManager.serializationMIMEType = RKMIMETypeJSON;
@@ -141,31 +159,55 @@
 	// Define a resource path for deleting activities.
 	[router routeClass:[Activity class] toResourcePath:@"/activities/:tracktivityID" forMethod:RKRequestMethodDELETE];
 	
-	// Configure a (serialization) mapping for the Activity class.
+	// Configure a (serialization) mapping for the Activity class and its relationships.
+	
 	RKManagedObjectMapping *activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
 	RKManagedObjectMapping *trackMapping = [RKManagedObjectMapping mappingForClass:[Track class] inManagedObjectStore:objectStore];
 	RKManagedObjectMapping *segmentMapping = [RKManagedObjectMapping mappingForClass:[Segment class] inManagedObjectStore:objectStore];
 	RKManagedObjectMapping *pointMapping = [RKManagedObjectMapping mappingForClass:[Waypoint class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *activityTypeMapping = [RKManagedObjectMapping mappingForClass:[ActivityType class] inManagedObjectStore:objectStore];
+	
 	[pointMapping mapKeyPathsToAttributes:
 		@"time", @"time",
 		@"lat", @"latitude",
 		@"lon", @"longitude",
 		@"ele", @"elevation", nil];
+	
 	[segmentMapping mapKeyPath:@"points" toRelationship:@"points" withMapping:pointMapping];
 	[trackMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
+	
 	[activityMapping mapKeyPathsToAttributes:
 		@"id", @"tracktivityID",
-		@"type", @"typeString",
 		@"name", @"name",
 		@"created", @"start", nil];
 	activityMapping.primaryKeyAttribute = @"tracktivityID";
+	
 	[activityMapping mapKeyPath:@"track" toRelationship:@"track" withMapping:trackMapping];
+	
+	[activityTypeMapping mapKeyOfNestedDictionaryToAttribute:@"stringValue"];
+	activityTypeMapping.primaryKeyAttribute = @"stringValue";
+	[activityMapping mapKeyPath:@"type" toRelationship:@"type" withMapping:activityTypeMapping];
+	
 	// Set the object mapping so that the response after posting an activity will be mapped correctly.
 	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities"];
 	// Set the object mapping for getting activities.
 	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities/:tracktivityID"];
+	
+	// Adjust the inverse mapping (because of ActivityType).
+	RKObjectMapping *inverseMapping = [activityMapping inverseMapping];
+	[inverseMapping removeMappingForKeyPath:@"type"];
+	[inverseMapping mapKeyPath:@"type.stringValue" toAttribute:@"type"];
 	// Set the object mapping for serializing/posting activities.
-	[objectManager.mappingProvider setSerializationMapping:[activityMapping inverseMapping] forClass:[Activity class]];
+	[objectManager.mappingProvider setSerializationMapping:inverseMapping forClass:[Activity class]];
+	
+#ifdef RESTKIT_GENERATE_SEED_DB
+	// TODO: set a different activityTypeMapping here
+	// Create a seed database with all activity types.
+	RKManagedObjectSeeder *objectSeeder = [RKManagedObjectSeeder objectSeederWithObjectManager:objectManager];
+	[objectSeeder seedObjectsFromFile:@"ActivityTypes.json" withObjectMapping:activityTypeMapping];
+	// Finalize the seeding operation and output a helpful informational message
+    [objectSeeder finalizeSeedingAndExit];
+#endif
 	
 	// Set the preferred date formatter.
 	ISO8601DateFormatter *dateFormatter = [ISO8601DateFormatter new];
@@ -182,9 +224,7 @@
 	objectManager.client.username = @"hendrik";
 	objectManager.client.password = @"boerrek";
 	
-	// Activate logging.
-//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+	NSLog(@"number of activity types in database: %d", [ActivityType count:nil]);
 	
     return YES;
 }

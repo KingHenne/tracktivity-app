@@ -9,31 +9,26 @@
 #import "FinishActivityViewController.h"
 #import "Activity.h"
 #import "ActivityType.h"
+#import <RestKit/RestKit.h>
 
 @interface FinishActivityViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *nameTextField;
-@property (nonatomic, strong) NSDictionary *localizedLabels;
 @property (weak, nonatomic) IBOutlet UITableViewCell *nameCell;
+@property (nonatomic, strong) NSArray *activityTypes;
 @end
 
 @implementation FinishActivityViewController
 
 @synthesize activity = _activity;
 @synthesize wrappedTrack = _wrappedTrack;
-@synthesize localizedLabels = _localizedLabels;
+@synthesize activityTypes = _activityTypes;
 
-- (void)awakeFromNib
+- (NSArray *)activityTypes
 {
-	[super awakeFromNib];
-	self.nameTextField.delegate = self;
-}
-
-- (NSDictionary *)localizedLabels
-{
-	if (_localizedLabels == nil) {
-		_localizedLabels = [ActivityType localizedLabels];
+	if (_activityTypes == nil) {
+		_activityTypes = [ActivityType findAllSortedBy:@"displayOrder" ascending:YES];
 	}
-	return _localizedLabels;
+	return _activityTypes;
 }
 
 - (void)updateTextFieldText
@@ -68,8 +63,8 @@
 - (IBAction)saveButtonPressed:(id)sender
 {
 	self.activity.name = self.nameTextField.text;
-	if (self.activity.type.intValue < 0) {
-		self.activity.type = [NSNumber numberWithInt:0];
+	if (self.activity.type == nil) {
+		self.activity.type = [self.activityTypes objectAtIndex:0];
 	}
 	[self.delegate finishActivityViewController:self didFinishActivity:self.activity];
 }
@@ -109,7 +104,7 @@
 			NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
 			UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
 			if (row == indexPath.row) {
-				self.activity.type = [NSNumber numberWithInt:row];
+				self.activity.type = [self.activityTypes objectAtIndex:row];
 				cell.accessoryType = UITableViewCellAccessoryCheckmark;
 				[cell setSelected:NO animated:YES];
 			} else {
@@ -129,7 +124,7 @@
 	if (cell == nil) {
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
 	}
-	cell.textLabel.text = [self.localizedLabels objectForKey:[NSNumber numberWithInt:indexPath.row]];
+	cell.textLabel.text = [(ActivityType *)[self.activityTypes objectAtIndex:indexPath.row] localizedLabel];
 	if (indexPath.row == 0) {
 		cell.accessoryType = UITableViewCellAccessoryCheckmark;
 	} else {
@@ -142,7 +137,7 @@
 {
 	switch (section) {
 		case 1:
-			return ActivityType.localizedLabels.count;
+			return self.activityTypes.count;
 			break;
 		default:
 			return 1;
