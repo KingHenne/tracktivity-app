@@ -39,7 +39,10 @@
 {
 	MultiPolyline *multiPolyline = [MultiPolyline new];
 	for (Segment *segment in self.segments) {
-		[multiPolyline addPolyline:segment.polyline];
+		MKPolyline *segmentPolyline = segment.polyline;
+		if (segmentPolyline) {
+			[multiPolyline addPolyline:segmentPolyline];
+		}
 	}
 	return multiPolyline;
 }
