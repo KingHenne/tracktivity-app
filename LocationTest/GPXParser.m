@@ -18,14 +18,14 @@
 #import <TBXML-Headers/TBXML.h>
 
 @interface GPXParser ()
-@property NSMutableDictionary *elementStates;
-@property Route *currentRoute;
-@property Segment *currentSegment;
-@property Waypoint *currentRoutePoint;
-@property Waypoint *currentWayPoint;
-@property NSURL *fileURL;
-@property int pointsParsed;
-@property int totalPointsToParse;
+@property (nonatomic, strong) NSMutableDictionary *elementStates;
+@property (nonatomic, strong) Route *currentRoute;
+@property (nonatomic, strong) Segment *currentSegment;
+@property (nonatomic, strong) Waypoint *currentRoutePoint;
+@property (nonatomic, strong) Waypoint *currentWayPoint;
+@property (nonatomic, strong) NSURL *fileURL;
+@property (nonatomic) int pointsParsed;
+@property (nonatomic) int totalPointsToParse;
 @property (nonatomic) float parseProgress;
 @end
 
@@ -42,6 +42,14 @@
 @synthesize totalPointsToParse = _totalPointsToParse;
 @synthesize parseProgress = _parseProgress;
 
+- (NSMutableDictionary *)elementStates
+{
+	if (_elementStates == nil) {
+		_elementStates = [NSMutableDictionary new];
+	}
+	return _elementStates;
+}
+
 - (void)setParseProgress:(float)parseProgress
 {
 	if (parseProgress >= 0 && parseProgress <= 1) {
@@ -52,11 +60,28 @@
 - (BOOL)parseGPXFile:(NSURL *)fileURL
 {
 	self.fileURL = fileURL;
-	NSString *xmlFileString = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:NULL];
+	NSString *xmlFileString;
+	if ([fileURL.scheme isEqualToString:@"tracktivity"]) {
+		fileURL = [NSURL URLWithString:[fileURL.absoluteString stringByReplacingOccurrencesOfString:@"tracktivity://" withString:@"http://"]];
+	}
+	
+	NSError *error;
+	xmlFileString = [NSString stringWithContentsOfURL:fileURL encoding:NSUTF8StringEncoding error:&error];
+	if (error) {
+		NSLog(@"%@ is not a valid URL to import GPX files from.", fileURL);
+		return NO;
+	}
+	
 	self.pointsParsed = 0;
 	self.totalPointsToParse	= [xmlFileString componentsSeparatedByString:@"<trkpt"].count - 1;
+	if (!self.totalPointsToParse) {
+		self.totalPointsToParse	= [xmlFileString componentsSeparatedByString:@"<rtept"].count - 1;
+	}
+	if (!self.totalPointsToParse) {
+		NSLog(@"There are no trkpt elements in this GPX file.");
+		return NO;
+	}
 	NSLog(@"totalPointsToParse=%d", self.totalPointsToParse);
-	NSError *error;
 	NSDate *start = [NSDate date];
 	TBXML *tbxml = [TBXML newTBXMLWithXMLString:xmlFileString error:&error];
 	if (error) {
@@ -95,13 +120,16 @@
 {
 	NSString *elementName = [TBXML elementName:element].lowercaseString;
 	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName];
-	if ([elementName isEqualToString:@"trk"]) {
+	if ([elementName isEqualToString:@"trk"] || [elementName isEqualToString:@"rte"]) {
 		self.currentRoute = [Route createEntity];
 		self.currentRoute.created = [NSDate date];
 		self.currentRoute.track = [Track createEntity];
+		if ([elementName isEqualToString:@"rte"]) {
+			self.currentSegment = [Segment createEntity];
+		}
 	} else if ([elementName isEqualToString:@"trkseg"]) {
 		self.currentSegment = [Segment createEntity];
-	} else if ([elementName isEqualToString:@"trkpt"]) {
+	} else if ([elementName isEqualToString:@"trkpt"] || [elementName isEqualToString:@"rtept"]) {
 		double lat = [[TBXML valueOfAttributeNamed:@"lat" forElement:element] doubleValue];
 		double lon = [[TBXML valueOfAttributeNamed:@"lon" forElement:element] doubleValue];
 		self.currentRoutePoint = [Waypoint createEntity];
@@ -112,20 +140,23 @@
 
 - (void)didFindContent:(NSString *)string
 {
-	if ([[self.elementStates objectForKey:@"trk"] boolValue] == YES) {
-		if ([[self.elementStates objectForKey:@"name"] boolValue] == YES) {
+	if ([[self.elementStates objectForKey:@"trk"] boolValue] == YES ||
+		[[self.elementStates objectForKey:@"rte"] boolValue] == YES) {
+		if ([[self.elementStates objectForKey:@"trkpt"] boolValue] == NO &&
+			[[self.elementStates objectForKey:@"rtept"] boolValue] == NO &&
+			[[self.elementStates objectForKey:@"name"] boolValue] == YES) {
 			self.currentRoute.name = string;
 		}
 		if ([[self.elementStates objectForKey:@"desc"] boolValue] == YES) {
 		}
-		if ([[self.elementStates objectForKey:@"trkseg"] boolValue] == YES &&
-			[[self.elementStates objectForKey:@"trkpt"] boolValue] == YES) {
+		if ([[self.elementStates objectForKey:@"trkpt"] boolValue] == YES ||
+			[[self.elementStates objectForKey:@"rtept"] boolValue] == YES) {
 			if ([[self.elementStates objectForKey:@"ele"] boolValue] == YES) {
 				self.currentRoutePoint.elevation = [NSNumber numberWithDouble:[string doubleValue]];
 			}
 			if ([[self.elementStates objectForKey:@"time"] boolValue] == YES) {
-				ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
-				self.currentRoutePoint.time = [formatter dateFromString:string];
+				//ISO8601DateFormatter *formatter = [[ISO8601DateFormatter alloc] init];
+				//self.currentRoutePoint.time = [formatter dateFromString:string];
 			}
 		}
 	}
@@ -135,18 +166,22 @@
 {
 	NSString *elementName = [TBXML elementName:element].lowercaseString;
 	[self.elementStates setObject:[NSNumber numberWithBool:NO] forKey:elementName];
-	if ([elementName isEqualToString:@"trk"]) {
+	if ([elementName isEqualToString:@"trk"] || [elementName isEqualToString:@"rte"]) {
 		if (self.currentRoute.name == nil) {
 			self.currentRoute.name = self.fileURL.fileNameWithoutExtension;
 		}
 		self.currentRoute.originalFile = [NSData dataWithContentsOfURL:self.fileURL];
+		if ([elementName isEqualToString:@"rte"]) {
+			[self.currentRoute.track addSegmentsObject:self.currentSegment];
+			self.currentSegment = nil;
+		}
 		[self saveContext];
 		self.parsedRoute = self.currentRoute;
 		self.currentRoute = nil;
 	} else if ([elementName isEqualToString:@"trkseg"]) {
 		[self.currentRoute.track addSegmentsObject:self.currentSegment];
 		self.currentSegment = nil;
-	} else if ([elementName isEqualToString:@"trkpt"]) {
+	} else if ([elementName isEqualToString:@"trkpt"] || [elementName isEqualToString:@"rtept"]) {
 		[self.currentSegment addPointsObject:self.currentRoutePoint];
 		self.currentRoutePoint = nil;
 		self.pointsParsed++;

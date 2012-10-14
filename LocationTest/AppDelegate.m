@@ -49,7 +49,7 @@
 	return _tbc;
 }
 
-- (void)showImportMessageForURL:(NSURL *)url
+- (void)showImportSuccessMessageForURL:(NSURL *)url
 {
 	NSString *alertTitle = NSLocalizedString(@"FileImportTitle", @"File import title");
 	NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"FileImportMessage", @"File import message"), url.lastPathComponent];
@@ -57,19 +57,31 @@
 	[importSuccessMessage show];
 }
 
+- (void)showImportFailureMessageForURL:(NSURL *)url
+{
+	NSString *alertTitle = NSLocalizedString(@"FileImportFailedTitle", @"File import failed title");
+	NSString *alertMessage = [NSString stringWithFormat:NSLocalizedString(@"FileImportFailedMessage", @"File import failed message"), url.lastPathComponent];
+	UIAlertView *importFailureMessage = [[UIAlertView alloc] initWithTitle:alertTitle message:alertMessage delegate:self cancelButtonTitle:NSLocalizedString(@"AlertBtnOk", @"Alert Button, Ok") otherButtonTitles: nil];
+	[importFailureMessage show];
+}
+
 - (void)parseGPXFile:(NSURL *)url
 {
 	[self.gpxParser addObserver:self.tbc forKeyPath:@"parseProgress" options:NSKeyValueObservingOptionNew context:NULL];
 	if ([self.gpxParser parseGPXFile:url]) {
-		// Delete the file from the inbox directory. It's stored (externally) in Core Data now.
-		NSError *fileManagerError;
-		if (![[NSFileManager defaultManager] removeItemAtURL:url error:&fileManagerError]) {
-			NSLog(@"An error occured trying to delete a file: %@", fileManagerError);
+		if ([url isFileURL]) {
+			// Delete the file from the inbox directory. It's stored (externally) in Core Data now.
+			NSError *fileManagerError;
+			if (![[NSFileManager defaultManager] removeItemAtURL:url error:&fileManagerError]) {
+				NSLog(@"An error occured trying to delete a file: %@", fileManagerError);
+			}
 		}
 		// Inform user that the file has been successfully imported.
-		[self performSelectorOnMainThread:@selector(showImportMessageForURL:) withObject:url waitUntilDone:NO];
+		[self performSelectorOnMainThread:@selector(showImportSuccessMessageForURL:) withObject:url waitUntilDone:NO];
 	} else {
 		NSLog(@"The file %@ could not be parsed without errors.", url.lastPathComponent);
+		// Inform user that the file could not be imported.
+		[self performSelectorOnMainThread:@selector(showImportFailureMessageForURL:) withObject:url waitUntilDone:NO];
 	}
 }
 
