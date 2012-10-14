@@ -100,6 +100,7 @@
 
 - (void)centerMapOnLocation:(CLLocation *)location
 {
+	if (location == nil) return;
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, DEFAULT_ZOOM, DEFAULT_ZOOM);
 	[self.mapView setRegion:region animated:YES];
 }
