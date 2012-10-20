@@ -39,6 +39,19 @@
 	_splitViewBarButtonItem = splitViewBarButtonItem;
 }
 
+- (NSURL *)tracktivityURL
+{
+	if (_tracktivityURL == nil && [self.wrappedTrack respondsToSelector:@selector(tracktivityID)]) {
+		NSString *tracktivityID = [self.wrappedTrack performSelector:@selector(tracktivityID)];
+		NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
+		NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
+		NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
+		NSString *path = [NSString stringWithFormat:@"activities/%@", tracktivityID];
+		_tracktivityURL = [appURL URLByAppendingPathComponent:path];
+	}
+	return _tracktivityURL;
+}
+
 - (void)createOverlays
 {
 	if (self.wrappedTrack == nil) return;
@@ -97,6 +110,7 @@
 	if (_wrappedTrack == wrappedTrack) return;
 	_wrappedTrack = wrappedTrack;
 	self.title = wrappedTrack.title;
+	self.tracktivityURL = nil; // reset saved URL
 	//[self createOverlaysAndAnnotations];
 	[self performSelector:@selector(createOverlaysAndAnnotations) withObject:nil afterDelay:0];
 }
@@ -106,11 +120,6 @@
 	if ([self.wrappedTrack isKindOfClass:[Activity class]]) {
 		Activity *activity = (Activity *) self.wrappedTrack;
 		if (activity.tracktivityID) {
-			NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
-			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
-			NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
-			NSString *path = [NSString stringWithFormat:@"activities/%@", activity.tracktivityID];
-			self.tracktivityURL = [appURL URLByAppendingPathComponent:path];
 			if ([UIActivityViewController class]) {
 				NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
 				UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
