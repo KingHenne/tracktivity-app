@@ -56,7 +56,11 @@
 {
 	MKPolylineView* lineView = [[MKPolylineView alloc] initWithPolyline:overlay];
 	lineView.strokeColor = [UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f];
+	// Compute the currently visible map zoom scale
+	//MKZoomScale currentZoomScale = (CGFloat)(theMapView.bounds.size.width / theMapView.visibleMapRect.size.width);
+	// Find out the line width at this zoom scale to set it as width for the lineView.
 	//lineView.lineWidth = MKRoadWidthAtZoomScale(currentZoomScale);
+	//lineView.lineWidth = 10;
 	return lineView;
 }
 
