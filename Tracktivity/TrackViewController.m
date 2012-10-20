@@ -18,8 +18,10 @@
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM (IPAD ? 600 : 250)
 
-@interface TrackViewController ()
+@interface TrackViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) UIPopoverController *popoverController;
+@property (nonatomic, strong) UIActionSheet *actionSheet;
+@property (nonatomic, strong) NSURL *tracktivityURL;
 @end
 
 @implementation TrackViewController
@@ -27,6 +29,8 @@
 @synthesize wrappedTrack = _wrappedTrack;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
 @synthesize popoverController = _myPopoverController;
+@synthesize actionSheet = _actionSheet;
+@synthesize tracktivityURL = _tracktivityURL;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
 {
@@ -106,9 +110,9 @@
 			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
 			NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
 			NSString *path = [NSString stringWithFormat:@"activities/%@", activity.tracktivityID];
-			NSURL *fullURL = [appURL URLByAppendingPathComponent:path];
+			self.tracktivityURL = [appURL URLByAppendingPathComponent:path];
 			if ([UIActivityViewController class]) {
-				NSArray *items = [NSArray arrayWithObjects:fullURL, nil];
+				NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
 				UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
 				if (IPAD) {
 					if (self.popoverController.popoverVisible) {
@@ -121,10 +125,24 @@
 					[self presentModalViewController:activityVC animated:YES];
 				}
 			} else {
-				[[UIApplication sharedApplication] openURL:fullURL];
+				if (self.actionSheet) return;
+				NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
+				NSString *safariButtonTitle = NSLocalizedString(@"ActionSheetOpenInSafari", @"action sheet button label open in safari");
+				self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:safariButtonTitle, nil];
+				[self.actionSheet showFromBarButtonItem:sender animated:YES];
 			}
 		}
 	}
+}
+
+#pragma mark UIActionSheetDelegate Methods
+
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+	if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+		[[UIApplication sharedApplication] openURL:self.tracktivityURL];
+	}
+	self.actionSheet = nil;
 }
 
 #pragma mark UIViewController Methods
