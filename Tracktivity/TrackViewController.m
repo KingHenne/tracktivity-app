@@ -18,6 +18,8 @@
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM (IPAD ? 600 : 250)
 
+NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequestedNotification";
+
 @interface TrackViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) UIActionSheet *actionSheet;
@@ -43,11 +45,13 @@
 {
 	if (_tracktivityURL == nil && [self.wrappedTrack respondsToSelector:@selector(tracktivityID)]) {
 		NSString *tracktivityID = [self.wrappedTrack performSelector:@selector(tracktivityID)];
-		NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
-		NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
-		NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
-		NSString *path = [NSString stringWithFormat:@"activities/%@", tracktivityID];
-		_tracktivityURL = [appURL URLByAppendingPathComponent:path];
+		if (tracktivityID) {
+			NSURL *apiURL = [RKObjectManager sharedManager].baseURL;
+			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
+			NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
+			NSString *path = [NSString stringWithFormat:@"activities/%@", tracktivityID];
+			_tracktivityURL = [appURL URLByAppendingPathComponent:path];
+		}
 	}
 	return _tracktivityURL;
 }
@@ -117,30 +121,30 @@
 
 - (IBAction)actionButtonPressed:(UIBarButtonItem *)sender
 {
-	if ([self.wrappedTrack isKindOfClass:[Activity class]]) {
-		Activity *activity = (Activity *) self.wrappedTrack;
-		if (activity.tracktivityID) {
-			if ([UIActivityViewController class]) {
-				NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
-				UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
-				if (IPAD) {
-					if (self.popoverController.popoverVisible) {
-						[self.popoverController dismissPopoverAnimated:YES];
-					} else {
-						self.popoverController = [[UIPopoverController alloc] initWithContentViewController:activityVC];
-						[self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-					}
-				} else {
-					[self presentModalViewController:activityVC animated:YES];
-				}
+	if ([UIActivityViewController class]) {
+		NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
+		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+		if (IPAD) {
+			if (self.popoverController.popoverVisible) {
+				[self.popoverController dismissPopoverAnimated:YES];
 			} else {
-				if (self.actionSheet) return;
-				NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
-				NSString *safariButtonTitle = NSLocalizedString(@"ActionSheetOpenInSafari", @"action sheet button label open in safari");
-				self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:safariButtonTitle, nil];
-				[self.actionSheet showFromBarButtonItem:sender animated:YES];
+				self.popoverController = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+				[self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 			}
+		} else {
+			[self presentModalViewController:activityVC animated:YES];
 		}
+	} else {
+		if (self.actionSheet) return;
+		NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
+		NSString *bgtrackButtonTitle = NSLocalizedString(@"ActionSheetBackgroundTrack", @"action sheet button label background track");
+		if (self.tracktivityURL) {
+			NSString *safariButtonTitle = NSLocalizedString(@"ActionSheetOpenInSafari", @"action sheet button label open in safari");
+			self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:bgtrackButtonTitle, safariButtonTitle, nil];
+		} else {
+			self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:bgtrackButtonTitle, nil];
+		}
+		[self.actionSheet showFromBarButtonItem:sender animated:YES];
 	}
 }
 
@@ -149,6 +153,8 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 	if (buttonIndex == actionSheet.firstOtherButtonIndex) {
+		[[NSNotificationCenter defaultCenter] postNotificationName:BackgroundTrackRequestedNotification object:self.wrappedTrack];
+	} else if (buttonIndex == actionSheet.firstOtherButtonIndex + 1) {
 		[[UIApplication sharedApplication] openURL:self.tracktivityURL];
 	}
 	self.actionSheet = nil;

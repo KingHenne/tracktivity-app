@@ -10,6 +10,8 @@
 #import "WrappedTrackHandler.h"
 #import "SplitViewDetailController.h"
 
+extern NSString * const BackgroundTrackRequestedNotification;
+
 @interface TrackViewController : MapViewController <WrappedTrackHandler, SplitViewDetailController>
 
 @end

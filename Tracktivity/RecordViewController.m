@@ -17,6 +17,7 @@
 #import "Track+Data.h"
 #import "FinishActivityViewController.h"
 #import <RestKit/RestKit.h>
+#import "TrackViewController.h"
 
 // default zoom (i.e. region width/height) in meters
 #define DEFAULT_ZOOM 500
@@ -35,6 +36,7 @@
 @property (nonatomic) BOOL automaticallyCenterMapOnUser;
 @property (weak, nonatomic) IBOutlet UIButton *centerLocationButton;
 @property (nonatomic, strong) UserLocationAnnotation *userLocation;
+@property (nonatomic, strong) WrappedTrack *backgroundTrack;
 @end
 
 @implementation RecordViewController
@@ -47,6 +49,7 @@
 @synthesize automaticallyCenterMapOnUser = _automaticallyCenterMapOnUser;
 @synthesize centerLocationButton = _centerLocationButton;
 @synthesize userLocation = _userLocation;
+@synthesize backgroundTrack = _backgroundTrack;
 
 - (TrackingManager *)trackingManager
 {
@@ -79,6 +82,11 @@
 		self.userLocation = [UserLocationAnnotation new];
 	}
 	return _userLocation;
+}
+
+- (void)setBackgroundTrack:(WrappedTrack *)backgroundTrack
+{
+	_backgroundTrack = backgroundTrack;
 }
 
 - (void)setAutomaticallyCenterMapOnUser:(BOOL)center
@@ -283,6 +291,13 @@
 	[self stopUsingLocationServices];
 }
 
+- (void)backgroundTrackRequestedNotification:(NSNotification *)notification
+{
+	if (!self.trackingManager.isRecordingActivity) {
+		self.backgroundTrack = [notification object];
+	}
+}
+
 #pragma mark FinishActivityViewControllerPresenter Methods
 
 - (void)finishActivityViewController:(FinishActivityViewController *)sender
@@ -334,7 +349,8 @@
 - (void)viewDidDisappear:(BOOL)animated
 {
 	[super viewDidDisappear:animated];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidEnterBackgroundNotification object:nil];
 	[self stopUsingLocationServices];
 }
 
@@ -348,6 +364,10 @@
         self.automaticallyCenterMapOnUser = NO;
 	};
 	[self.mapView addGestureRecognizer:tapInterceptor];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(backgroundTrackRequestedNotification:)
+												 name:BackgroundTrackRequestedNotification
+											   object:nil];
 }
 
 - (void)viewDidUnload
@@ -355,6 +375,7 @@
 	[self setRecordButton:nil];
 	[self setFinishButton:nil];
 	[self setCenterLocationButton:nil];
+	[[NSNotificationCenter defaultCenter] removeObserver:self name:BackgroundTrackRequestedNotification object:nil];
     [super viewDidUnload];
 }
 
