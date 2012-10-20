@@ -18,10 +18,15 @@
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM (IPAD ? 600 : 250)
 
+@interface TrackViewController ()
+@property (nonatomic, strong) UIPopoverController *popoverController;
+@end
+
 @implementation TrackViewController
 
 @synthesize wrappedTrack = _wrappedTrack;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+@synthesize popoverController = _myPopoverController;
 
 - (void)setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem
 {
@@ -101,13 +106,26 @@
 			NSURL *baseURL = [apiURL URLByDeletingLastPathComponent];
 			NSURL *appURL = [baseURL URLByAppendingPathComponent:@"app"];
 			NSString *path = [NSString stringWithFormat:@"activities/%@", activity.tracktivityID];
-			[[UIApplication sharedApplication] openURL:[appURL URLByAppendingPathComponent:path]];
+			NSURL *fullURL = [appURL URLByAppendingPathComponent:path];
+			if ([UIActivityViewController class]) {
+				NSArray *items = [NSArray arrayWithObjects:fullURL, nil];
+				UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+				if (IPAD) {
+					if (self.popoverController.popoverVisible) {
+						[self.popoverController dismissPopoverAnimated:YES];
+					} else {
+						self.popoverController = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+						[self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+					}
+				} else {
+					[self presentModalViewController:activityVC animated:YES];
+				}
+			} else {
+				[[UIApplication sharedApplication] openURL:fullURL];
+			}
 		}
 	}
 }
-
-#pragma mark MKMapViewDelegate Methods
-
 
 #pragma mark UIViewController Methods
 

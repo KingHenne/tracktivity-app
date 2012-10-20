@@ -176,6 +176,9 @@
         </class>
         <class className="TrackViewController" superclassName="MapViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
+            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
