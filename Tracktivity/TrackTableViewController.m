@@ -19,6 +19,8 @@
 #import "SplitViewDetailController.h"
 #import "WrappedTrack+Info.h"
 
+NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotification";
+
 @interface TrackTableViewController () <RKObjectLoaderDelegate, UIActionSheetDelegate>
 @property (nonatomic, strong) UIActionSheet *deleteActionSheet;
 @end

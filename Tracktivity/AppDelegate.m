@@ -83,6 +83,7 @@
 		// Inform user that the file could not be imported.
 		[self performSelectorOnMainThread:@selector(showImportFailureMessageForURL:) withObject:url waitUntilDone:NO];
 	}
+	[self.gpxParser removeObserver:self.tbc forKeyPath:@"parseProgress"];
 }
 
 #pragma mark UIAlertViewDelegate Methods
@@ -99,10 +100,12 @@
 				[navc popToRootViewControllerAnimated:NO];
 				SegmentedTrackViewController *stvc = (SegmentedTrackViewController *) navc.topViewController;
 				[stvc setCurrentViewControllerWithIndex:kRouteViewController];
-				NSIndexPath *cellIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
 				TrackTableViewController *tvc = stvc.currentViewController;
-				[tvc performSegueWithIdentifier:@"Show Route Details"
-										 sender:[tvc.tableView cellForRowAtIndexPath:cellIndexPath]];
+				[[NSNotificationCenter defaultCenter] addObserver:tvc
+														 selector:@selector(displayImportedTrackNotification:)
+															 name:DisplayImportedTrackNotification
+														   object:nil];
+				[[NSNotificationCenter defaultCenter] postNotificationName:DisplayImportedTrackNotification object:importedRoute];
 			}
 		}
 	}];

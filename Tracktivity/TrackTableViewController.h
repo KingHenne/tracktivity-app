@@ -10,6 +10,8 @@
 #import "CoreDataTableViewController.h"
 #import <RestKit/RestKit.h>
 
+extern NSString * const DisplayImportedTrackNotification;
+
 @interface TrackTableViewController : CoreDataTableViewController <UISplitViewControllerDelegate>
 
 - (IBAction)trashButtonPressed:(UIBarButtonItem *)sender;
