@@ -45,7 +45,6 @@
 		B16A049715B32101005B372D /* NSDate+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049615B32100005B372D /* NSDate+Strings.m */; };
 		B16A049B15B343F6005B372D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049A15B343F6005B372D /* MapViewController.m */; };
 		B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A115B34639005B372D /* WaypointAnnotation.m */; };
-		B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A515B36311005B372D /* TrackOverlayView.m */; };
 		B174D6831617AA480098B433 /* userLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6811617AA480098B433 /* userLocation.png */; };
 		B174D6841617AA480098B433 /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6821617AA480098B433 /* userLocation@2x.png */; };
 		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
@@ -232,8 +231,6 @@
 		B16A04A015B34639005B372D /* WaypointAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WaypointAnnotation.h; sourceTree = "<group>"; };
 		B16A04A115B34639005B372D /* WaypointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaypointAnnotation.m; sourceTree = "<group>"; };
 		B16A04A315B35784005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/iPhone.storyboard; sourceTree = "<group>"; };
-		B16A04A415B36311005B372D /* TrackOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackOverlayView.h; sourceTree = "<group>"; };
-		B16A04A515B36311005B372D /* TrackOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackOverlayView.m; sourceTree = "<group>"; };
 		B174D6811617AA480098B433 /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = userLocation.png; path = Tracktivity/userLocation.png; sourceTree = "<group>"; };
 		B174D6821617AA480098B433 /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "userLocation@2x.png"; path = "Tracktivity/userLocation@2x.png"; sourceTree = "<group>"; };
 		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
@@ -564,8 +561,6 @@
 				B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */,
 				B16A04A015B34639005B372D /* WaypointAnnotation.h */,
 				B16A04A115B34639005B372D /* WaypointAnnotation.m */,
-				B16A04A415B36311005B372D /* TrackOverlayView.h */,
-				B16A04A515B36311005B372D /* TrackOverlayView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -771,7 +766,6 @@
 				B16A049715B32101005B372D /* NSDate+Strings.m in Sources */,
 				B16A049B15B343F6005B372D /* MapViewController.m in Sources */,
 				B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */,
-				B16A04A615B36311005B372D /* TrackOverlayView.m in Sources */,
 				B1FB1B0D15BC0F3600B51E16 /* Model.xcdatamodeld in Sources */,
 				B1FB1B7415BC66D300B51E16 /* Waypoint+Create.m in Sources */,
 				B1FB1B7715BC680800B51E16 /* Segment+Create.m in Sources */,
