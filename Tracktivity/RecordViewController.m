@@ -37,6 +37,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *centerLocationButton;
 @property (nonatomic, strong) UserLocationAnnotation *userLocation;
 @property (nonatomic, strong) WrappedTrack *backgroundTrack;
+@property (nonatomic, strong) MultiPolyline *backgroundTrackMultiPolyline;
 @end
 
 @implementation RecordViewController
@@ -50,6 +51,7 @@
 @synthesize centerLocationButton = _centerLocationButton;
 @synthesize userLocation = _userLocation;
 @synthesize backgroundTrack = _backgroundTrack;
+@synthesize backgroundTrackMultiPolyline = _backgroundTrackMultiPolyline;
 
 - (TrackingManager *)trackingManager
 {
@@ -87,6 +89,18 @@
 - (void)setBackgroundTrack:(WrappedTrack *)backgroundTrack
 {
 	_backgroundTrack = backgroundTrack;
+	self.backgroundTrackMultiPolyline = backgroundTrack.track.multiPolyline;
+}
+
+- (void)setBackgroundTrackMultiPolyline:(MultiPolyline *)backgroundTrackMultiPolyline
+{
+	if (_backgroundTrackMultiPolyline) {
+		[self.mapView removeOverlays:_backgroundTrackMultiPolyline.polylines];
+	}
+	if (backgroundTrackMultiPolyline) {
+		[self.mapView addOverlays:backgroundTrackMultiPolyline.polylines];
+	}
+	_backgroundTrackMultiPolyline = backgroundTrackMultiPolyline;
 }
 
 - (void)setAutomaticallyCenterMapOnUser:(BOOL)center
@@ -192,7 +206,15 @@
 {
 	[self.mapView removeAnnotations:self.waypoints];
 	[self.waypoints removeAllObjects];
-	[self.mapView removeOverlays:self.mapView.overlays];
+	if (self.backgroundTrackMultiPolyline) {
+		// remove all overlays not belonging to the background track
+		NSMutableArray *mapOverlays = [self.mapView.overlays mutableCopy];
+		[mapOverlays removeObjectsInArray:self.backgroundTrackMultiPolyline.polylines];
+		[self.mapView removeOverlays:mapOverlays];
+	} else {
+		// remove all overlays
+		[self.mapView removeOverlays:self.mapView.overlays];
+	}
 }
 
 - (void)startedActivity
