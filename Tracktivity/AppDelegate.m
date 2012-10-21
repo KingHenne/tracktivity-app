@@ -122,12 +122,9 @@
   sourceApplication:(NSString *)sourceApplication
 		 annotation:(id)annotation
 {
-	if ([url.pathExtension isEqualToString:@"gpx"]) {
-		[self.tbc performSegueWithIdentifier:@"Show Import View" sender:url];
-		[self performSelectorInBackground:@selector(parseGPXFile:) withObject:url];
-		return YES;
-	}
-	return NO;
+	[self.tbc performSegueWithIdentifier:@"Show Import View" sender:url];
+	[self performSelectorInBackground:@selector(parseGPXFile:) withObject:url];
+	return YES;
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
