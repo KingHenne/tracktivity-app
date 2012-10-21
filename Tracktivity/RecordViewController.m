@@ -97,10 +97,10 @@
 	if (_backgroundTrackMultiPolyline) {
 		[self.mapView removeOverlays:_backgroundTrackMultiPolyline.polylines];
 	}
-	if (backgroundTrackMultiPolyline) {
-		[self.mapView addOverlays:backgroundTrackMultiPolyline.polylines];
-	}
 	_backgroundTrackMultiPolyline = backgroundTrackMultiPolyline;
+	if (_backgroundTrackMultiPolyline) {
+		[self.mapView addOverlays:_backgroundTrackMultiPolyline.polylines];
+	}
 }
 
 - (void)setAutomaticallyCenterMapOnUser:(BOOL)center
@@ -282,6 +282,18 @@
 		return aView;
 	}
 	return [super mapView:mapView viewForAnnotation:annotation];
+}
+
+- (MKOverlayView *)mapView:(MKMapView *)theMapView
+			viewForOverlay:(id <MKOverlay>)overlay
+{
+	MKPolylineView* lineView = [[MKPolylineView alloc] initWithPolyline:overlay];
+	if ([self.backgroundTrackMultiPolyline.polylines containsObject:overlay]) {
+		lineView.strokeColor = [UIColor colorWithRed:0.13f green:0.73f blue:0.19f alpha:0.7f];
+	} else {
+		lineView.strokeColor = [UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f];
+	}
+	return lineView;
 }
 
 - (void)viewDidAppear
