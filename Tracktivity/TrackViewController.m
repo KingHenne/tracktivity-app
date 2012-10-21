@@ -13,6 +13,7 @@
 #import <RestKit/RestKit.h>
 #import "Track+Data.h"
 #import "WrappedTrack+Info.h"
+#import "OpenInSafariActivity.h"
 
 #define IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 // minimum zoom (i.e. region width/height) in meters
@@ -123,7 +124,8 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 {
 	if ([UIActivityViewController class]) {
 		NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
-		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+		NSArray *customActivities = [NSArray arrayWithObject:[OpenInSafariActivity new]];
+		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:customActivities];
 		if (IPAD) {
 			if (self.popoverController.popoverVisible) {
 				[self.popoverController dismissPopoverAnimated:YES];

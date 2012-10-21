@@ -29,6 +29,11 @@
 		B12D4BEB15B1CDC2001490B3 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */; };
 		B12D4BED15B1CDC7001490B3 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B12D4BEC15B1CDC7001490B3 /* MapKit.framework */; };
 		B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */; };
+		B142346B16342D5500AEAFE9 /* OpenInSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */; };
+		B14234701634444800AEAFE9 /* activitySafari-43.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346C1634444800AEAFE9 /* activitySafari-43.png */; };
+		B14234711634444800AEAFE9 /* activitySafari-43@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */; };
+		B14234721634444800AEAFE9 /* activitySafari-55.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346E1634444800AEAFE9 /* activitySafari-55.png */; };
+		B14234731634444800AEAFE9 /* activitySafari-55@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346F1634444800AEAFE9 /* activitySafari-55@2x.png */; };
 		B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */ = {isa = PBXBuildFile; fileRef = B148B69B161C962B003B9DDC /* WrappedTrack.m */; };
 		B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B148B6B2161C9CD3003B9DDC /* iPad.storyboard */; };
 		B164D56615B74F110061E562 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B164D56515B74F110061E562 /* QuartzCore.framework */; };
@@ -200,6 +205,12 @@
 		B12D4BEC15B1CDC7001490B3 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		B13BCC38160E3B7A001E7486 /* WildcardGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildcardGestureRecognizer.h; sourceTree = "<group>"; };
 		B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildcardGestureRecognizer.m; sourceTree = "<group>"; };
+		B142346916342D5400AEAFE9 /* OpenInSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInSafariActivity.h; sourceTree = "<group>"; };
+		B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInSafariActivity.m; sourceTree = "<group>"; };
+		B142346C1634444800AEAFE9 /* activitySafari-43.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activitySafari-43.png"; path = "Tracktivity/activitySafari-43.png"; sourceTree = "<group>"; };
+		B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activitySafari-43@2x.png"; path = "Tracktivity/activitySafari-43@2x.png"; sourceTree = "<group>"; };
+		B142346E1634444800AEAFE9 /* activitySafari-55.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activitySafari-55.png"; path = "Tracktivity/activitySafari-55.png"; sourceTree = "<group>"; };
+		B142346F1634444800AEAFE9 /* activitySafari-55@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activitySafari-55@2x.png"; path = "Tracktivity/activitySafari-55@2x.png"; sourceTree = "<group>"; };
 		B148B69A161C962B003B9DDC /* WrappedTrack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WrappedTrack.h; sourceTree = "<group>"; };
 		B148B69B161C962B003B9DDC /* WrappedTrack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WrappedTrack.m; sourceTree = "<group>"; };
 		B148B6B2161C9CD3003B9DDC /* iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = iPad.storyboard; sourceTree = "<group>"; };
@@ -403,6 +414,10 @@
 		B12D4BE915B1CD78001490B3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B142346C1634444800AEAFE9 /* activitySafari-43.png */,
+				B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */,
+				B142346E1634444800AEAFE9 /* activitySafari-55.png */,
+				B142346F1634444800AEAFE9 /* activitySafari-55@2x.png */,
 				B174D6811617AA480098B433 /* userLocation.png */,
 				B174D6821617AA480098B433 /* userLocation@2x.png */,
 				B187CEDF1607AF33008F6236 /* Default-568h@2x.png */,
@@ -497,6 +512,8 @@
 				B10BFDC115CECF0F0070FA11 /* ActivityTableViewController.m */,
 				B10BFDC315CECF2E0070FA11 /* RouteTableViewController.h */,
 				B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */,
+				B142346916342D5400AEAFE9 /* OpenInSafariActivity.h */,
+				B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -731,6 +748,10 @@
 				B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */,
 				B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */,
 				B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */,
+				B14234701634444800AEAFE9 /* activitySafari-43.png in Resources */,
+				B14234711634444800AEAFE9 /* activitySafari-43@2x.png in Resources */,
+				B14234721634444800AEAFE9 /* activitySafari-55.png in Resources */,
+				B14234731634444800AEAFE9 /* activitySafari-55@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -783,6 +804,7 @@
 				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
 				B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */,
 				B1A8D150162221DD00926E42 /* Activity.m in Sources */,
+				B142346B16342D5500AEAFE9 /* OpenInSafariActivity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
