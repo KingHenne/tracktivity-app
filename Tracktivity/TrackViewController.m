@@ -168,9 +168,6 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-	if ([self.wrappedTrack isKindOfClass:[Route class]]) {
-		self.navigationItem.rightBarButtonItem = nil;
-	}
 }
 
 - (void)viewDidUnload
