@@ -138,6 +138,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="actionButton" destination="wL8-hf-ugn" id="fQr-EE-fjG"/>
                         <outlet property="mapView" destination="58a-U5-Lyz" id="PTJ-gb-inu"/>
                     </connections>
                 </viewController>
@@ -149,38 +150,6 @@
     <resources>
         <image name="mapThumbnail.png" width="53" height="53"/>
     </resources>
-    <classes>
-        <class className="ActivityTableViewController" superclassName="TrackTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/ActivityTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="refreshButtonPressed:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="CoreDataTableViewController" superclassName="UITableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/CoreDataTableViewController.h"/>
-        </class>
-        <class className="MapViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/MapViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
-            </relationships>
-        </class>
-        <class className="NSLayoutConstraint" superclassName="NSObject">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/NSLayoutConstraint.h"/>
-        </class>
-        <class className="TrackTableViewController" superclassName="CoreDataTableViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackTableViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="trashButtonPressed:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-        <class className="TrackViewController" superclassName="MapViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/TrackViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="actionButtonPressed:" candidateClass="UIBarButtonItem"/>
-            </relationships>
-        </class>
-    </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
         <simulatedOrientationMetrics key="orientation"/>

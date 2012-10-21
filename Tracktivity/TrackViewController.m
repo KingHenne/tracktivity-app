@@ -25,6 +25,7 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 @property (nonatomic, strong) UIPopoverController *popoverController;
 @property (nonatomic, strong) UIActionSheet *actionSheet;
 @property (nonatomic, strong) NSURL *tracktivityURL;
+@property (nonatomic, strong) IBOutlet UIBarButtonItem *actionButton;
 @end
 
 @implementation TrackViewController
@@ -113,6 +114,9 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 - (void)setWrappedTrack:(WrappedTrack *)wrappedTrack
 {
 	if (_wrappedTrack == wrappedTrack) return;
+	if (self.navigationItem.rightBarButtonItem == nil) {
+		self.navigationItem.rightBarButtonItem = self.actionButton;
+	}
 	_wrappedTrack = wrappedTrack;
 	self.title = wrappedTrack.title;
 	self.tracktivityURL = nil; // reset saved URL
@@ -168,10 +172,14 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+	if (self.wrappedTrack == nil) {
+		self.navigationItem.rightBarButtonItem = nil;
+	}
 }
 
 - (void)viewDidUnload
 {
+	[self setActionButton:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }
