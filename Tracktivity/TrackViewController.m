@@ -127,7 +127,7 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 - (IBAction)actionButtonPressed:(UIBarButtonItem *)sender
 {
 	if ([UIActivityViewController class]) {
-		NSArray *items = [NSArray arrayWithObjects:self.tracktivityURL, nil];
+		NSArray *items = [NSArray arrayWithObjects:self.title, self.tracktivityURL, nil];
 		NSArray *customActivities = [NSArray arrayWithObject:[OpenInSafariActivity new]];
 		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:customActivities];
 		if (IPAD) {
