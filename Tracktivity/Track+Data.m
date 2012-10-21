@@ -50,7 +50,8 @@
 - (NSArray *)encodedPolylineStrings
 {
 	NSMutableArray *encodedPolylineStrings = [NSMutableArray new];
-	float minDist = VERYSMALL * self.numberOfTotalPoints / 100;
+	int count = self.numberOfTotalPoints;
+	float minDist = VERYSMALL * count * count / 100000;
 	for (Segment *segment in self.segments) {
 		[encodedPolylineStrings addObject:[segment encodedPolylineStringWithMinimumDistanceBetweenPoints:minDist]];
 	}
