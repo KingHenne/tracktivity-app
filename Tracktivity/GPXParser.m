@@ -20,13 +20,13 @@
 @interface GPXParser ()
 @property (nonatomic, strong) NSMutableDictionary *elementStates;
 @property (nonatomic, strong) Route *currentRoute;
-@property (nonatomic, strong) Segment *currentSegment;
 @property (nonatomic, strong) Waypoint *currentRoutePoint;
 @property (nonatomic, strong) Waypoint *currentWayPoint;
 @property (nonatomic, strong) NSURL *fileURL;
 @property (nonatomic) int pointsParsed;
 @property (nonatomic) int totalPointsToParse;
 @property (nonatomic) float parseProgress;
+@property (nonatomic, strong) NSMutableArray *pointsArray;
 @end
 
 @implementation GPXParser
@@ -34,13 +34,13 @@
 @synthesize parsedRoute = _parsedRoute;
 @synthesize elementStates = _elementStates;
 @synthesize currentRoute = _currentRoute;
-@synthesize currentSegment = _currentSegment;
 @synthesize currentRoutePoint = _currentRoutePoint;
 @synthesize currentWayPoint = _currentWayPoint;
 @synthesize fileURL = _fileURL;
 @synthesize pointsParsed = _pointsParsed;
 @synthesize totalPointsToParse = _totalPointsToParse;
 @synthesize parseProgress = _parseProgress;
+@synthesize pointsArray = _pointsArray;
 
 - (NSMutableDictionary *)elementStates
 {
@@ -90,6 +90,8 @@
     }
 	// If TBXML found a root node, process element and iterate all children
 	if (tbxml.rootXMLElement) {
+		NSManagedObjectContext *moc = [RKManagedObjectStore.defaultObjectStore managedObjectContextForCurrentThread];
+		moc.undoManager = nil;
 		[self traverseElement:tbxml.rootXMLElement];
 	}
 	NSTimeInterval time = [start timeIntervalSinceNow];
@@ -125,10 +127,10 @@
 		self.currentRoute.created = [NSDate date];
 		self.currentRoute.track = [Track createEntity];
 		if ([elementName isEqualToString:@"rte"]) {
-			self.currentSegment = [Segment createEntity];
+			self.pointsArray = [NSMutableArray new];
 		}
 	} else if ([elementName isEqualToString:@"trkseg"]) {
-		self.currentSegment = [Segment createEntity];
+		self.pointsArray = [NSMutableArray new];
 	} else if ([elementName isEqualToString:@"trkpt"] || [elementName isEqualToString:@"rtept"]) {
 		double lat = [[TBXML valueOfAttributeNamed:@"lat" forElement:element] doubleValue];
 		double lon = [[TBXML valueOfAttributeNamed:@"lon" forElement:element] doubleValue];
@@ -172,17 +174,20 @@
 		}
 		self.currentRoute.originalFile = [NSData dataWithContentsOfURL:self.fileURL];
 		if ([elementName isEqualToString:@"rte"]) {
-			[self.currentRoute.track addSegmentsObject:self.currentSegment];
-			self.currentSegment = nil;
+			Segment *segment = [Segment createEntity];
+			segment.points = [NSOrderedSet orderedSetWithArray:self.pointsArray];
+			[self.currentRoute.track addSegmentsObject:segment];
+			self.pointsArray = nil;
 		}
 		[self saveContext];
 		self.parsedRoute = self.currentRoute;
-		self.currentRoute = nil;
 	} else if ([elementName isEqualToString:@"trkseg"]) {
-		[self.currentRoute.track addSegmentsObject:self.currentSegment];
-		self.currentSegment = nil;
+		Segment *segment = [Segment createEntity];
+		segment.points = [NSOrderedSet orderedSetWithArray:self.pointsArray];
+		[self.currentRoute.track addSegmentsObject:segment];
+		self.pointsArray = nil;
 	} else if ([elementName isEqualToString:@"trkpt"] || [elementName isEqualToString:@"rtept"]) {
-		[self.currentSegment addPointsObject:self.currentRoutePoint];
+		[self.pointsArray addObject:self.currentRoutePoint];
 		self.currentRoutePoint = nil;
 		self.pointsParsed++;
 		self.parseProgress = (float)self.pointsParsed / (float)self.totalPointsToParse;
