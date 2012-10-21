@@ -81,11 +81,14 @@
 
 - (void)updateTimeRelatedViews
 {
+	if (!self.trackingManager.activity.start) return;
 	self.elapsedTimeLabel.text = [self.trackingManager.activity.start formattedTimeIntervalSinceNow];
 	double totalTimeInSeconds = abs([self.trackingManager.activity.start timeIntervalSinceNow]);
-	CLLocationDistance totalDistanceInKm = self.trackingManager.totalDistance / 1000.0;
-	double averageSpeedInKph = totalDistanceInKm / totalTimeInSeconds * 3600;
-	self.averageSpeedLabel.text = [NSString stringWithFormat:NSLocalizedString(@"SpeedFormat", @"SpeedFormat"), averageSpeedInKph];
+	if (totalTimeInSeconds > 0) {
+		CLLocationDistance totalDistanceInKm = self.trackingManager.totalDistance / 1000.0;
+		double averageSpeedInKph = totalDistanceInKm / totalTimeInSeconds * 3600;
+		self.averageSpeedLabel.text = [NSString localizedStringWithFormat:NSLocalizedString(@"SpeedFormat", @"SpeedFormat"), averageSpeedInKph];
+	}
 }
 
 - (void)startUpdateTimer
@@ -107,7 +110,7 @@
 	self.verticalAccuracyLabel.text = location.localizedVerticalAccuracyString;
 	self.currentSpeedLabel.text = location.localizedSpeedString;
 	CLLocationDistance totalDistanceInKm = self.trackingManager.totalDistance / 1000.0;
-	self.totalDistanceLabel.text = [NSString stringWithFormat:NSLocalizedString(@"DistanceFormat", @"Distance in km"), totalDistanceInKm];
+	self.totalDistanceLabel.text = [NSString localizedStringWithFormat:NSLocalizedString(@"DistanceFormat", @"Distance in km"), totalDistanceInKm];
 }
 
 #pragma mark TrackingManagerDelegate Methods

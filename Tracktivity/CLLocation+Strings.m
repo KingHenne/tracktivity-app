@@ -15,7 +15,7 @@
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
     NSString *latString = (self.coordinate.latitude < 0) ? NSLocalizedString(@"South", @"South") : NSLocalizedString(@"North", @"North");
-    return [NSString stringWithFormat:NSLocalizedString(@"LatLongFormat", @"LatLongFormat"), fabs(self.coordinate.latitude), latString];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"LatLongFormat", @"LatLongFormat"), fabs(self.coordinate.latitude), latString];
 }
 
 - (NSString *)localizedLongitudeString {
@@ -23,7 +23,7 @@
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
     NSString *lonString = (self.coordinate.longitude < 0) ? NSLocalizedString(@"West", @"West") : NSLocalizedString(@"East", @"East");
-    return [NSString stringWithFormat:NSLocalizedString(@"LatLongFormat", @"LatLongFormat"), fabs(self.coordinate.longitude), lonString];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"LatLongFormat", @"LatLongFormat"), fabs(self.coordinate.longitude), lonString];
 }
 
 - (NSString *)localizedAltitudeString {
@@ -31,35 +31,35 @@
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
     NSString *seaLevelString = (self.altitude < 0) ? NSLocalizedString(@"BelowSeaLevel", @"BelowSeaLevel") : NSLocalizedString(@"AboveSeaLevel", @"AboveSeaLevel");
-    return [NSString stringWithFormat:NSLocalizedString(@"AltitudeFormat", @"AltitudeFormat"), fabs(self.altitude), seaLevelString];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"AltitudeFormat", @"AltitudeFormat"), fabs(self.altitude), seaLevelString];
 }
 
 - (NSString *)localizedHorizontalAccuracyString {
     if (self.horizontalAccuracy < 0) {
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
-    return [NSString stringWithFormat:NSLocalizedString(@"AccuracyFormat", @"AccuracyFormat"), self.horizontalAccuracy];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"AccuracyFormat", @"AccuracyFormat"), self.horizontalAccuracy];
 }
 
 - (NSString *)localizedVerticalAccuracyString {
     if (self.verticalAccuracy < 0) {
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
-    return [NSString stringWithFormat:NSLocalizedString(@"AccuracyFormat", @"AccuracyFormat"), self.verticalAccuracy];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"AccuracyFormat", @"AccuracyFormat"), self.verticalAccuracy];
 }    
 
 - (NSString *)localizedCourseString {
     if (self.course < 0) {
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
-    return [NSString stringWithFormat:NSLocalizedString(@"CourseFormat", @"CourseFormat"), self.course];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"CourseFormat", @"CourseFormat"), self.course];
 }
 
 - (NSString *)localizedSpeedString {
     if (self.speed < 0) {
         return NSLocalizedString(@"DataUnavailable", @"DataUnavailable");
     }
-    return [NSString stringWithFormat:NSLocalizedString(@"SpeedFormat", @"SpeedFormat"), self.speed * 3.6];
+    return [NSString localizedStringWithFormat:NSLocalizedString(@"SpeedFormat", @"SpeedFormat"), self.speed * 3.6];
 }
 
 @end
