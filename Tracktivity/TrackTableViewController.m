@@ -54,7 +54,6 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 			}
 		});
 	}
-	dispatch_release(queue);
 }
 
 - (void)deleteThumbnails
@@ -129,7 +128,6 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 					}
 				}
 			});
-			dispatch_release(queue);
 		}
 	} else {
 		cell.imageView.image = thumbnail;

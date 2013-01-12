@@ -126,31 +126,20 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 
 - (IBAction)actionButtonPressed:(UIBarButtonItem *)sender
 {
-	if ([UIActivityViewController class]) {
-		NSArray *items = [NSArray arrayWithObjects:self.title, self.tracktivityURL, nil];
-		NSArray *customActivities = [NSArray arrayWithObject:[OpenInSafariActivity new]];
-		UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:customActivities];
-		if (IPAD) {
-			if (self.popoverController.popoverVisible) {
-				[self.popoverController dismissPopoverAnimated:YES];
-			} else {
-				self.popoverController = [[UIPopoverController alloc] initWithContentViewController:activityVC];
-				[self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-			}
+	NSArray *items = [NSArray arrayWithObjects:self.title, self.tracktivityURL, nil];
+	NSArray *customActivities = [NSArray arrayWithObject:[OpenInSafariActivity new]];
+	UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:customActivities];
+	if (IPAD) {
+		if (self.popoverController.popoverVisible) {
+			[self.popoverController dismissPopoverAnimated:YES];
 		} else {
-			[self presentModalViewController:activityVC animated:YES];
+			self.popoverController = [[UIPopoverController alloc] initWithContentViewController:activityVC];
+			[self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 		}
 	} else {
-		if (self.actionSheet) return;
-		NSString *cancelButtonTitle = NSLocalizedString(@"ActionSheetCancel", @"action sheet cancel button label");
-		NSString *bgtrackButtonTitle = NSLocalizedString(@"ActionSheetBackgroundTrack", @"action sheet button label background track");
-		if (self.tracktivityURL) {
-			NSString *safariButtonTitle = NSLocalizedString(@"ActionSheetOpenInSafari", @"action sheet button label open in safari");
-			self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:bgtrackButtonTitle, safariButtonTitle, nil];
-		} else {
-			self.actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:nil otherButtonTitles:bgtrackButtonTitle, nil];
-		}
-		[self.actionSheet showFromBarButtonItem:sender animated:YES];
+		[self presentViewController:activityVC animated:YES completion:^{
+			
+		}];
 	}
 }
 
