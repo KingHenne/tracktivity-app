@@ -75,6 +75,7 @@
 		B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A59B03160F6E22000FFD92 /* MultiPolyline.m */; };
 		B1A59B27160FA152000FFD92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B26160FA152000FFD92 /* libz.dylib */; };
 		B1A59B29160FA2D3000FFD92 /* libTBXML-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */; };
+		B1A5DA7616A1E11D005FD4E6 /* WFConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A5DA7416A1E111005FD4E6 /* WFConnector.framework */; };
 		B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D1451621E6D500926E42 /* ActivityType.m */; };
 		B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1471622024A00926E42 /* ActivityTypes.json */; };
 		B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */; };
@@ -217,7 +218,6 @@
 		B164D56815B754C80061E562 /* 18-05-2012.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = "18-05-2012.gpx"; path = "../18-05-2012.gpx"; sourceTree = "<group>"; };
 		B16A047015B20FC1005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B16A047115B20FC1005B372D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		B16A047415B21C35005B372D /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_2.2.3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
 		B16A047615B21CA3005B372D /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		B16A047815B21CAA005B372D /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		B16A047F15B2B7FC005B372D /* TrackingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackingManager.h; sourceTree = "<group>"; };
@@ -279,6 +279,7 @@
 		B1A59B03160F6E22000FFD92 /* MultiPolyline.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiPolyline.m; sourceTree = "<group>"; };
 		B1A59B10160F9BF9000FFD92 /* TBXML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TBXML.xcodeproj; path = TBXML/TBXML.xcodeproj; sourceTree = "<group>"; };
 		B1A59B26160FA152000FFD92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		B1A5DA7416A1E111005FD4E6 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_2.3.5/dependencies/WFConnector.framework; sourceTree = "<group>"; };
 		B1A8D1441621E6D500926E42 /* ActivityType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityType.h; sourceTree = "<group>"; };
 		B1A8D1451621E6D500926E42 /* ActivityType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityType.m; sourceTree = "<group>"; };
 		B1A8D1471622024A00926E42 /* ActivityTypes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ActivityTypes.json; sourceTree = "<group>"; };
@@ -309,6 +310,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1A5DA7616A1E11D005FD4E6 /* WFConnector.framework in Frameworks */,
 				B1A59B29160FA2D3000FFD92 /* libTBXML-iOS.a in Frameworks */,
 				B1A59B27160FA152000FFD92 /* libz.dylib in Frameworks */,
 				B190500415FD2DBB00B225E2 /* libxml2.dylib in Frameworks */,
@@ -356,6 +358,7 @@
 			children = (
 				B1A59B26160FA152000FFD92 /* libz.dylib */,
 				B190500315FD2DBB00B225E2 /* libxml2.dylib */,
+				B1A5DA7416A1E111005FD4E6 /* WFConnector.framework */,
 				B190500115FD2DA700B225E2 /* SystemConfiguration.framework */,
 				B1904FFF15FD2D9C00B225E2 /* Security.framework */,
 				B1904FFD15FD2D9400B225E2 /* MobileCoreServices.framework */,
@@ -364,7 +367,6 @@
 				B164D56515B74F110061E562 /* QuartzCore.framework */,
 				B16A047815B21CAA005B372D /* CoreBluetooth.framework */,
 				B16A047615B21CA3005B372D /* ExternalAccessory.framework */,
-				B16A047415B21C35005B372D /* WFConnector.framework */,
 				B12D4BEC15B1CDC7001490B3 /* MapKit.framework */,
 				B12D4BEA15B1CDC1001490B3 /* CoreLocation.framework */,
 				B12D4BBE15B1CCA6001490B3 /* UIKit.framework */,
@@ -914,6 +916,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
+					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tracktivity/Tracktivity-Prefix.pch";
@@ -939,6 +942,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
+					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tracktivity/Tracktivity-Prefix.pch";
