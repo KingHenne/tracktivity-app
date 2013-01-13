@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B10865BD16A2EF2300EB41FB /* BluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
 		B10BFDBF15CECBA40070FA11 /* SegmentedTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBE15CECBA40070FA11 /* SegmentedTrackViewController.m */; };
@@ -76,6 +77,8 @@
 		B1A59B27160FA152000FFD92 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B26160FA152000FFD92 /* libz.dylib */; };
 		B1A59B29160FA2D3000FFD92 /* libTBXML-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */; };
 		B1A5DA7616A1E11D005FD4E6 /* WFConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A5DA7416A1E111005FD4E6 /* WFConnector.framework */; };
+		B1A5DA7D16A1E54C005FD4E6 /* bluetooth.png in Resources */ = {isa = PBXBuildFile; fileRef = B1A5DA7B16A1E54C005FD4E6 /* bluetooth.png */; };
+		B1A5DA7E16A1E54C005FD4E6 /* bluetooth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1A5DA7C16A1E54C005FD4E6 /* bluetooth@2x.png */; };
 		B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D1451621E6D500926E42 /* ActivityType.m */; };
 		B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1471622024A00926E42 /* ActivityTypes.json */; };
 		B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */; };
@@ -173,6 +176,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B10865BB16A2EF2300EB41FB /* BluetoothViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothViewController.h; sourceTree = "<group>"; };
+		B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BluetoothViewController.m; sourceTree = "<group>"; };
 		B10BFDB115CDC04C0070FA11 /* Activity+Create.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Activity+Create.h"; sourceTree = "<group>"; };
 		B10BFDB215CDC04C0070FA11 /* Activity+Create.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Activity+Create.m"; sourceTree = "<group>"; };
 		B10BFDB415CE91B70070FA11 /* NSURL+FileHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+FileHelper.h"; sourceTree = "<group>"; };
@@ -280,6 +285,8 @@
 		B1A59B10160F9BF9000FFD92 /* TBXML.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = TBXML.xcodeproj; path = TBXML/TBXML.xcodeproj; sourceTree = "<group>"; };
 		B1A59B26160FA152000FFD92 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		B1A5DA7416A1E111005FD4E6 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_2.3.5/dependencies/WFConnector.framework; sourceTree = "<group>"; };
+		B1A5DA7B16A1E54C005FD4E6 /* bluetooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetooth.png; path = Tracktivity/bluetooth.png; sourceTree = "<group>"; };
+		B1A5DA7C16A1E54C005FD4E6 /* bluetooth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@2x.png"; path = "Tracktivity/bluetooth@2x.png"; sourceTree = "<group>"; };
 		B1A8D1441621E6D500926E42 /* ActivityType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityType.h; sourceTree = "<group>"; };
 		B1A8D1451621E6D500926E42 /* ActivityType.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityType.m; sourceTree = "<group>"; };
 		B1A8D1471622024A00926E42 /* ActivityTypes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = ActivityTypes.json; sourceTree = "<group>"; };
@@ -413,6 +420,8 @@
 		B12D4BE915B1CD78001490B3 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B1A5DA7B16A1E54C005FD4E6 /* bluetooth.png */,
+				B1A5DA7C16A1E54C005FD4E6 /* bluetooth@2x.png */,
 				B142346C1634444800AEAFE9 /* activitySafari-43.png */,
 				B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */,
 				B142346E1634444800AEAFE9 /* activitySafari-55.png */,
@@ -513,6 +522,8 @@
 				B10BFDC415CECF2E0070FA11 /* RouteTableViewController.m */,
 				B142346916342D5400AEAFE9 /* OpenInSafariActivity.h */,
 				B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */,
+				B10865BB16A2EF2300EB41FB /* BluetoothViewController.h */,
+				B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -749,6 +760,8 @@
 				B14234711634444800AEAFE9 /* activitySafari-43@2x.png in Resources */,
 				B14234721634444800AEAFE9 /* activitySafari-55.png in Resources */,
 				B14234731634444800AEAFE9 /* activitySafari-55@2x.png in Resources */,
+				B1A5DA7D16A1E54C005FD4E6 /* bluetooth.png in Resources */,
+				B1A5DA7E16A1E54C005FD4E6 /* bluetooth@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,6 +814,7 @@
 				B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */,
 				B1A8D150162221DD00926E42 /* Activity.m in Sources */,
 				B142346B16342D5500AEAFE9 /* OpenInSafariActivity.m in Sources */,
+				B10865BD16A2EF2300EB41FB /* BluetoothViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -883,6 +897,7 @@
 				);
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALID_ARCHS = armv7;
 			};
 			name = Debug;
 		};
@@ -907,6 +922,7 @@
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7;
 			};
 			name = Release;
 		};
@@ -915,7 +931,6 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
 					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -941,7 +956,6 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/../wf_api_2.2.3/dependencies\"",
 					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;

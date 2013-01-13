@@ -8,8 +8,6 @@
 
 #import "OpenInSafariActivity.h"
 
-#define IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-
 @interface OpenInSafariActivity ()
 @property (nonatomic, strong) NSURL *url;
 @end

@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import <RestKit/RestKit.h>
+#import <WFConnector/WFConnector.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, RKManagedObjectStoreDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, RKManagedObjectStoreDelegate, WFHardwareConnectorDelegate>
+{
+	WFHardwareConnector* hardwareConnector;
+}
 
 @property (strong, nonatomic) UIWindow *window;
 

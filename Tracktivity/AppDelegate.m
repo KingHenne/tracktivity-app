@@ -21,6 +21,7 @@
 #import "Waypoint.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/ISO8601DateFormatter.h>
+#import <WFConnector/WFConnector.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) GPXParser *gpxParser;
@@ -238,6 +239,24 @@
 	
 	NSLog(@"number of activity types in database: %d", [ActivityType count:nil]);
 	
+	// configure the hardware connector.
+    hardwareConnector = [WFHardwareConnector sharedConnector];
+    hardwareConnector.delegate = self;
+	hardwareConnector.sampleRate = 0.5;  // sample rate 500 ms, or 2 Hz.
+    
+    // determine support for BTLE.
+    if ( hardwareConnector.hasBTLESupport )
+    {
+        [hardwareConnector enableBTLE:TRUE];
+		NSTimeInterval timeout = hardwareConnector.settings.discoveryTimeout;
+		[hardwareConnector discoverDevicesOfType:WF_SENSORTYPE_HEARTRATE onNetwork:WF_NETWORKTYPE_BTLE searchTimeout:timeout];
+		[hardwareConnector discoverDevicesOfType:WF_SENSORTYPE_BIKE_SPEED_CADENCE onNetwork:WF_NETWORKTYPE_BTLE searchTimeout:timeout];
+    }
+    NSLog(@"%@", hardwareConnector.hasBTLESupport?@"DEVICE HAS BTLE SUPPORT":@"DEVICE DOES NOT HAVE BTLE SUPPORT");
+    
+    // set HW Connector to call hasData only when new data is available.
+    [hardwareConnector setSampleTimerDataCheck:YES];
+	
     return YES;
 }
 							
@@ -279,6 +298,46 @@
 		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 		abort();
 	}
+}
+
+#pragma mark HardwareConnectorDelegate Implementation
+
+- (void)hardwareConnector:(WFHardwareConnector *)hwConnector connectedSensor:(WFSensorConnection *)connectionInfo
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_CONNECTED object:nil];
+}
+
+- (void)hardwareConnector:(WFHardwareConnector *)hwConnector didDiscoverDevices:(NSSet *)connectionParams searchCompleted:(BOOL)bCompleted
+{
+    // post the sensor type and device params to the notification.
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+							  connectionParams, @"connectionParams",
+							  [NSNumber numberWithBool:bCompleted], @"searchCompleted",
+							  nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_DISCOVERED_SENSOR object:nil userInfo:userInfo];
+}
+
+- (void)hardwareConnector:(WFHardwareConnector *)hwConnector disconnectedSensor:(WFSensorConnection *)connectionInfo
+{
+	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_DISCONNECTED object:nil];
+}
+
+- (void)hardwareConnector:(WFHardwareConnector *)hwConnector stateChanged:(WFHardwareConnectorState_t)currentState
+{
+	BOOL connected = (currentState & WF_HWCONN_STATE_BT40_ENABLED) ? TRUE : FALSE;
+	if (connected)
+	{
+        [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_HW_CONNECTED object:nil];
+	}
+	else
+	{
+        [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_HW_DISCONNECTED object:nil];
+	}
+}
+
+- (void)hardwareConnectorHasData
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_HAS_DATA object:nil];
 }
 
 @end

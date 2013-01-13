@@ -15,7 +15,6 @@
 #import "WrappedTrack+Info.h"
 #import "OpenInSafariActivity.h"
 
-#define IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 // minimum zoom (i.e. region width/height) in meters
 #define MIN_ZOOM (IPAD ? 600 : 250)
 
