@@ -26,6 +26,8 @@
 @interface AppDelegate ()
 @property (nonatomic, strong) GPXParser *gpxParser;
 @property (nonatomic, strong) UITabBarController *tbc;
+@property (retain, nonatomic) WFHeartrateConnection *hrConnection;
+@property (retain, nonatomic) WFBikeSpeedCadenceConnection *scConnection;
 @end
 
 @implementation AppDelegate
@@ -33,6 +35,8 @@
 @synthesize window = _window;
 @synthesize gpxParser = _gpxParser;
 @synthesize tbc = _tbc;
+@synthesize hrConnection = _hrConnection;
+@synthesize scConnection = _scConnection;
 
 - (GPXParser *)gpxParser
 {
@@ -87,6 +91,196 @@
 	[self.gpxParser removeObserver:self.tbc forKeyPath:@"parseProgress"];
 }
 
+- (void)initializeRestKit
+{
+	// Activate logging.
+	//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+	//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
+	//  RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
+	
+    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://mackie-messer.local:8080/api"];
+	
+    // Enable automatic network activity indicator management.
+    objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
+	
+	// Initialize object store
+#ifdef RESTKIT_GENERATE_SEED_DB
+	NSString *seedDatabaseName = nil;
+	NSString *databaseName = RKDefaultSeedDatabaseFileName;
+#else
+	NSString *seedDatabaseName = RKDefaultSeedDatabaseFileName;
+	NSString *databaseName = @"CoreData.sqlite";
+#endif
+	
+    // Initialize object store.
+	RKManagedObjectStore *objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self];
+	objectManager.objectStore = objectStore;
+	
+	// Uncomment this line for one run if you want to reset the database.
+	//[objectStore deletePersistentStoreUsingSeedDatabaseName:seedDatabaseName];
+	
+	// Globally use JSON as the wire format for POST/PUT operations.
+	objectManager.serializationMIMEType = RKMIMETypeJSON;
+	
+	// Grab the reference to the router from the manager.
+	RKObjectRouter *router = objectManager.router;
+	// Define a resource path for posting activities.
+	[router routeClass:[Activity class] toResourcePath:@"/activities" forMethod:RKRequestMethodPOST];
+	// Define a resource path for deleting activities.
+	[router routeClass:[Activity class] toResourcePath:@"/activities/:tracktivityID" forMethod:RKRequestMethodDELETE];
+	
+	// Configure a (serialization) mapping for the Activity class and its relationships.
+	
+	RKManagedObjectMapping *activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *trackMapping = [RKManagedObjectMapping mappingForClass:[Track class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *segmentMapping = [RKManagedObjectMapping mappingForClass:[Segment class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *pointMapping = [RKManagedObjectMapping mappingForClass:[Waypoint class] inManagedObjectStore:objectStore];
+	RKManagedObjectMapping *activityTypeMapping = [RKManagedObjectMapping mappingForClass:[ActivityType class] inManagedObjectStore:objectStore];
+	
+	[pointMapping mapKeyPathsToAttributes:
+     @"time", @"time",
+     @"lat", @"latitude",
+     @"lon", @"longitude",
+     @"ele", @"elevation", nil];
+	
+	[segmentMapping mapKeyPath:@"points" toRelationship:@"points" withMapping:pointMapping];
+	[trackMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
+	
+	[activityMapping mapKeyPathsToAttributes:
+     @"id", @"tracktivityID",
+     @"name", @"name",
+     @"created", @"start", nil];
+	activityMapping.primaryKeyAttribute = @"tracktivityID";
+	
+	[activityMapping mapKeyPath:@"track" toRelationship:@"track" withMapping:trackMapping];
+	
+	[activityTypeMapping mapKeyOfNestedDictionaryToAttribute:@"stringValue"];
+	activityTypeMapping.primaryKeyAttribute = @"stringValue";
+	[activityMapping mapKeyPath:@"type" toRelationship:@"type" withMapping:activityTypeMapping];
+	
+	// Set the object mapping so that the response after posting an activity will be mapped correctly.
+	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities"];
+	// Set the object mapping for getting activities.
+	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities/:tracktivityID"];
+	
+	// Adjust the inverse mapping (because of ActivityType).
+	RKObjectMapping *inverseMapping = [activityMapping inverseMapping];
+	[inverseMapping removeMappingForKeyPath:@"type"];
+	[inverseMapping mapKeyPath:@"type.stringValue" toAttribute:@"type"];
+	// Set the object mapping for serializing/posting activities.
+	[objectManager.mappingProvider setSerializationMapping:inverseMapping forClass:[Activity class]];
+	
+#ifdef RESTKIT_GENERATE_SEED_DB
+	// TODO: set a different activityTypeMapping here
+	// Create a seed database with all activity types.
+	RKManagedObjectSeeder *objectSeeder = [RKManagedObjectSeeder objectSeederWithObjectManager:objectManager];
+	[objectSeeder seedObjectsFromFile:@"ActivityTypes.json" withObjectMapping:activityTypeMapping];
+	// Finalize the seeding operation and output a helpful informational message
+    [objectSeeder finalizeSeedingAndExit];
+#endif
+	
+	// Set the preferred date formatter.
+	ISO8601DateFormatter *dateFormatter = [ISO8601DateFormatter new];
+	dateFormatter.format = ISO8601DateFormatCalendar;
+	dateFormatter.includeTime = YES;
+	[RKObjectMapping setPreferredDateFormatter:dateFormatter];
+	
+	// DEBUG: Disable SSL certificate validation, because on the local test server we don't have a valid cartificate.
+	objectManager.client.disableCertificateValidation = YES;
+	
+	// Send user credentials as basic auth.
+	// TODO: replace this with NSUserDefaults values filled with a login view.
+	objectManager.client.authenticationType = RKRequestAuthenticationTypeHTTPBasic;
+	objectManager.client.username = @"hendrik";
+	objectManager.client.password = @"boerrek";
+	
+	NSLog(@"number of activity types in database: %d", [ActivityType count:nil]);
+}
+
+- (void)initializeAccessories
+{
+	hardwareConnector = [WFHardwareConnector sharedConnector];
+    
+    // Determine support for BTLE.
+    if (hardwareConnector.hasBTLESupport) {
+		hardwareConnector.delegate = self;
+		hardwareConnector.sampleRate = 0.5;  // sample rate 500 ms, or 2 Hz.
+		
+        [hardwareConnector enableBTLE:TRUE];
+		
+		// Set HW Connector to call hasData only when new data is available.
+		[hardwareConnector setSampleTimerDataCheck:YES];
+		
+		// Listen for changes made to the accessory settings.
+		NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+		[userDefaults addObserver:self forKeyPath:BTLE_HR_ENABLED options:NSKeyValueObservingOptionNew context:NULL];
+		[userDefaults addObserver:self forKeyPath:BTLE_SC_ENABLED options:NSKeyValueObservingOptionNew context:NULL];
+		
+		// Set up the connections if enabled via settings.
+		if ([userDefaults boolForKey:BTLE_HR_ENABLED]) {
+			[self requestHrConnection];
+		}
+		if ([userDefaults boolForKey:BTLE_SC_ENABLED]) {
+			[self requestScConnection];
+		}
+    }
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+						change:(NSDictionary *)change
+					   context:(void *)context
+{
+	if ([keyPath isEqualToString:BTLE_HR_ENABLED]) {
+		BOOL enabled = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+		if (enabled) {
+			[self requestHrConnection];
+		} else {
+			[self.hrConnection disconnect];
+		}
+	} else if ([keyPath isEqualToString:BTLE_SC_ENABLED]) {
+		BOOL enabled = [[change objectForKey:NSKeyValueChangeNewKey] boolValue];
+		if (enabled) {
+			[self requestScConnection];
+		} else {
+			[self.scConnection disconnect];
+		}
+	}
+}
+
+- (void)requestHrConnection
+{
+	NSArray* connections = [hardwareConnector getSensorConnections:WF_SENSORTYPE_HEARTRATE];
+	self.hrConnection = ([connections count]>0) ? (WFHeartrateConnection *)[connections objectAtIndex:0] : nil;
+	if (self.hrConnection == nil) {
+		WFConnectionParams *params = [hardwareConnector.settings connectionParamsForSensorType:WF_SENSORTYPE_HEARTRATE];
+		params.networkType = WF_NETWORKTYPE_BTLE;
+		self.hrConnection = (WFHeartrateConnection *)[hardwareConnector requestSensorConnection:params];
+	}
+	self.hrConnection.delegate = self;
+}
+
+- (void)requestScConnection
+{
+	NSArray* connections = [hardwareConnector getSensorConnections:WF_SENSORTYPE_BIKE_SPEED_CADENCE];
+	self.scConnection = ([connections count]>0) ? (WFBikeSpeedCadenceConnection *)[connections objectAtIndex:0] : nil;
+	if (self.scConnection == nil) {
+		WFConnectionParams *params = [hardwareConnector.settings connectionParamsForSensorType:WF_SENSORTYPE_BIKE_SPEED_CADENCE];
+		params.networkType = WF_NETWORKTYPE_BTLE;
+		self.scConnection = (WFBikeSpeedCadenceConnection *)[hardwareConnector requestSensorConnection:params];
+	}
+	self.scConnection.delegate = self;
+}
+
+- (void)saveContext
+{
+    NSError *error = nil;
+	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+		abort();
+	}
+}
+
 #pragma mark UIAlertViewDelegate Methods
 
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -134,129 +328,8 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-	
-	// Activate logging.
-//	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
-//	RKLogConfigureByName("RestKit/ObjectMapping", RKLogLevelTrace);
-//  RKLogConfigureByName("RestKit/CoreData", RKLogLevelTrace);
-	
-	// Initialize RestKit.
-    RKObjectManager *objectManager = [RKObjectManager managerWithBaseURLString:@"http://mackie-messer.local:8080/api"];
-	
-    // Enable automatic network activity indicator management.
-    objectManager.client.requestQueue.showsNetworkActivityIndicatorWhenBusy = YES;
-	
-	// Initialize object store
-#ifdef RESTKIT_GENERATE_SEED_DB
-	NSString *seedDatabaseName = nil;
-	NSString *databaseName = RKDefaultSeedDatabaseFileName;
-#else
-	NSString *seedDatabaseName = RKDefaultSeedDatabaseFileName;
-	NSString *databaseName = @"CoreData.sqlite";
-#endif
-	
-    // Initialize object store.
-	RKManagedObjectStore *objectStore = [RKManagedObjectStore objectStoreWithStoreFilename:databaseName usingSeedDatabaseName:seedDatabaseName managedObjectModel:nil delegate:self];
-	objectManager.objectStore = objectStore;
-	
-	// Uncomment this line for one run if you want to reset the database.
-	//[objectStore deletePersistentStoreUsingSeedDatabaseName:seedDatabaseName];
-	
-	// Globally use JSON as the wire format for POST/PUT operations.
-	objectManager.serializationMIMEType = RKMIMETypeJSON;
-	
-	// Grab the reference to the router from the manager.
-	RKObjectRouter *router = objectManager.router;
-	// Define a resource path for posting activities.
-	[router routeClass:[Activity class] toResourcePath:@"/activities" forMethod:RKRequestMethodPOST];
-	// Define a resource path for deleting activities.
-	[router routeClass:[Activity class] toResourcePath:@"/activities/:tracktivityID" forMethod:RKRequestMethodDELETE];
-	
-	// Configure a (serialization) mapping for the Activity class and its relationships.
-	
-	RKManagedObjectMapping *activityMapping = [RKManagedObjectMapping mappingForClass:[Activity class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping *trackMapping = [RKManagedObjectMapping mappingForClass:[Track class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping *segmentMapping = [RKManagedObjectMapping mappingForClass:[Segment class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping *pointMapping = [RKManagedObjectMapping mappingForClass:[Waypoint class] inManagedObjectStore:objectStore];
-	RKManagedObjectMapping *activityTypeMapping = [RKManagedObjectMapping mappingForClass:[ActivityType class] inManagedObjectStore:objectStore];
-	
-	[pointMapping mapKeyPathsToAttributes:
-		@"time", @"time",
-		@"lat", @"latitude",
-		@"lon", @"longitude",
-		@"ele", @"elevation", nil];
-	
-	[segmentMapping mapKeyPath:@"points" toRelationship:@"points" withMapping:pointMapping];
-	[trackMapping mapKeyPath:@"segments" toRelationship:@"segments" withMapping:segmentMapping];
-	
-	[activityMapping mapKeyPathsToAttributes:
-		@"id", @"tracktivityID",
-		@"name", @"name",
-		@"created", @"start", nil];
-	activityMapping.primaryKeyAttribute = @"tracktivityID";
-	
-	[activityMapping mapKeyPath:@"track" toRelationship:@"track" withMapping:trackMapping];
-	
-	[activityTypeMapping mapKeyOfNestedDictionaryToAttribute:@"stringValue"];
-	activityTypeMapping.primaryKeyAttribute = @"stringValue";
-	[activityMapping mapKeyPath:@"type" toRelationship:@"type" withMapping:activityTypeMapping];
-	
-	// Set the object mapping so that the response after posting an activity will be mapped correctly.
-	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities"];
-	// Set the object mapping for getting activities.
-	[objectManager.mappingProvider setObjectMapping:activityMapping forResourcePathPattern:@"/activities/:tracktivityID"];
-	
-	// Adjust the inverse mapping (because of ActivityType).
-	RKObjectMapping *inverseMapping = [activityMapping inverseMapping];
-	[inverseMapping removeMappingForKeyPath:@"type"];
-	[inverseMapping mapKeyPath:@"type.stringValue" toAttribute:@"type"];
-	// Set the object mapping for serializing/posting activities.
-	[objectManager.mappingProvider setSerializationMapping:inverseMapping forClass:[Activity class]];
-	
-#ifdef RESTKIT_GENERATE_SEED_DB
-	// TODO: set a different activityTypeMapping here
-	// Create a seed database with all activity types.
-	RKManagedObjectSeeder *objectSeeder = [RKManagedObjectSeeder objectSeederWithObjectManager:objectManager];
-	[objectSeeder seedObjectsFromFile:@"ActivityTypes.json" withObjectMapping:activityTypeMapping];
-	// Finalize the seeding operation and output a helpful informational message
-    [objectSeeder finalizeSeedingAndExit];
-#endif
-	
-	// Set the preferred date formatter.
-	ISO8601DateFormatter *dateFormatter = [ISO8601DateFormatter new];
-	dateFormatter.format = ISO8601DateFormatCalendar;
-	dateFormatter.includeTime = YES;
-	[RKObjectMapping setPreferredDateFormatter:dateFormatter];
-	
-	// DEBUG: Disable SSL certificate validation, because on the local test server we don't have a valid cartificate.
-	objectManager.client.disableCertificateValidation = YES;
-	
-	// Send user credentials as basic auth.
-	// TODO: replace this with NSUserDefaults values filled with a login view.
-	objectManager.client.authenticationType = RKRequestAuthenticationTypeHTTPBasic;
-	objectManager.client.username = @"hendrik";
-	objectManager.client.password = @"boerrek";
-	
-	NSLog(@"number of activity types in database: %d", [ActivityType count:nil]);
-	
-	// configure the hardware connector.
-    hardwareConnector = [WFHardwareConnector sharedConnector];
-    hardwareConnector.delegate = self;
-	hardwareConnector.sampleRate = 0.5;  // sample rate 500 ms, or 2 Hz.
-    
-    // determine support for BTLE.
-    if ( hardwareConnector.hasBTLESupport )
-    {
-        [hardwareConnector enableBTLE:TRUE];
-		NSTimeInterval timeout = hardwareConnector.settings.discoveryTimeout;
-		[hardwareConnector discoverDevicesOfType:WF_SENSORTYPE_HEARTRATE onNetwork:WF_NETWORKTYPE_BTLE searchTimeout:timeout];
-		[hardwareConnector discoverDevicesOfType:WF_SENSORTYPE_BIKE_SPEED_CADENCE onNetwork:WF_NETWORKTYPE_BTLE searchTimeout:timeout];
-    }
-    NSLog(@"%@", hardwareConnector.hasBTLESupport?@"DEVICE HAS BTLE SUPPORT":@"DEVICE DOES NOT HAVE BTLE SUPPORT");
-    
-    // set HW Connector to call hasData only when new data is available.
-    [hardwareConnector setSampleTimerDataCheck:YES];
-	
+	[self initializeRestKit];
+	[self initializeAccessories];
     return YES;
 }
 							
@@ -291,35 +364,18 @@
 	[self saveContext];
 }
 
-- (void)saveContext
-{
-    NSError *error = nil;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}
-}
-
 #pragma mark HardwareConnectorDelegate Implementation
 
 - (void)hardwareConnector:(WFHardwareConnector *)hwConnector connectedSensor:(WFSensorConnection *)connectionInfo
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_CONNECTED object:nil];
-}
-
-- (void)hardwareConnector:(WFHardwareConnector *)hwConnector didDiscoverDevices:(NSSet *)connectionParams searchCompleted:(BOOL)bCompleted
-{
-    // post the sensor type and device params to the notification.
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  connectionParams, @"connectionParams",
-							  [NSNumber numberWithBool:bCompleted], @"searchCompleted",
-							  nil];
-    [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_DISCOVERED_SENSOR object:nil userInfo:userInfo];
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:connectionInfo forKey:@"connectionInfo"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_CONNECTED object:nil userInfo:userInfo];
 }
 
 - (void)hardwareConnector:(WFHardwareConnector *)hwConnector disconnectedSensor:(WFSensorConnection *)connectionInfo
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_DISCONNECTED object:nil];
+	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:connectionInfo forKey:@"connectionInfo"];
+	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_DISCONNECTED object:nil userInfo:userInfo];
 }
 
 - (void)hardwareConnector:(WFHardwareConnector *)hwConnector stateChanged:(WFHardwareConnectorState_t)currentState
@@ -337,7 +393,31 @@
 
 - (void)hardwareConnectorHasData
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_HAS_DATA object:nil];
+	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_HAS_DATA object:nil];
+}
+
+#pragma mark WFSensorConnectionDelegate Implementation
+
+- (void)connectionDidTimeout:(WFSensorConnection*)connectionInfo
+{
+	connectionInfo.delegate = nil;
+	if (connectionInfo.sensorType == WF_SENSORTYPE_HEARTRATE) {
+		self.hrConnection = nil;
+	} else if (connectionInfo.sensorType == WF_SENSORTYPE_BIKE_SPEED_CADENCE) {
+		self.scConnection = nil;
+	}
+}
+
+- (void)connection:(WFSensorConnection*)connectionInfo stateChanged:(WFSensorConnectionStatus_t)connState
+{
+	NSLog(@"SENSOR CONNECTION STATE CHANGED: connState = %d (IDLE=%d)", connState, WF_SENSOR_CONNECTION_STATUS_IDLE);
+    
+    // Check for a valid connection.
+    if (connectionInfo.isValid && connectionInfo.isConnected)
+    {
+        // Process post-connection setup.
+		[[WFHardwareConnector sharedConnector].settings saveConnectionInfo:connectionInfo];
+    }
 }
 
 @end

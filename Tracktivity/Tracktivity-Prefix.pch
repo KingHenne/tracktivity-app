@@ -4,8 +4,8 @@
 
 #import <Availability.h>
 
-#ifndef __IPHONE_5_0
-#warning "This project uses features only available in iOS SDK 5.0 and later."
+#ifndef __IPHONE_6_0
+#warning "This project uses features only available in iOS SDK 6.0 and later."
 #endif
 
 #ifdef __OBJC__
@@ -15,11 +15,13 @@
 
 #define IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 
-#define WF_SENSOR_DATA_FILE                    @"sensor-data.plist"
-
 #define WF_NOTIFICATION_DISCOVERED_SENSOR      @"WFNotificationDiscoveredSensor"
 #define WF_NOTIFICATION_HW_CONNECTED           @"WFNotificationHWConnected"
 #define WF_NOTIFICATION_HW_DISCONNECTED        @"WFNotificationHWDisconnected"
 #define WF_NOTIFICATION_SENSOR_CONNECTED       @"WFNotificationSensorConnected"
 #define WF_NOTIFICATION_SENSOR_DISCONNECTED    @"WFNotificationSensorDisconnected"
 #define WF_NOTIFICATION_SENSOR_HAS_DATA        @"WFNotificationSensorHasData"
+#define WF_NOTIFICATION_SENSOR_STATE_CHANGED   @"WFNotificationSensorStateChanged"
+
+#define BTLE_HR_ENABLED                        @"NotificationHeartrateSensorEnabled"
+#define BTLE_SC_ENABLED                        @"NotificationSpeedCadenceSensorEnabled"

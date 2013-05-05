@@ -32,19 +32,14 @@
 	
 	WFHardwareConnector *hardwareConnector = [WFHardwareConnector sharedConnector];
 	
-	if (hardwareConnector.isCommunicationHWReady) {
-		// set up existing or new sensor connections
-		[self requestHrConnection];
-		[self requestScConnection];
+	if (hardwareConnector.hasBTLESupport) {
         // update the view
 		[self checkConnectionStates];
         [self updateData];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorConnected:) name:WF_NOTIFICATION_SENSOR_CONNECTED object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorDisconnected:) name:WF_NOTIFICATION_SENSOR_DISCONNECTED object:nil];
+		[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:WF_NOTIFICATION_SENSOR_HAS_DATA object:nil];
     }
-    
-    // register for HW connector notifications.
-	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorConnected) name:WF_NOTIFICATION_SENSOR_CONNECTED object:nil];
-	//[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sensorDisconnected) name:WF_NOTIFICATION_SENSOR_DISCONNECTED object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData) name:WF_NOTIFICATION_SENSOR_HAS_DATA object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -53,13 +48,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)sensorConnected
+- (void)sensorConnected:(NSNotification *)notification
 {
+	WFSensorConnection *connection = (WFSensorConnection *) [notification.userInfo valueForKey:@"connectionInfo"];
+	if (connection.sensorType == WF_SENSORTYPE_HEARTRATE) {
+		self.hrConnection = (WFHeartrateConnection *) connection;
+	} else if (connection.sensorType == WF_SENSORTYPE_BIKE_SPEED_CADENCE) {
+		self.scConnection = (WFBikeSpeedCadenceConnection *) connection;
+	}
 	[self checkConnectionStates];
 }
 
-- (void)sensorDisconnected
+- (void)sensorDisconnected:(NSNotification *)notification
 {
+	WFSensorConnection *connection = (WFSensorConnection *) [notification.userInfo valueForKey:@"connectionInfo"];
+	if (connection.sensorType == WF_SENSORTYPE_HEARTRATE) {
+		self.hrConnection = nil;
+	} else if (connection.sensorType == WF_SENSORTYPE_BIKE_SPEED_CADENCE) {
+		self.scConnection = nil;
+	}
 	[self checkConnectionStates];
 }
 
@@ -116,32 +123,6 @@
 	[switchBtn setOn:NO animated:YES];
 }
 
-- (void)requestHrConnection
-{
-	WFHardwareConnector *hardwareConnector = [WFHardwareConnector sharedConnector];
-	NSArray* connections = [hardwareConnector getSensorConnections:WF_SENSORTYPE_HEARTRATE];
-	self.hrConnection = ([connections count]>0) ? (WFHeartrateConnection *)[connections objectAtIndex:0] : nil;
-	if (self.hrConnection == nil) {
-		WFConnectionParams *params = [hardwareConnector.settings connectionParamsForSensorType:WF_SENSORTYPE_HEARTRATE];
-		//params.searchTimeout = hardwareConnector.settings.discoveryTimeout;
-		self.hrConnection = (WFHeartrateConnection *)[hardwareConnector requestSensorConnection:params];
-	}
-	self.hrConnection.delegate = self;
-}
-
-- (void)requestScConnection
-{
-	WFHardwareConnector *hardwareConnector = [WFHardwareConnector sharedConnector];
-	NSArray* connections = [hardwareConnector getSensorConnections:WF_SENSORTYPE_BIKE_SPEED_CADENCE];
-	self.scConnection = ([connections count]>0) ? (WFBikeSpeedCadenceConnection *)[connections objectAtIndex:0] : nil;
-	if (self.scConnection == nil) {
-		WFConnectionParams *params = [hardwareConnector.settings connectionParamsForSensorType:WF_SENSORTYPE_BIKE_SPEED_CADENCE];
-		//params.searchTimeout = hardwareConnector.settings.discoveryTimeout;
-		self.scConnection = (WFBikeSpeedCadenceConnection *)[hardwareConnector requestSensorConnection:params];
-	}
-	self.scConnection.delegate = self;
-}
-
 - (void)updateData
 {
 	if (self.hrConnection) {
@@ -161,52 +142,18 @@
 
 - (IBAction)hrSwitched:(UISwitch *)sender
 {
-	if ([sender isOn]) {
-		[self requestHrConnection];
-	} else {
-		[self.hrConnection disconnect];
-	}
-	[self checkConnectionStates];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setBool:[sender isOn] forKey:BTLE_HR_ENABLED];
+	[userDefaults synchronize];
+	//[self checkConnectionStates];
 }
 
 - (IBAction)scSwitched:(UISwitch *)sender
 {
-	if ([sender isOn]) {
-		[self requestScConnection];
-	} else {
-		[self.scConnection disconnect];
-	}
-	[self checkConnectionStates];
-}
-
-#pragma mark WFSensorConnectionDelegate Implementation
-
-- (void)connectionDidTimeout:(WFSensorConnection*)connectionInfo
-{
-	connectionInfo.delegate = nil;
-	if (connectionInfo.sensorType == WF_SENSORTYPE_HEARTRATE) {
-		self.hrConnection = nil;
-	} else if (connectionInfo.sensorType == WF_SENSORTYPE_BIKE_SPEED_CADENCE) {
-		self.scConnection = nil;
-	}
-	[self checkConnectionStates];
-}
-
-- (void)connection:(WFSensorConnection*)connectionInfo stateChanged:(WFSensorConnectionStatus_t)connState
-{
-	NSLog(@"SENSOR CONNECTION STATE CHANGED: connState = %d (IDLE=%d)", connState, WF_SENSOR_CONNECTION_STATUS_IDLE);
-    
-    // check for a valid connection.
-    if (connectionInfo.isValid && connectionInfo.isConnected)
-    {
-        // process post-connection setup.
-		[[WFHardwareConnector sharedConnector].settings saveConnectionInfo:connectionInfo];
-		
-        // update the display.
-        [self updateData];
-    }
-	
-	[self checkConnectionStates];
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	[userDefaults setBool:[sender isOn] forKey:BTLE_SC_ENABLED];
+	[userDefaults synchronize];
+	//[self checkConnectionStates];
 }
 
 @end
