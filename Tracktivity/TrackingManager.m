@@ -60,7 +60,7 @@
 			self.locationManager.distanceFilter = DISTANCE_FILTER;
 			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 		}
-		self.context = [NSManagedObjectContext contextForCurrentThread];
+		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 		_paused = YES;
 		_recording = NO;
     }
@@ -76,17 +76,15 @@
 - (void)saveContext
 {
     NSError *error = nil;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
-	}
+	BOOL success = [self.context saveToPersistentStore:&error];
+	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 }
 
 - (void)startActivity
 {
 	[self reset];
-	self.activity = [Activity createEntity];
-	self.activity.track = [Track createEntity];
+	self.activity = [self.context insertNewObjectForEntityForName:@"Activity"];
+	self.activity.track = [self.context insertNewObjectForEntityForName:@"Track"];
 	self.activity.recording = [NSNumber numberWithBool:YES];
 	self.activity.start = [NSDate date];
 	self.recording = YES;
@@ -101,7 +99,7 @@
 	self.paused = YES;
 	self.recording = NO;
 	if (self.activity.track.numberOfTotalPoints < 2) {
-		[self.activity deleteEntity];
+		[self.context deleteObject:self.activity];
 		self.activity = nil;
 	} else {
 		self.activity.end = [NSDate date];
@@ -120,7 +118,7 @@
 		[self startActivity];
 	} else {
 		if (!paused) {
-			[self.activity.track addSegmentsObject:[Segment createEntity]];
+			[self.activity.track addSegmentsObject:[self.context insertNewObjectForEntityForName:@"Segment"]];
 			[self.locationManager startUpdatingLocation];
 		}
 		if ([self.delegate respondsToSelector:@selector(toggledPause:)]) {

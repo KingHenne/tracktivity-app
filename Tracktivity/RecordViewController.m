@@ -257,10 +257,9 @@
 
 - (void)saveContext
 {
-	NSError *error;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	}
+	NSError *error = nil;
+	BOOL success = [RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
+	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 }
 
 #pragma mark MKMapViewDelegate Methods
@@ -347,7 +346,7 @@
 {
 	__block __typeof__(self) blockSelf = self;
 	[self dismissViewControllerAnimated:YES completion:^{
-		[activity deleteEntity];
+		[activity.managedObjectContext deleteObject:activity];
 		[blockSelf saveContext];
 		[blockSelf reset];
 	}];

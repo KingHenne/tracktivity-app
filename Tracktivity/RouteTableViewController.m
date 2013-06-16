@@ -21,7 +21,11 @@
 - (void)setupFetchedResultsController
 {
 	self.debug = YES;
-	self.fetchedResultsController = [Route fetchAllSortedBy:@"created" ascending:NO withPredicate:nil groupBy:nil];
+	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] mainQueueManagedObjectContext];
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Route"];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"created" ascending:NO];
+	[fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+	self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"allRoutes"];
 }
 
 - (void)displayImportedRoute

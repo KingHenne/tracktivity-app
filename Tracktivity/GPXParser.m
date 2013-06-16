@@ -12,9 +12,9 @@
 #import "Route.h"
 #import "Segment+Create.h"
 #import "Waypoint+Create.h"
-#import "RestKit/ISO8601DateFormatter.h"
 #import "NSURL+FileHelper.h"
 #import <RestKit/RestKit.h>
+#import <RestKit/RKISO8601DateFormatter.h>
 #import <TBXML-Headers/TBXML.h>
 
 @interface GPXParser ()
@@ -27,6 +27,7 @@
 @property (nonatomic) int totalPointsToParse;
 @property (nonatomic) float parseProgress;
 @property (nonatomic, strong) NSMutableArray *pointsArray;
+@property (nonatomic, strong) NSManagedObjectContext *context;
 @end
 
 @implementation GPXParser
@@ -41,6 +42,7 @@
 @synthesize totalPointsToParse = _totalPointsToParse;
 @synthesize parseProgress = _parseProgress;
 @synthesize pointsArray = _pointsArray;
+@synthesize context = _context;
 
 - (NSMutableDictionary *)elementStates
 {
@@ -55,6 +57,15 @@
 	if (parseProgress >= 0 && parseProgress <= 1) {
 		_parseProgress = parseProgress;
 	}
+}
+
+- (NSManagedObjectContext *)context
+{
+	if (_context == nil) {
+		_context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+		_context.undoManager = nil; // for performance reasons
+	}
+	return _context;
 }
 
 - (BOOL)parseGPXFile:(NSURL *)fileURL
@@ -90,8 +101,6 @@
     }
 	// If TBXML found a root node, process element and iterate all children
 	if (tbxml.rootXMLElement) {
-		NSManagedObjectContext *moc = [RKManagedObjectStore.defaultObjectStore managedObjectContextForCurrentThread];
-		moc.undoManager = nil;
 		[self traverseElement:tbxml.rootXMLElement];
 	}
 	NSTimeInterval time = [start timeIntervalSinceNow];
@@ -123,9 +132,9 @@
 	NSString *elementName = [TBXML elementName:element].lowercaseString;
 	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName];
 	if ([elementName isEqualToString:@"trk"] || [elementName isEqualToString:@"rte"]) {
-		self.currentRoute = [Route createEntity];
+		self.currentRoute = [self.context insertNewObjectForEntityForName:@"Route"];
 		self.currentRoute.created = [NSDate date];
-		self.currentRoute.track = [Track createEntity];
+		self.currentRoute.track = [self.context insertNewObjectForEntityForName:@"Track"];
 		if ([elementName isEqualToString:@"rte"]) {
 			self.pointsArray = [NSMutableArray new];
 		}
@@ -134,7 +143,7 @@
 	} else if ([elementName isEqualToString:@"trkpt"] || [elementName isEqualToString:@"rtept"]) {
 		double lat = [[TBXML valueOfAttributeNamed:@"lat" forElement:element] doubleValue];
 		double lon = [[TBXML valueOfAttributeNamed:@"lon" forElement:element] doubleValue];
-		self.currentRoutePoint = [Waypoint createEntity];
+		self.currentRoutePoint = [self.context insertNewObjectForEntityForName:@"Waypoint"];
 		self.currentRoutePoint.latitude = [NSNumber numberWithDouble:lat];
 		self.currentRoutePoint.longitude = [NSNumber numberWithDouble:lon];
 	}
@@ -174,7 +183,7 @@
 		}
 		self.currentRoute.originalFile = [NSData dataWithContentsOfURL:self.fileURL];
 		if ([elementName isEqualToString:@"rte"]) {
-			Segment *segment = [Segment createEntity];
+			Segment *segment = [self.context insertNewObjectForEntityForName:@"Segment"];
 			segment.points = [NSOrderedSet orderedSetWithArray:self.pointsArray];
 			[self.currentRoute.track addSegmentsObject:segment];
 			self.pointsArray = nil;
@@ -182,7 +191,7 @@
 		[self saveContext];
 		self.parsedRoute = self.currentRoute;
 	} else if ([elementName isEqualToString:@"trkseg"]) {
-		Segment *segment = [Segment createEntity];
+		Segment *segment = [self.context insertNewObjectForEntityForName:@"Segment"];
 		segment.points = [NSOrderedSet orderedSetWithArray:self.pointsArray];
 		[self.currentRoute.track addSegmentsObject:segment];
 		self.pointsArray = nil;
@@ -196,10 +205,9 @@
 
 - (void)saveContext
 {
-    NSError *error = nil;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-		abort();
+	NSError *error = nil;
+	if (![self.context saveToPersistentStore:&error]) {
+		RKLogWarning(@"Failed saving managed object context: %@", error);
 	}
 }
 

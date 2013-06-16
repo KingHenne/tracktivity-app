@@ -10,8 +10,7 @@
 #import <RestKit/RestKit.h>
 #import <WFConnector/WFConnector.h>
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate,
-	RKManagedObjectStoreDelegate, WFHardwareConnectorDelegate, WFSensorConnectionDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate, WFHardwareConnectorDelegate, WFSensorConnectionDelegate>
 {
 	WFHardwareConnector* hardwareConnector;
 }

@@ -10,7 +10,7 @@
 #import "Activity.h"
 #import <RestKit/RestKit.h>
 
-@interface ActivityTableViewController () <RKObjectLoaderDelegate, RKRequestDelegate>
+@interface ActivityTableViewController ()
 @property (nonatomic, strong) UIBarButtonItem *refreshButton;
 @end
 
@@ -21,8 +21,12 @@
 - (void)setupFetchedResultsController
 {
 	self.debug = YES;
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"recording == 0"];
-	self.fetchedResultsController = [Activity fetchAllSortedBy:@"start" ascending:NO withPredicate:predicate groupBy:nil];
+	NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
+	NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"start" ascending:NO];
+	fetchRequest.sortDescriptors = [NSArray arrayWithObject:sortDescriptor];
+	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"recording == 0"];
+	self.fetchedResultsController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchRequest managedObjectContext:context sectionNameKeyPath:nil cacheName:@"activities"];
 }
 
 - (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender
@@ -35,90 +39,95 @@
 
 - (void)uploadNewActivities
 {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"(tracktivityID == nil) AND (recording == 0)"];
-	NSArray *newActivities = [Activity findAllWithPredicate:predicate];
+	__block __typeof__(self) blockSelf = self;
+	NSManagedObjectContext *context = [RKManagedObjectStore defaultStore].mainQueueManagedObjectContext;
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
+	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"(tracktivityID == nil) AND (recording == 0)"];
+	NSArray *newActivities = [context executeFetchRequest:fetchRequest error:nil];
 	for (Activity *newActivity in newActivities) {
-		[[RKObjectManager sharedManager] postObject:newActivity delegate:self];
+		[RKObjectManager.sharedManager postObject:newActivity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+			//TODO
+		} failure:^(RKObjectRequestOperation *operation, NSError *error) {
+			[blockSelf operationFailedWithError:error];
+		}];
 	}
 }
 
 - (void)fetchActivityList
 {
-	[[[RKObjectManager sharedManager] client] get:@"/users/hendrik/activities" delegate:self];
+	__block __typeof__(self) blockSelf = self;
+	RKObjectManager *manager = [RKObjectManager sharedManager];
+	RKObjectRequestOperation *operation = [manager appropriateObjectRequestOperationWithObject:nil method:RKRequestMethodGET path:@"users/hendrik/activities" parameters:nil];
+	
+	[operation setWillMapDeserializedResponseBlock:^id(id deserializedResponseBody) {
+		NSLog(@"deserializedResponseBody: %@", deserializedResponseBody);
+		return deserializedResponseBody;
+	}];
+	
+	[operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+		NSArray *activityIDs = [mappingResult.dictionary valueForKey:@"activities"];
+		if (activityIDs) {
+			[blockSelf downloadNewActivities:activityIDs];
+			[blockSelf deleteActivitiesNotIncludedInList:activityIDs];
+			[blockSelf updateRefreshButton];
+		}
+	} failure:^(RKObjectRequestOperation *operation, NSError *error) {
+		[blockSelf operationFailedWithError:error];
+	}];
+	
+	[manager enqueueObjectRequestOperation:operation];
+}
+
+- (void)updateRefreshButton
+{
+	if (RKObjectManager.sharedManager.operationQueue.operationCount <= 1) {
+		self.refreshButton.enabled = YES;
+	}
 }
 
 // activityIDs must be an array of dictionaries with a key 'id'
 - (void)downloadNewActivities:(NSArray *)activityIDs
 {
+	__block __typeof__(self) blockSelf = self;
+	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 	for (NSDictionary *activity in activityIDs) {
 		NSString *tracktivityID = [activity valueForKey:@"id"];
-		if (tracktivityID && [Activity findByPrimaryKey:tracktivityID] == nil) {
-			NSLog(@"Loading activity %@ from the server...", tracktivityID);
+		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID == %@", tracktivityID];
+		if ([context countForEntityForName:@"Activity" predicate:predicate error:nil] == NSNotFound) {
+			NSLog(@"Loading activity %@ from the server ...", tracktivityID);
 			NSString *path = [NSString stringWithFormat:@"/activities/%@", tracktivityID];
-			[RKObjectManager.sharedManager loadObjectsAtResourcePath:path delegate:self];
+			[[RKObjectManager sharedManager] getObjectsAtPath:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+				// TODO: should I do something here?
+			} failure:^(RKObjectRequestOperation *operation, NSError *error) {
+				[blockSelf operationFailedWithError:error];
+			}];
 		}
 	}
 }
 
 - (void)deleteActivitiesNotIncludedInList:(NSArray *)activityIDs
 {
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID != nil"];
-	NSArray *activities = [Activity findAllWithPredicate:predicate];
+	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
+	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"tracktivityID != nil"];
+	NSArray *activities = [context executeFetchRequest:fetchRequest error:nil];
 	for (Activity *activity in activities) {
 		NSDictionary *testDict = [NSDictionary dictionaryWithObject:activity.tracktivityID forKey:@"id"];
 		if (![activityIDs containsObject:testDict]) {
 			NSLog(@"Deleting activity %@ now.", activity.tracktivityID);
-			[activity deleteEntity];
-			[self saveContext];
+			[context deleteObject:activity];
 		}
 	}
-}
-
-- (void)saveContext
-{
-	NSError *error;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	if ([context hasChanges]) {
+		NSError *error;
+		BOOL success = [context saveToPersistentStore:&error];
+		if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 	}
 }
 
-#pragma mark RestKit Delegate Methods
-
-- (void)request:(RKRequest *)request didLoadResponse:(RKResponse *)response
+- (void)operationFailedWithError:(NSError *)error
 {
-	if (request.method == RKRequestMethodGET && response.isJSON) {
-		NSError * error;
-		NSDictionary *responseBody = [response parsedBody:&error];
-		if (responseBody) {
-			NSArray *activityIDs = [responseBody valueForKey:@"activities"];
-			if (activityIDs) {
-				[self downloadNewActivities:activityIDs];
-				[self deleteActivitiesNotIncludedInList:activityIDs];
-			}
-		} else {
-			NSLog(@"Error parsing response: %@, %@", error, [error userInfo]);
-		}
-	}
-	if (RKObjectManager.sharedManager.requestQueue.count <= 1) {
-		self.refreshButton.enabled = YES;
-	}
-}
-
-- (void)objectLoaderDidFinishLoading:(RKObjectLoader *)objectLoader
-{
-	if (RKObjectManager.sharedManager.requestQueue.count <= 1) {
-		self.refreshButton.enabled = YES;
-	}
-}
-
-- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-}
-
-- (void)request:(RKRequest *)request didFailLoadWithError:(NSError *)error
-{
-	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+	RKLogWarning(@"Operation failed with an error: %@", error);
 	NSString *localizedErrorMessage = [error.userInfo objectForKey:@"NSLocalizedDescription"];
 	NSString *cancelButtonTitle = NSLocalizedString(@"AlertViewOK", @"alert view ok button label");
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:localizedErrorMessage delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles: nil];
@@ -126,9 +135,11 @@
 	self.refreshButton.enabled = YES;
 }
 
-- (void)requestDidTimeout:(RKRequest *)request
+- (void)saveContext
 {
-	self.refreshButton.enabled = YES;
+	NSError *error = nil;
+	BOOL success = [RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
+	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 }
 
 @end

@@ -26,7 +26,10 @@
 - (NSArray *)activityTypes
 {
 	if (_activityTypes == nil) {
-		_activityTypes = [ActivityType findAllSortedBy:@"displayOrder" ascending:YES];
+		NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"ActivityType"];
+		NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"displayOrder" ascending:YES];
+		[fetchRequest setSortDescriptors:[NSArray arrayWithObject:sortDescriptor]];
+		_activityTypes = [[RKManagedObjectStore defaultStore].mainQueueManagedObjectContext executeFetchRequest:fetchRequest error:nil];
 	}
 	return _activityTypes;
 }

@@ -21,7 +21,7 @@
 
 NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotification";
 
-@interface TrackTableViewController () <RKObjectLoaderDelegate, UIActionSheetDelegate>
+@interface TrackTableViewController () <UIActionSheetDelegate>
 @property (nonatomic, strong) UIActionSheet *deleteActionSheet;
 @end
 
@@ -37,23 +37,20 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 
 - (void)deleteTracks
 {
-	//[self.fetchedResultsController.fetchedObjects makeObjectsPerformSelector:@selector(deleteEntity)];
-	//[self saveContext];
-	dispatch_queue_t queue = dispatch_queue_create("delete track queue", NULL);
-	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
-		NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
-		dispatch_async(queue, ^{
-			NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+	NSManagedObjectContext *context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+	[context performBlock:^{
+		for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+			NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
 			WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
 			if (wt) {
-				[wt deleteEntity];
+				[context deleteObject:wt];
 				NSError *error;
-				if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-					NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+				if (![context saveToPersistentStore:&error]) {
+					RKLogWarning(@"Failed saving managed object context: %@", error);
 				}
 			}
-		});
-	}
+		}
+	}];
 }
 
 - (void)deleteThumbnails
@@ -110,7 +107,7 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 		} else {
 			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);
 			dispatch_async(queue, ^{
-				NSManagedObjectContext *context = [NSManagedObjectContext contextForCurrentThread];
+				NSManagedObjectContext *context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
 				WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
 				if (wt) {
 					NSDate *start = [NSDate date];
@@ -122,7 +119,7 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 						wt.track.thumbnail = thumbnail;
 						wt.updated = [NSDate date];
 						NSError *error;
-						if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
+						if (![context saveToPersistentStore:&error]) {
 							NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 						}
 					}
@@ -138,10 +135,9 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 
 - (void)saveContext
 {
-	NSError *error;
-	if (![RKManagedObjectStore.defaultObjectStore save:&error]) {
-		NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-	}
+	NSError *error = nil;
+	BOOL success = [RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
+	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 }
 
 // Override to support conditional editing of the table view.
@@ -161,11 +157,18 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 		if ([wrappedTrack isKindOfClass:[Activity class]]) {
 			Activity *activity = (Activity *) wrappedTrack;
 			if (activity.tracktivityID) {
-				[[RKObjectManager sharedManager] deleteObject:activity delegate:self];
+				[[RKObjectManager sharedManager] deleteObject:activity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+					NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+					[context deleteObject:wrappedTrack];
+					NSError *error;
+					if (![context saveToPersistentStore:&error]) {
+						RKLogWarning(@"The context could not be saved to the persistent store: %@", error);
+					}
+				} failure:^(RKObjectRequestOperation *operation, NSError *error) {
+					RKLogWarning(@"The activity could not be deleted on the server: %@", error);
+				}];
 			}
 		}
-		[wrappedTrack deleteEntity];
-		[self saveContext];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
@@ -213,13 +216,6 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 		svdc = nil;
 	}
 	return svdc;
-}
-
-#pragma mark RestKit Delegate Methods
-
-- (void)objectLoader:(RKObjectLoader *)objectLoader didFailWithError:(NSError *)error
-{
-	NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
 }
 
 #pragma mark UIViewController Methods
