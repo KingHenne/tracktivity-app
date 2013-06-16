@@ -7,12 +7,12 @@
 //
 
 #import "BluetoothViewController.h"
-#import <WFConnector/WFConnector.h>
+//#import <WFConnector/WFConnector.h>
 
 @interface BluetoothViewController ()
 
-@property (retain, nonatomic) WFHeartrateConnection *hrConnection;
-@property (retain, nonatomic) WFBikeSpeedCadenceConnection *scConnection;
+//@property (retain, nonatomic) WFHeartrateConnection *hrConnection;
+//@property (retain, nonatomic) WFBikeSpeedCadenceConnection *scConnection;
 @property (weak, nonatomic) IBOutlet UISwitch *hrSwitch;
 @property (weak, nonatomic) IBOutlet UISwitch *scSwitch;
 @property (weak, nonatomic) IBOutlet UILabel *hrLabel;
@@ -22,7 +22,7 @@
 
 @implementation BluetoothViewController
 
-@synthesize hrConnection = _hrConnection;
+/*@synthesize hrConnection = _hrConnection;
 @synthesize scConnection = _scConnection;
 
 - (void)viewDidLoad
@@ -154,6 +154,6 @@
 	[userDefaults setBool:[sender isOn] forKey:BTLE_SC_ENABLED];
 	[userDefaults synchronize];
 	//[self checkConnectionStates];
-}
+}*/
 
 @end

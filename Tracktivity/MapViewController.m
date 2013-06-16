@@ -7,6 +7,7 @@
 //
 
 #import <MapKit/MKPinAnnotationView.h>
+#import <MapKit/MKPolylineView.h>
 #import "MapViewController.h"
 #import "WaypointAnnotation.h"
 

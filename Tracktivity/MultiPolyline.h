@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <MapKit/MKMapView.h>
+#import <MapKit/MKPolyline.h>
 
 @interface MultiPolyline : NSObject
 

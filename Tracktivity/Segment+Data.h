@@ -7,7 +7,7 @@
 //
 
 #import "Segment.h"
-#import <MapKit/MKMapView.h>
+#import <MapKit/MKPolyline.h>
 
 @interface Segment (Data)
 

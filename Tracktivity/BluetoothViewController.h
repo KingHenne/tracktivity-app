@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <WFConnector/WFConnector.h>
+//#import <WFConnector/WFConnector.h>
 
-@interface BluetoothViewController : UITableViewController <WFSensorConnectionDelegate>
+@interface BluetoothViewController : UITableViewController /*<WFSensorConnectionDelegate>*/
 
 @end

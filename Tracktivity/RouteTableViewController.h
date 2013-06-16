@@ -10,4 +10,6 @@
 
 @interface RouteTableViewController : TrackTableViewController
 
+- (void)displayImportedTrackNotification:(NSNotification *)notification;
+
 @end

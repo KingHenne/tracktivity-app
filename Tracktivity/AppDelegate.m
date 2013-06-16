@@ -11,6 +11,7 @@
 #import "FileHelper.h"
 #import "GPXParser.h"
 #import "TrackTableViewController.h"
+#import "RouteTableViewController.h"
 #import "TrackViewController.h"
 #import "SegmentedTrackViewController.h"
 #import "Activity.h"
@@ -20,13 +21,13 @@
 #import "Waypoint.h"
 #import <RestKit/RestKit.h>
 #import <RestKit/RKISO8601DateFormatter.h>
-#import <WFConnector/WFConnector.h>
+//#import <WFConnector/WFConnector.h>
 
 @interface AppDelegate ()
 @property (nonatomic, strong) GPXParser *gpxParser;
 @property (nonatomic, strong) UITabBarController *tbc;
-@property (retain, nonatomic) WFHeartrateConnection *hrConnection;
-@property (retain, nonatomic) WFBikeSpeedCadenceConnection *scConnection;
+//@property (retain, nonatomic) WFHeartrateConnection *hrConnection;
+//@property (retain, nonatomic) WFBikeSpeedCadenceConnection *scConnection;
 @end
 
 @implementation AppDelegate
@@ -34,8 +35,8 @@
 @synthesize window = _window;
 @synthesize gpxParser = _gpxParser;
 @synthesize tbc = _tbc;
-@synthesize hrConnection = _hrConnection;
-@synthesize scConnection = _scConnection;
+//@synthesize hrConnection = _hrConnection;
+//@synthesize scConnection = _scConnection;
 
 - (GPXParser *)gpxParser
 {
@@ -188,7 +189,7 @@
 	objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
 }
 
-- (void)initializeAccessories
+/*- (void)initializeAccessories
 {
 	hardwareConnector = [WFHardwareConnector sharedConnector];
     
@@ -261,7 +262,7 @@
 		self.scConnection = (WFBikeSpeedCadenceConnection *)[hardwareConnector requestSensorConnection:params];
 	}
 	self.scConnection.delegate = self;
-}
+}*/
 
 - (void)saveContext
 {
@@ -311,7 +312,7 @@
 {
     // Override point for customization after application launch.
 	[self initializeRestKit];
-	[self initializeAccessories];
+	//[self initializeAccessories];
     return YES;
 }
 							
@@ -348,7 +349,7 @@
 
 #pragma mark HardwareConnectorDelegate Implementation
 
-- (void)hardwareConnector:(WFHardwareConnector *)hwConnector connectedSensor:(WFSensorConnection *)connectionInfo
+/*- (void)hardwareConnector:(WFHardwareConnector *)hwConnector connectedSensor:(WFSensorConnection *)connectionInfo
 {
 	NSDictionary *userInfo = [NSDictionary dictionaryWithObject:connectionInfo forKey:@"connectionInfo"];
 	[[NSNotificationCenter defaultCenter] postNotificationName:WF_NOTIFICATION_SENSOR_CONNECTED object:nil userInfo:userInfo];
@@ -400,6 +401,6 @@
         // Process post-connection setup.
 		[[WFHardwareConnector sharedConnector].settings saveConnectionInfo:connectionInfo];
     }
-}
+}*/
 
 @end

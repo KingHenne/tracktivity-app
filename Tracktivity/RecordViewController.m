@@ -9,6 +9,7 @@
 #import "RecordViewController.h"
 #import <MapKit/MKUserLocation.h>
 #import <MapKit/MKPinAnnotationView.h>
+#import <MapKit/MKPolylineView.h>
 #import "WaypointAnnotation.h"
 #import "WildcardGestureRecognizer.h"
 #import "UserLocationAnnotation.h"

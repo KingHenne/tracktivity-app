@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B10865BD16A2EF2300EB41FB /* BluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */; };
-		B10865C016A34F6F00EB41FB /* WFConnector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B10865BE16A34F6000EB41FB /* WFConnector.framework */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
 		B10BFDBF15CECBA40070FA11 /* SegmentedTrackViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDBE15CECBA40070FA11 /* SegmentedTrackViewController.m */; };
@@ -290,6 +289,8 @@
 		B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLocationAnnotation.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
+		B1D18380176DD3B2001D9172 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.1_beta3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
+		B1D1838A176DDAE1001D9172 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = Tracktivity/gpxFile.png; sourceTree = "<group>"; };
 		B1E9298215D7B74000CF1574 /* gpxFile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gpxFile@2x.png"; path = "Tracktivity/gpxFile@2x.png"; sourceTree = "<group>"; };
 		B1E9298515D7B87C00CF1574 /* ImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportViewController.h; sourceTree = "<group>"; };
@@ -327,7 +328,6 @@
 				B12D4BBF15B1CCA6001490B3 /* UIKit.framework in Frameworks */,
 				B12D4BC115B1CCA6001490B3 /* Foundation.framework in Frameworks */,
 				B12D4BC315B1CCA6001490B3 /* CoreGraphics.framework in Frameworks */,
-				B10865C016A34F6F00EB41FB /* WFConnector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +356,7 @@
 		B12D4BBD15B1CCA6001490B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1D18380176DD3B2001D9172 /* WFConnector.framework */,
 				B1A59B26160FA152000FFD92 /* libz.dylib */,
 				B190500315FD2DBB00B225E2 /* libxml2.dylib */,
 				B10865BE16A34F6000EB41FB /* WFConnector.framework */,
@@ -627,8 +628,17 @@
 		B12D4BB115B1CCA6001490B3 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = SinnerSchrader;
+				TargetAttributes = {
+					B12D4BB915B1CCA6001490B3 = {
+						SystemCapabilities = {
+							com.apple.iOS = {
+								enabled = 1;
+							};
+						};
+					};
+				};
 			};
 			buildConfigurationList = B12D4BB415B1CCA6001490B3 /* Build configuration list for PBXProject "Tracktivity" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -832,6 +842,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B16A04A315B35784005B372D /* de */,
+				B1D1838A176DDAE1001D9172 /* en */,
 			);
 			name = iPhone.storyboard;
 			sourceTree = "<group>";
@@ -861,11 +872,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -877,13 +889,18 @@
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-all_load",
 				);
+				PROVISIONING_PROFILE = "1BD67993-5025-496D-8E50-A4D19693F2AC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALID_ARCHS = armv7;
@@ -895,23 +912,28 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-all_load",
 				);
+				PROVISIONING_PROFILE = "1BD67993-5025-496D-8E50-A4D19693F2AC";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -922,11 +944,7 @@
 		B12D4BE715B1CCA6001490B3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
-					"\"$(SRCROOT)/../wf_api_3.0_beta1/dependencies\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tracktivity/Tracktivity-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
@@ -948,11 +966,7 @@
 		B12D4BE815B1CCA6001490B3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/../wf_api_2.3.5/dependencies\"",
-					"\"$(SRCROOT)/../wf_api_3.0_beta1/dependencies\"",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tracktivity/Tracktivity-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
