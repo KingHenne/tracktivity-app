@@ -8,6 +8,7 @@
 
 #import "ActivityTableViewController.h"
 #import "Activity.h"
+#import "ThinActivity.h"
 #import <RestKit/RestKit.h>
 
 @interface ActivityTableViewController ()
@@ -46,7 +47,9 @@
 	NSArray *newActivities = [context executeFetchRequest:fetchRequest error:nil];
 	for (Activity *newActivity in newActivities) {
 		[RKObjectManager.sharedManager postObject:newActivity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-			//TODO
+			Activity *activity = (Activity *) mappingResult.firstObject;
+			NSLog(@"successfully uploaded activity with newly assigned tracktivity ID: %@", activity.tracktivityID);
+			[blockSelf updateRefreshButton];
 		} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 			[blockSelf operationFailedWithError:error];
 		}];
@@ -57,57 +60,55 @@
 {
 	__block __typeof__(self) blockSelf = self;
 	RKObjectManager *manager = [RKObjectManager sharedManager];
-	RKObjectRequestOperation *operation = [manager appropriateObjectRequestOperationWithObject:nil method:RKRequestMethodGET path:@"users/hendrik/activities" parameters:nil];
-	
-	[operation setWillMapDeserializedResponseBlock:^id(id deserializedResponseBody) {
-		NSLog(@"deserializedResponseBody: %@", deserializedResponseBody);
-		return deserializedResponseBody;
-	}];
-	
-	[operation setCompletionBlockWithSuccess:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-		NSArray *activityIDs = [mappingResult.dictionary valueForKey:@"activities"];
-		if (activityIDs) {
-			[blockSelf downloadNewActivities:activityIDs];
-			[blockSelf deleteActivitiesNotIncludedInList:activityIDs];
-			[blockSelf updateRefreshButton];
-		}
+	NSDictionary *pathObject = [NSDictionary dictionaryWithObject:@"hendrik" forKey:@"username"];
+	[manager getObjectsAtPathForRouteNamed:@"userActivityIds" object:pathObject parameters:nil
+								   success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+		NSArray *activityIDs = mappingResult.array;
+		[blockSelf downloadNewActivities:activityIDs];
+		//[blockSelf deleteActivitiesNotIncludedInList:activityIDs];
+		[blockSelf updateRefreshButton];
 	} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 		[blockSelf operationFailedWithError:error];
 	}];
-	
-	[manager enqueueObjectRequestOperation:operation];
 }
 
 - (void)updateRefreshButton
 {
-	if (RKObjectManager.sharedManager.operationQueue.operationCount <= 1) {
+	if (RKObjectManager.sharedManager.operationQueue.operationCount == 0) {
 		self.refreshButton.enabled = YES;
 	}
 }
 
-// activityIDs must be an array of dictionaries with a key 'id'
+// activityIDs must be an array of ThinActivity objects
 - (void)downloadNewActivities:(NSArray *)activityIDs
 {
 	__block __typeof__(self) blockSelf = self;
-	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
-	for (NSDictionary *activity in activityIDs) {
-		NSString *tracktivityID = [activity valueForKey:@"id"];
+	NSManagedObjectContext *context = self.fetchedResultsController.managedObjectContext;
+	for (ThinActivity *thinActivity in activityIDs) {
+		NSString *tracktivityID = thinActivity.tracktivityID;
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"tracktivityID == %@", tracktivityID];
-		if ([context countForEntityForName:@"Activity" predicate:predicate error:nil] == NSNotFound) {
+		if ([context countForEntityForName:@"Activity" predicate:predicate error:nil] == 0) {
 			NSLog(@"Loading activity %@ from the server ...", tracktivityID);
-			NSString *path = [NSString stringWithFormat:@"/activities/%@", tracktivityID];
-			[[RKObjectManager sharedManager] getObjectsAtPath:path parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-				// TODO: should I do something here?
+			Activity *activity = [context insertNewObjectForEntityForName:@"Activity"];
+			activity.recording = @YES;
+			activity.tracktivityID = tracktivityID;
+			[[RKObjectManager sharedManager] getObject:activity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+				NSLog(@"successfully fetched activity: %@", tracktivityID);
+				Activity *fetchedActivity = (Activity *) mappingResult.firstObject;
+				fetchedActivity.recording = @NO;
+				[blockSelf updateRefreshButton];
 			} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 				[blockSelf operationFailedWithError:error];
 			}];
+		} else {
+			NSLog(@"The activity %@ was already loaded from the server.", tracktivityID);
 		}
 	}
 }
 
 - (void)deleteActivitiesNotIncludedInList:(NSArray *)activityIDs
 {
-	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+	NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
 	NSFetchRequest *fetchRequest = [NSFetchRequest fetchRequestWithEntityName:@"Activity"];
 	fetchRequest.predicate = [NSPredicate predicateWithFormat:@"tracktivityID != nil"];
 	NSArray *activities = [context executeFetchRequest:fetchRequest error:nil];

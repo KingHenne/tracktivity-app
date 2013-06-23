@@ -60,7 +60,7 @@
 			self.locationManager.distanceFilter = DISTANCE_FILTER;
 			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 		}
-		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
 		_paused = YES;
 		_recording = NO;
     }

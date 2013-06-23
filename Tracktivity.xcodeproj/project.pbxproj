@@ -32,6 +32,7 @@
 		B1354F331736B79500646C5C /* libTBXML-iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */; };
 		B1354F341736B79B00646C5C /* libRestKit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1354F2C1736B73600646C5C /* libRestKit.a */; };
 		B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */; };
+		B13C91F9177608D900CED2D7 /* ThinActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = B13C91F8177608D900CED2D7 /* ThinActivity.m */; };
 		B142346B16342D5500AEAFE9 /* OpenInSafariActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */; };
 		B14234701634444800AEAFE9 /* activitySafari-43.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346C1634444800AEAFE9 /* activitySafari-43.png */; };
 		B14234711634444800AEAFE9 /* activitySafari-43@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */; };
@@ -204,6 +205,8 @@
 		B1354F241736B73600646C5C /* RestKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RestKit.xcodeproj; path = RestKit/RestKit.xcodeproj; sourceTree = "<group>"; };
 		B13BCC38160E3B7A001E7486 /* WildcardGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WildcardGestureRecognizer.h; sourceTree = "<group>"; };
 		B13BCC39160E3B7A001E7486 /* WildcardGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WildcardGestureRecognizer.m; sourceTree = "<group>"; };
+		B13C91F7177608D900CED2D7 /* ThinActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThinActivity.h; sourceTree = "<group>"; };
+		B13C91F8177608D900CED2D7 /* ThinActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThinActivity.m; sourceTree = "<group>"; };
 		B142346916342D5400AEAFE9 /* OpenInSafariActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenInSafariActivity.h; sourceTree = "<group>"; };
 		B142346A16342D5500AEAFE9 /* OpenInSafariActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenInSafariActivity.m; sourceTree = "<group>"; };
 		B142346C1634444800AEAFE9 /* activitySafari-43.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "activitySafari-43.png"; path = "Tracktivity/activitySafari-43.png"; sourceTree = "<group>"; };
@@ -541,6 +544,8 @@
 				B1A8D1451621E6D500926E42 /* ActivityType.m */,
 				B1A59B02160F6E22000FFD92 /* MultiPolyline.h */,
 				B1A59B03160F6E22000FFD92 /* MultiPolyline.m */,
+				B13C91F7177608D900CED2D7 /* ThinActivity.h */,
+				B13C91F8177608D900CED2D7 /* ThinActivity.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -804,6 +809,7 @@
 				B19C0CD7161C7A5E0068B601 /* Track.m in Sources */,
 				B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */,
 				B19C0CE3161C7A5F0068B601 /* Route.m in Sources */,
+				B13C91F9177608D900CED2D7 /* ThinActivity.m in Sources */,
 				B148B69C161C962B003B9DDC /* WrappedTrack.m in Sources */,
 				B181FBCA161D0A2B00D734C0 /* WrappedTrack+Info.m in Sources */,
 				B1A8D1461621E6D500926E42 /* ActivityType.m in Sources */,

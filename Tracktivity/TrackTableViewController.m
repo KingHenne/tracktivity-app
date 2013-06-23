@@ -37,20 +37,14 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 
 - (void)deleteTracks
 {
-	NSManagedObjectContext *context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
-	[context performBlock:^{
-		for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
-			NSManagedObjectID *wrappedTrackObjectID = wrappedTrack.objectID;
-			WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
-			if (wt) {
-				[context deleteObject:wt];
-				NSError *error;
-				if (![context saveToPersistentStore:&error]) {
-					RKLogWarning(@"Failed saving managed object context: %@", error);
-				}
-			}
-		}
-	}];
+	for (WrappedTrack *wrappedTrack in self.fetchedResultsController.fetchedObjects) {
+		[wrappedTrack.managedObjectContext deleteObject:wrappedTrack];
+	}
+	NSManagedObjectContext *context = self.fetchedResultsController.managedObjectContext;
+	NSError *error;
+	if (![context saveToPersistentStore:&error]) {
+		RKLogWarning(@"Failed saving managed object context: %@", error);
+	}
 }
 
 - (void)deleteThumbnails
@@ -107,7 +101,7 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 		} else {
 			dispatch_queue_t queue = dispatch_queue_create("thumbnail fetch queue", NULL);
 			dispatch_async(queue, ^{
-				NSManagedObjectContext *context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+				NSManagedObjectContext *context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
 				WrappedTrack *wt = (WrappedTrack *) [context objectWithID:wrappedTrackObjectID];
 				if (wt) {
 					NSDate *start = [NSDate date];
@@ -153,43 +147,29 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
     if (editingStyle == UITableViewCellEditingStyleDelete) {
 		// Delete the managed object at the given index path.
 		WrappedTrack *wrappedTrack = [self.fetchedResultsController objectAtIndexPath:indexPath];
-		// If the wrapped track is a synced activity, first delete it from the server.
+		NSManagedObjectContext *context = wrappedTrack.managedObjectContext;
+		[context deleteObject:wrappedTrack];
+		// If the wrapped track is a synced activity, also delete it from the server.
 		if ([wrappedTrack isKindOfClass:[Activity class]]) {
 			Activity *activity = (Activity *) wrappedTrack;
 			if (activity.tracktivityID) {
-				[[RKObjectManager sharedManager] deleteObject:activity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
-					NSManagedObjectContext *context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
-					[context deleteObject:wrappedTrack];
+				RKObjectManager *manager = [RKObjectManager sharedManager];
+				[manager deleteObject:activity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
+					NSManagedObjectContext *blockContext = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+					[blockContext deleteObject:activity];
 					NSError *error;
-					if (![context saveToPersistentStore:&error]) {
+					if (![blockContext saveToPersistentStore:&error]) {
 						RKLogWarning(@"The context could not be saved to the persistent store: %@", error);
 					}
 				} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 					RKLogWarning(@"The activity could not be deleted on the server: %@", error);
 				}];
+			} else {
+				[context saveToPersistentStore:nil];
 			}
 		}
-    }   
-    else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+    }
 }
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath
-{
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {

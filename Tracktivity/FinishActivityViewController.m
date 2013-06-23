@@ -107,7 +107,8 @@
 			NSIndexPath *path = [NSIndexPath indexPathForRow:row inSection:indexPath.section];
 			UITableViewCell *cell = [tableView cellForRowAtIndexPath:path];
 			if (row == indexPath.row) {
-				self.activity.type = [self.activityTypes objectAtIndex:row];
+				NSManagedObjectID *typeID = [[self.activityTypes objectAtIndex:row] objectID];
+				self.activity.type = (ActivityType *) [self.activity.managedObjectContext objectWithID:typeID];
 				cell.accessoryType = UITableViewCellAccessoryCheckmark;
 				[cell setSelected:NO animated:YES];
 			} else {

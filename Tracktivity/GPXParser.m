@@ -62,7 +62,7 @@
 - (NSManagedObjectContext *)context
 {
 	if (_context == nil) {
-		_context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType];
+		_context = [[RKManagedObjectStore defaultStore] newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
 		_context.undoManager = nil; // for performance reasons
 	}
 	return _context;

@@ -15,6 +15,7 @@
 #import "TrackViewController.h"
 #import "SegmentedTrackViewController.h"
 #import "Activity.h"
+#import "ThinActivity.h"
 #import "ActivityType.h"
 #import "Track.h"
 #import "Segment.h"
@@ -100,56 +101,30 @@
 	RKLogConfigureByName("RestKit/CoreData", RKLogLevelDebug);
 	
 	NSError *error = nil;
-	NSManagedObjectModel *managedObjectModel = [[NSManagedObjectModel mergedModelFromBundles:nil] mutableCopy];
-	RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
-	
-	// Initialize the Core Data stack
-	[managedObjectStore createPersistentStoreCoordinator];
-	
-	// Initialize object store
-	BOOL success = RKEnsureDirectoryExistsAtPath(RKApplicationDataDirectory(), &error);
-	if (! success) {
-		RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
-	}
-#ifdef RESTKIT_GENERATE_SEED_DB
-	NSString *seedDatabasePath = nil;
-	NSString *databasePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"RKSeedDatabase.sqlite"];
-#else
-	NSString *seedDatabasePath = [[NSBundle mainBundle] pathForResource:@"RKSeedDatabase" ofType:@"sqlite"];
-	NSString *databasePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Tracktivity.sqlite"];
-#endif
-	
-	NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:databasePath fromSeedDatabaseAtPath:seedDatabasePath withConfiguration:nil options:nil error:&error];
-	if (! persistentStore) {
-		RKLogError(@"Failed adding persistent store at path '%@': %@", databasePath, error);
-	}
-	
-	[managedObjectStore createManagedObjectContexts];
-	
-	// Set the default store shared instance
-	[RKManagedObjectStore setDefaultStore:managedObjectStore];
 	
 	NSURL *apiEndpoint = [NSURL URLWithString:@"http://mackie-messer.local:8080/api"];
 	RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:apiEndpoint];
-	objectManager.managedObjectStore = managedObjectStore;
-	
-	// Send user credentials as basic auth.
-	// TODO: replace this with NSUserDefaults values filled with a login view.
-	[objectManager.HTTPClient setAuthorizationHeaderWithUsername:@"hendrik" password:@"boerrek"];
-	
-	// Set the default manager shared instance
-	[RKObjectManager setSharedManager:objectManager];
 	
 	// Enable automatic network activity indicator management.
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
 	
-	// Configure a (serialization) mapping for the Activity class and its relationships.
+    // Initialize managed object store
+	NSManagedObjectModel *managedObjectModel = [NSManagedObjectModel mergedModelFromBundles:nil];
+	RKManagedObjectStore *managedObjectStore = [[RKManagedObjectStore alloc] initWithManagedObjectModel:managedObjectModel];
+	objectManager.managedObjectStore = managedObjectStore;
+	
+	// Send user credentials as basic auth.
+	// TODO: replace this with NSUserDefaults values filled with a login view.
+	[objectManager.HTTPClient setAuthorizationHeaderWithUsername:@"hendrik" password:@"123456"];
+	
+	// Configure object mappings for the Activity entity and its relationships.
 	
 	RKEntityMapping *activityMapping = [RKEntityMapping mappingForEntityForName:@"Activity" inManagedObjectStore:managedObjectStore];
 	RKEntityMapping *trackMapping = [RKEntityMapping mappingForEntityForName:@"Track" inManagedObjectStore:managedObjectStore];
 	RKEntityMapping *segmentMapping = [RKEntityMapping mappingForEntityForName:@"Segment" inManagedObjectStore:managedObjectStore];
 	RKEntityMapping *pointMapping = [RKEntityMapping mappingForEntityForName:@"Waypoint" inManagedObjectStore:managedObjectStore];
 	RKEntityMapping *activityTypeMapping = [RKEntityMapping mappingForEntityForName:@"ActivityType" inManagedObjectStore:managedObjectStore];
+	RKObjectMapping *activityIdMapping = [RKObjectMapping mappingForClass:[ThinActivity class]];
 	
 	[pointMapping addAttributeMappingsFromDictionary:@{
 	 @"time":	@"time",
@@ -170,14 +145,49 @@
 	activityTypeMapping.identificationAttributes = @[ @"stringValue" ];
 	[activityMapping addRelationshipMappingWithSourceKeyPath:@"type" mapping:activityTypeMapping];
 	
+	[activityIdMapping addAttributeMappingsFromDictionary:@{ @"id":@"tracktivityID" }];
+	
+	// Register our mappings with the provider using response descriptors
+    [objectManager addResponseDescriptorsFromArray:
+	 @[[RKResponseDescriptor responseDescriptorWithMapping:activityIdMapping pathPattern:@"users/:username/activities" keyPath:@"activities" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities/:tracktivityID" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
+	
+	[objectManager addRequestDescriptor:[RKRequestDescriptor requestDescriptorWithMapping:activityMapping.inverseMapping objectClass:[Activity class] rootKeyPath:nil]];
+	
+	// Add routes for specific paths and HTTP methods.
+	[objectManager.router.routeSet addRoutes:
+	 @[[RKRoute routeWithName:@"userActivityIds" pathPattern:@"users/:username/activities" method:RKRequestMethodGET],
+	   [RKRoute routeWithClass:[Activity class] pathPattern:@"activities/:tracktivityID" method:RKRequestMethodGET],
+	   [RKRoute routeWithClass:[Activity class] pathPattern:@"activities/:tracktivityID" method:RKRequestMethodDELETE],
+	   [RKRoute routeWithClass:[Activity class] pathPattern:@"activities" method:RKRequestMethodPOST]]];
+	
+	BOOL success = RKEnsureDirectoryExistsAtPath(RKApplicationDataDirectory(), &error);
+	if (! success) {
+		RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
+	}
+	
+	// Initialize the Core Data stack
+	[managedObjectStore createPersistentStoreCoordinator];
+	
 #ifdef RESTKIT_GENERATE_SEED_DB
+	NSString *seedDatabasePath = nil;
+	NSString *databasePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"RKSeedDatabase.sqlite"];
 	// TODO: set a different activityTypeMapping here
 	// Create a seed database with all activity types.
 	RKManagedObjectSeeder *objectSeeder = [RKManagedObjectSeeder objectSeederWithObjectManager:objectManager];
 	[objectSeeder seedObjectsFromFile:@"ActivityTypes.json" withObjectMapping:activityTypeMapping];
 	// Finalize the seeding operation and output a helpful informational message
     [objectSeeder finalizeSeedingAndExit];
+#else
+	NSString *seedDatabasePath = [[NSBundle mainBundle] pathForResource:@"RKSeedDatabase" ofType:@"sqlite"];
+	NSString *databasePath = [RKApplicationDataDirectory() stringByAppendingPathComponent:@"Tracktivity.sqlite"];
 #endif
+	
+	NSPersistentStore *persistentStore = [managedObjectStore addSQLitePersistentStoreAtPath:databasePath fromSeedDatabaseAtPath:seedDatabasePath withConfiguration:nil options:nil error:&error];
+	if (! persistentStore) {
+		RKLogError(@"Failed adding persistent store at path '%@': %@", databasePath, error);
+	}
 	
 	// Set the preferred date formatter.
 	RKISO8601DateFormatter *dateFormatter = [RKISO8601DateFormatter new];
@@ -187,6 +197,12 @@
 	
 	// Globally use JSON as the wire format for POST/PUT operations.
 	objectManager.requestSerializationMIMEType = RKMIMETypeJSON;
+	
+	// Create the managed object contexts
+    [managedObjectStore createManagedObjectContexts];
+	
+	// Configure a managed object cache to ensure we do not create duplicate objects
+    managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
 }
 
 /*- (void)initializeAccessories
