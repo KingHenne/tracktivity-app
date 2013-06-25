@@ -15,4 +15,9 @@
 	return [NSString stringWithFormat:@"%f,%f", self.latitude.doubleValue, self.longitude.doubleValue];
 }
 
+- (NSString *)jsonDataString
+{
+	return [NSString stringWithFormat:@"{\"data\": \"%@\"}", self.description];
+}
+
 @end

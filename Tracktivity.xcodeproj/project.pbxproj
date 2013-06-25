@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B1043214177A387E00C56F23 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B1043213177A387E00C56F23 /* libicucore.dylib */; };
 		B10865BD16A2EF2300EB41FB /* BluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
@@ -85,6 +86,7 @@
 		B1A8D150162221DD00926E42 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D14F162221DD00926E42 /* Activity.m */; };
 		B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
+		B1D4A6F5177A336B00EDD362 /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D4A6EB177A327D00EDD362 /* libSocketRocket.a */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
 		B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298215D7B74000CF1574 /* gpxFile@2x.png */; };
 		B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E9298615D7B87D00CF1574 /* ImportViewController.m */; };
@@ -166,9 +168,45 @@
 			remoteGlobalIDString = 8290352414D9F5B200ACF7E4;
 			remoteInfo = "TBXML-iOS";
 		};
+		B1D4A6EA177A327D00EDD362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F6B2082D1450F597009315AF;
+			remoteInfo = SocketRocket;
+		};
+		B1D4A6EC177A327D00EDD362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F668C880153E91210044DBAC;
+			remoteInfo = SocketRocketOSX;
+		};
+		B1D4A6EE177A327D00EDD362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F6BDA802145900D200FE3253;
+			remoteInfo = SRWebSocketTests;
+		};
+		B1D4A6F0177A327D00EDD362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F62417E314D52F3C003CE997;
+			remoteInfo = TestChat;
+		};
+		B1D4A6F6177A368800EDD362 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F6B2082C1450F597009315AF;
+			remoteInfo = SocketRocket;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B1043213177A387E00C56F23 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		B10865BB16A2EF2300EB41FB /* BluetoothViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothViewController.h; sourceTree = "<group>"; };
 		B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BluetoothViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B10865BE16A34F6000EB41FB /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.0_beta1/dependencies/WFConnector.framework; sourceTree = "<group>"; };
@@ -294,6 +332,7 @@
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
 		B1D18380176DD3B2001D9172 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.1_beta3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
 		B1D1838A176DDAE1001D9172 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/iPhone.storyboard; sourceTree = "<group>"; };
+		B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SocketRocket.xcodeproj; path = SocketRocket/SocketRocket.xcodeproj; sourceTree = "<group>"; };
 		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = Tracktivity/gpxFile.png; sourceTree = "<group>"; };
 		B1E9298215D7B74000CF1574 /* gpxFile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gpxFile@2x.png"; path = "Tracktivity/gpxFile@2x.png"; sourceTree = "<group>"; };
 		B1E9298515D7B87C00CF1574 /* ImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportViewController.h; sourceTree = "<group>"; };
@@ -314,6 +353,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B1043214177A387E00C56F23 /* libicucore.dylib in Frameworks */,
+				B1D4A6F5177A336B00EDD362 /* libSocketRocket.a in Frameworks */,
 				B1354F341736B79B00646C5C /* libRestKit.a in Frameworks */,
 				B1354F331736B79500646C5C /* libTBXML-iOS.a in Frameworks */,
 				B1A59B27160FA152000FFD92 /* libz.dylib in Frameworks */,
@@ -340,6 +381,7 @@
 		B12D4BAF15B1CCA6001490B3 = {
 			isa = PBXGroup;
 			children = (
+				B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */,
 				B1354F241736B73600646C5C /* RestKit.xcodeproj */,
 				B1A59B10160F9BF9000FFD92 /* TBXML.xcodeproj */,
 				B12D4BC415B1CCA6001490B3 /* Tracktivity */,
@@ -359,6 +401,7 @@
 		B12D4BBD15B1CCA6001490B3 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B1043213177A387E00C56F23 /* libicucore.dylib */,
 				B1D18380176DD3B2001D9172 /* WFConnector.framework */,
 				B1A59B26160FA152000FFD92 /* libz.dylib */,
 				B190500315FD2DBB00B225E2 /* libxml2.dylib */,
@@ -486,6 +529,17 @@
 				B1A59B1D160F9BFA000FFD92 /* TBXMLTests.octest */,
 				B1A59B1F160F9BFA000FFD92 /* libTBXML-iOS.a */,
 				B1A59B21160F9BFA000FFD92 /* TBXML-iOSTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B1D4A6E1177A327C00EDD362 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B1D4A6EB177A327D00EDD362 /* libSocketRocket.a */,
+				B1D4A6ED177A327D00EDD362 /* SocketRocket.framework */,
+				B1D4A6EF177A327D00EDD362 /* SRWebSocketTests.octest */,
+				B1D4A6F1177A327D00EDD362 /* TestChat.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -619,6 +673,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B1D4A6F7177A368800EDD362 /* PBXTargetDependency */,
 				B1354F361736B7A300646C5C /* PBXTargetDependency */,
 				B1A59B23160FA041000FFD92 /* PBXTargetDependency */,
 			);
@@ -660,6 +715,10 @@
 				{
 					ProductGroup = B1354F251736B73600646C5C /* Products */;
 					ProjectRef = B1354F241736B73600646C5C /* RestKit.xcodeproj */;
+				},
+				{
+					ProductGroup = B1D4A6E1177A327C00EDD362 /* Products */;
+					ProjectRef = B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */;
 				},
 				{
 					ProductGroup = B1A59B11160F9BF9000FFD92 /* Products */;
@@ -728,6 +787,34 @@
 			fileType = wrapper.cfbundle;
 			path = "TBXML-iOSTests.octest";
 			remoteRef = B1A59B20160F9BFA000FFD92 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1D4A6EB177A327D00EDD362 /* libSocketRocket.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libSocketRocket.a;
+			remoteRef = B1D4A6EA177A327D00EDD362 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1D4A6ED177A327D00EDD362 /* SocketRocket.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = SocketRocket.framework;
+			remoteRef = B1D4A6EC177A327D00EDD362 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1D4A6EF177A327D00EDD362 /* SRWebSocketTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = SRWebSocketTests.octest;
+			remoteRef = B1D4A6EE177A327D00EDD362 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B1D4A6F1177A327D00EDD362 /* TestChat.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = TestChat.app;
+			remoteRef = B1D4A6F0177A327D00EDD362 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -832,6 +919,11 @@
 			name = "TBXML-iOS";
 			targetProxy = B1A59B22160FA041000FFD92 /* PBXContainerItemProxy */;
 		};
+		B1D4A6F7177A368800EDD362 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SocketRocket;
+			targetProxy = B1D4A6F6177A368800EDD362 /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
@@ -905,6 +997,7 @@
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-all_load",
+					"-ObjC",
 				);
 				PROVISIONING_PROFILE = "1BD67993-5025-496D-8E50-A4D19693F2AC";
 				SDKROOT = iphoneos;
@@ -938,6 +1031,7 @@
 				OTHER_LDFLAGS = (
 					"-lstdc++",
 					"-all_load",
+					"-ObjC",
 				);
 				PROVISIONING_PROFILE = "1BD67993-5025-496D-8E50-A4D19693F2AC";
 				SDKROOT = iphoneos;
@@ -957,13 +1051,9 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
 					"TBXML/**",
+					"SocketRocket/**",
 				);
 				INFOPLIST_FILE = "Tracktivity/Tracktivity-Info.plist";
-				OTHER_LDFLAGS = (
-					"-lstdc++",
-					"-all_load",
-					"-ObjC",
-				);
 				PRODUCT_NAME = Tracktivity;
 				WRAPPER_EXTENSION = app;
 			};
@@ -978,13 +1068,9 @@
 				HEADER_SEARCH_PATHS = (
 					"\"$(BUILT_PRODUCTS_DIR)/../../Headers\"",
 					"TBXML/**",
+					"SocketRocket/**",
 				);
 				INFOPLIST_FILE = "Tracktivity/Tracktivity-Info.plist";
-				OTHER_LDFLAGS = (
-					"-lstdc++",
-					"-all_load",
-					"-ObjC",
-				);
 				PRODUCT_NAME = Tracktivity;
 				WRAPPER_EXTENSION = app;
 			};

@@ -4,3 +4,6 @@
 [submodule "RestKit"]
 	path = RestKit
 	url = git://github.com/RestKit/RestKit.git
+[submodule "SocketRocket"]
+	path = SocketRocket
+	url = git@github.com:square/SocketRocket.git

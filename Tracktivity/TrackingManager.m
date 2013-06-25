@@ -14,7 +14,9 @@
 #import "Segment+Create.h"
 #import "Segment+Data.h"
 #import "Waypoint+Create.h"
+#import "Waypoint+Strings.h"
 #import <RestKit/RestKit.h>
+#import <SocketRocket/SRWebSocket.h>
 
 // distance filter for the location manager in meters
 // use kCLDistanceFilterNone for unfiltered recording
@@ -27,32 +29,24 @@
 // that are older than this interval in seconds
 #define EXPIRY_TIME_INTERVAL 10.0
 
-@interface TrackingManager()
+@interface TrackingManager() <SRWebSocketDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic) CLLocationDistance totalDistance;
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) Activity *activity;
 @property (nonatomic, assign, getter = isRecordingActivity) BOOL recording;
+@property (nonatomic, strong) SRWebSocket *webSocket;
 @end
 
 @implementation TrackingManager
-
-@synthesize locationManager = _locationManager;
-@synthesize delegate = _delegate;
-@synthesize recording = _recording;
-@synthesize paused = _paused;
-@synthesize location = _location;
-@synthesize totalDistance = _totalDistance;
-@synthesize context = _context;
-@synthesize activity = _activity;
 
 - (id)init
 {
     self = [super init];
     if (self != nil) {
 		if (![CLLocationManager locationServicesEnabled]) {
-			// alert user he has to enable location services
+			// TODO: alert user he has to enable location services
 			NSLog(@"WARNING: Location services are disabled.");
 		} else {
 			self.locationManager = [[CLLocationManager alloc] init];
@@ -63,6 +57,9 @@
 		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
 		_paused = YES;
 		_recording = NO;
+		self.webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:@"wss://hendrik:123456@mackie-messer.local:8443/live"]];
+		self.webSocket.delegate = self;
+		[self.webSocket open];
     }
     return self;
 }
@@ -135,6 +132,7 @@
 	self.location = newLocation;
 	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
 	[self.activity.track.segments.lastObject addPointsObject:newPoint];
+	[self.webSocket send:newPoint.jsonDataString];
 }
 
 - (void)togglePause
@@ -166,7 +164,7 @@
 			[self recordLocation:newLocation];
 		}
 		// publish location update to current delegate
-		// maybe change this to multiple listeners later on
+		// maybe change this to multiple listeners later on, or use GCD
 		if ([self.delegate respondsToSelector:@selector(locationUpdate:)]) {
 			[self.delegate locationUpdate:newLocation];
 		}
@@ -190,6 +188,13 @@
 		sharedTrackingManagerInstance = [[self alloc] init];
 	});
 	return sharedTrackingManagerInstance;
+}
+
+#pragma SRWebSocketDelegate implementation
+
+- (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
+{
+	NSLog(@"received WebSocket message: %@", message);
 }
 
 @end
