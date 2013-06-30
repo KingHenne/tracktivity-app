@@ -33,6 +33,7 @@ typedef enum {
     LiveTrackingFinished = 0,
     LiveTrackingPaused = 1,
     LiveTrackingRecording = 2,
+	LiveTrackingStarted = 3
 } LiveTrackingEvent;
 
 @interface TrackingManager() <SRWebSocketDelegate>
@@ -94,6 +95,7 @@ typedef enum {
 	self.activity.start = [NSDate date];
 	self.recording = YES;
 	self.paused = NO;
+	[self startLiveTracking];
 	if ([self.delegate respondsToSelector:@selector(startedActivity)]) {
 		[self.delegate startedActivity];
 	}
@@ -111,6 +113,7 @@ typedef enum {
 		self.activity.recording = [NSNumber numberWithBool:NO];
 	}
 	[self saveContext];
+	[self finishLiveTracking];
 	if ([self.delegate respondsToSelector:@selector(finishedActivity)]) {
 		[self.delegate finishedActivity];
 	}
@@ -122,7 +125,9 @@ typedef enum {
 	if (!paused && !self.isRecordingActivity) {
 		[self startActivity];
 	} else {
-		if (!paused) {
+		if (paused) {
+			[self pauseLiveTracking];
+		} else {
 			[self.activity.track addSegmentsObject:[self.context insertNewObjectForEntityForName:@"Segment"]];
 			[self.locationManager startUpdatingLocation];
 		}
@@ -141,22 +146,6 @@ typedef enum {
 	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
 	[self.activity.track.segments.lastObject addPointsObject:newPoint];
 	[self doLiveTrackingWithPoint:newPoint];
-}
-
-- (void)doLiveTrackingWithPoint:(Waypoint *)point
-{
-	NSDictionary *pointDict = [RKObjectParameterization parametersWithObject:point
-														   requestDescriptor:self.waypointRequestDescriptor
-																	   error:nil];
-	NSDictionary *dict = @{@"event": [NSNumber numberWithInt:LiveTrackingRecording], @"point": pointDict};
-	NSError *error;
-	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
-	if (jsonData) {
-		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-		[self.webSocket send:jsonString];
-	} else {
-		NSLog(@"Error while serializing: %@", error);
-	}
 }
 
 - (void)togglePause
@@ -200,7 +189,7 @@ typedef enum {
 {
 	NSLog(@"ERROR: %@", error);
 	if ([self.delegate respondsToSelector:@selector(locationUpdateFailedWithError:)]) {
-		[self.delegate locationUpdateFailedWithError:error];	
+		[self.delegate locationUpdateFailedWithError:error];
 	}
 }
 
@@ -214,11 +203,52 @@ typedef enum {
 	return sharedTrackingManagerInstance;
 }
 
-#pragma SRWebSocketDelegate implementation
+#pragma mark SRWebSocketDelegate implementation
 
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
 	NSLog(@"received WebSocket message: %@", message);
+}
+
+#pragma mark Live Tracking
+
+- (void)startLiveTracking
+{
+	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingStarted],
+									   @"time":  RKStringFromDate(self.activity.start)}];
+}
+
+- (void)pauseLiveTracking
+{
+	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingPaused],
+									   @"time":  RKStringFromDate([NSDate date])}];
+}
+
+- (void)finishLiveTracking
+{
+	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingFinished],
+									   @"time":  RKStringFromDate(self.activity.end)}];
+}
+
+- (void)doLiveTrackingWithPoint:(Waypoint *)point
+{
+	NSDictionary *pointDict = [RKObjectParameterization parametersWithObject:point
+														   requestDescriptor:self.waypointRequestDescriptor
+																	   error:nil];
+	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingRecording],
+									   @"point": pointDict}];
+}
+
+- (void)sendDataAsJSONviaWebSocket:(NSDictionary *)data
+{
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
+	if (jsonData) {
+		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+		[self.webSocket send:jsonString];
+	} else {
+		NSLog(@"Error while serializing: %@", error);
+	}
 }
 
 @end
