@@ -10,6 +10,4 @@
 
 @interface Waypoint (Strings)
 
-- (NSString *)jsonDataString;
-
 @end

@@ -147,13 +147,18 @@
 	
 	[activityIdMapping addAttributeMappingsFromDictionary:@{ @"id":@"tracktivityID" }];
 	
-	// Register our mappings with the provider using response descriptors
+	// Register our mappings with the provider using response descriptors (fetching objects)
     [objectManager addResponseDescriptorsFromArray:
 	 @[[RKResponseDescriptor responseDescriptorWithMapping:activityIdMapping pathPattern:@"users/:username/activities" keyPath:@"activities" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
 	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities/:tracktivityID" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
 	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
 	
-	[objectManager addRequestDescriptor:[RKRequestDescriptor requestDescriptorWithMapping:activityMapping.inverseMapping objectClass:[Activity class] rootKeyPath:nil]];
+	// Register our mappings with the provider using request descriptors (sending objects)
+	RKRequestDescriptor *waypointRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:pointMapping.inverseMapping objectClass:[Waypoint class] rootKeyPath:nil];
+	[objectManager addRequestDescriptorsFromArray:
+	 @[[RKRequestDescriptor requestDescriptorWithMapping:activityMapping.inverseMapping objectClass:[Activity class] rootKeyPath:nil],
+	   waypointRequestDescriptor]];
+	
 	
 	// Add routes for specific paths and HTTP methods.
 	[objectManager.router.routeSet addRoutes:
@@ -203,6 +208,9 @@
 	
 	// Configure a managed object cache to ensure we do not create duplicate objects
     managedObjectStore.managedObjectCache = [[RKInMemoryManagedObjectCache alloc] initWithManagedObjectContext:managedObjectStore.persistentStoreManagedObjectContext];
+	
+	// Share the waypoint request descriptor with the tracking manager for WebSocket requests (live tracking).
+	TrackingManager.sharedTrackingManager.waypointRequestDescriptor = waypointRequestDescriptor;
 }
 
 /*- (void)initializeAccessories
@@ -302,11 +310,11 @@
 				SegmentedTrackViewController *stvc = (SegmentedTrackViewController *) navc.topViewController;
 				[stvc setCurrentViewControllerWithIndex:kRouteViewController];
 				TrackTableViewController *tvc = stvc.currentViewController;
-				[[NSNotificationCenter defaultCenter] addObserver:tvc
+				[NSNotificationCenter.defaultCenter addObserver:tvc
 														 selector:@selector(displayImportedTrackNotification:)
 															 name:DisplayImportedTrackNotification
 														   object:nil];
-				[[NSNotificationCenter defaultCenter] postNotificationName:DisplayImportedTrackNotification object:importedRoute];
+				[NSNotificationCenter.defaultCenter postNotificationName:DisplayImportedTrackNotification object:importedRoute];
 			}
 		}
 	}];
@@ -336,14 +344,14 @@
 {
 	// Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
 	// Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-	[[TrackingManager sharedTrackingManager] stopUpdatingWithoutRecording];
+	[TrackingManager.sharedTrackingManager stopUpdatingWithoutRecording];
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
 	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
 	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-	[[TrackingManager sharedTrackingManager] stopUpdatingWithoutRecording];
+	[TrackingManager.sharedTrackingManager stopUpdatingWithoutRecording];
 	[self saveContext];
 }
 

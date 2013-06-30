@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MKMapView.h>
+#import <RestKit/RestKit.h>
 #import "Activity.h"
 
 @protocol TrackingManagerDelegate <NSObject>
@@ -24,6 +25,7 @@
 
 @property (nonatomic, weak) id <TrackingManagerDelegate> delegate;
 @property (nonatomic, assign, getter = isPaused) BOOL paused;
+@property (nonatomic, strong) RKRequestDescriptor *waypointRequestDescriptor;
 
 - (BOOL)isRecordingActivity;
 - (void)togglePause;

@@ -29,6 +29,12 @@
 // that are older than this interval in seconds
 #define EXPIRY_TIME_INTERVAL 10.0
 
+typedef enum {
+    LiveTrackingFinished = 0,
+    LiveTrackingPaused = 1,
+    LiveTrackingRecording = 2,
+} LiveTrackingEvent;
+
 @interface TrackingManager() <SRWebSocketDelegate>
 @property (nonatomic, strong) CLLocationManager *locationManager;
 @property (nonatomic, strong) CLLocation *location;
@@ -134,7 +140,23 @@
 	self.location = newLocation;
 	Waypoint *newPoint = [Waypoint waypointWithLocation:newLocation inManagedObjectContext:self.context];
 	[self.activity.track.segments.lastObject addPointsObject:newPoint];
-	[self.webSocket send:newPoint.jsonDataString];
+	[self doLiveTrackingWithPoint:newPoint];
+}
+
+- (void)doLiveTrackingWithPoint:(Waypoint *)point
+{
+	NSDictionary *pointDict = [RKObjectParameterization parametersWithObject:point
+														   requestDescriptor:self.waypointRequestDescriptor
+																	   error:nil];
+	NSDictionary *dict = @{@"event": [NSNumber numberWithInt:LiveTrackingRecording], @"point": pointDict};
+	NSError *error;
+	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:dict options:0 error:&error];
+	if (jsonData) {
+		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+		[self.webSocket send:jsonString];
+	} else {
+		NSLog(@"Error while serializing: %@", error);
+	}
 }
 
 - (void)togglePause
