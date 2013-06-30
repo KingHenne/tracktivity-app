@@ -7,7 +7,6 @@
 //
 
 #import "TrackingManager.h"
-#import "AppDelegate.h"
 #import <CoreData/CoreData.h>
 #import "Track+Data.h"
 #import "Activity+Create.h"
@@ -17,6 +16,7 @@
 #import "Waypoint+Strings.h"
 #import <RestKit/RestKit.h>
 #import <SocketRocket/SRWebSocket.h>
+#import "NSURLRequest+Authorization.h"
 
 // distance filter for the location manager in meters
 // use kCLDistanceFilterNone for unfiltered recording
@@ -54,10 +54,12 @@
 			self.locationManager.distanceFilter = DISTANCE_FILTER;
 			self.locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation;
 		}
-		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:YES];
+		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
 		_paused = YES;
 		_recording = NO;
-		self.webSocket = [[SRWebSocket alloc] initWithURL:[NSURL URLWithString:@"wss://hendrik:123456@mackie-messer.local:8443/live"]];
+		NSURLRequest *urlRequest = [NSURLRequest requestWithURLString:@"wss://mackie-messer.local:8443/live"
+															 username:@"hendrik" password:@"123456"];
+		self.webSocket = [[SRWebSocket alloc] initWithURLRequest:urlRequest];
 		self.webSocket.delegate = self;
 		[self.webSocket open];
     }

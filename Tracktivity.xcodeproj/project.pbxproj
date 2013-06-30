@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B1043214177A387E00C56F23 /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B1043213177A387E00C56F23 /* libicucore.dylib */; };
+		B1043220177F514500C56F23 /* NSURLRequest+Authorization.m in Sources */ = {isa = PBXBuildFile; fileRef = B104321F177F514500C56F23 /* NSURLRequest+Authorization.m */; };
 		B10865BD16A2EF2300EB41FB /* BluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */; };
 		B10BFDB315CDC04C0070FA11 /* Activity+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB215CDC04C0070FA11 /* Activity+Create.m */; };
 		B10BFDB615CE91B70070FA11 /* NSURL+FileHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BFDB515CE91B70070FA11 /* NSURL+FileHelper.m */; };
@@ -207,6 +208,8 @@
 
 /* Begin PBXFileReference section */
 		B1043213177A387E00C56F23 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		B104321E177F514500C56F23 /* NSURLRequest+Authorization.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURLRequest+Authorization.h"; sourceTree = "<group>"; };
+		B104321F177F514500C56F23 /* NSURLRequest+Authorization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURLRequest+Authorization.m"; sourceTree = "<group>"; };
 		B10865BB16A2EF2300EB41FB /* BluetoothViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BluetoothViewController.h; sourceTree = "<group>"; };
 		B10865BC16A2EF2300EB41FB /* BluetoothViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = BluetoothViewController.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		B10865BE16A34F6000EB41FB /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.0_beta1/dependencies/WFConnector.framework; sourceTree = "<group>"; };
@@ -518,6 +521,8 @@
 				B16A049615B32100005B372D /* NSDate+Strings.m */,
 				B16A048A15B2FB30005B372D /* CLLocation+Strings.h */,
 				B16A048B15B2FB30005B372D /* CLLocation+Strings.m */,
+				B104321E177F514500C56F23 /* NSURLRequest+Authorization.h */,
+				B104321F177F514500C56F23 /* NSURLRequest+Authorization.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -892,6 +897,7 @@
 				B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */,
 				B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */,
 				B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */,
+				B1043220177F514500C56F23 /* NSURLRequest+Authorization.m in Sources */,
 				B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */,
 				B19C0CD7161C7A5E0068B601 /* Track.m in Sources */,
 				B19C0CDA161C7A5E0068B601 /* Waypoint.m in Sources */,
