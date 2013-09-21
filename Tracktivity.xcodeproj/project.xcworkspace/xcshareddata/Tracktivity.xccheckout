@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>B1631219-A8F5-488C-AB6C-B19020CBF15E</string>
 	<key>IDESourceControlProjectName</key>
@@ -10,6 +12,8 @@
 	<dict>
 		<key>23281554-BEFD-49B5-BD69-9F2AC40777D2</key>
 		<string>https://github.com/71squared/TBXML.git</string>
+		<key>339336D7-6AAF-4A1B-B4B4-CB636AE20EA3</key>
+		<string>ssh://github.com/blakewatters/ISO8601DateFormatterValueTransformer.git</string>
 		<key>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</key>
 		<string>git://github.com/RestKit/RestKit.git</string>
 		<key>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</key>
@@ -23,6 +27,8 @@
 	<dict>
 		<key>23281554-BEFD-49B5-BD69-9F2AC40777D2</key>
 		<string>../../TBXML</string>
+		<key>339336D7-6AAF-4A1B-B4B4-CB636AE20EA3</key>
+		<string>../../RestKit/Vendor/ISO8601DateFormatterValueTransformer</string>
 		<key>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</key>
 		<string>../../RestKit</string>
 		<key>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</key>
@@ -42,22 +48,6 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</string>
-			<key>IDESourceControlWCCName</key>
-			<string>RestKit</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</string>
-			<key>IDESourceControlWCCName</key>
-			<string>Tracktivity</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>D11265DD-34E0-4927-A740-B5BE07F1D4F6</string>
 			<key>IDESourceControlWCCName</key>
 			<string>AFNetworking</string>
@@ -66,9 +56,33 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>339336D7-6AAF-4A1B-B4B4-CB636AE20EA3</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ISO8601DateFormatterValueTransformer</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</string>
+			<key>IDESourceControlWCCName</key>
+			<string>RestKit</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>23281554-BEFD-49B5-BD69-9F2AC40777D2</string>
 			<key>IDESourceControlWCCName</key>
 			<string>TBXML</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Tracktivity</string>
 		</dict>
 	</array>
 </dict>

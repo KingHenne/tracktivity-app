@@ -149,16 +149,15 @@
 	
 	// Register our mappings with the provider using response descriptors (fetching objects)
     [objectManager addResponseDescriptorsFromArray:
-	 @[[RKResponseDescriptor responseDescriptorWithMapping:activityIdMapping pathPattern:@"users/:username/activities" keyPath:@"activities" statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
-	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities/:tracktivityID" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
-	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
+	 @[[RKResponseDescriptor responseDescriptorWithMapping:activityIdMapping method:RKRequestMethodGET pathPattern:@"users/:username/activities" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping method:RKRequestMethodGET pathPattern:@"activities/:tracktivityID" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
+	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping method:RKRequestMethodGET pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
 	
 	// Register our mappings with the provider using request descriptors (sending objects)
-	RKRequestDescriptor *waypointRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:pointMapping.inverseMapping objectClass:[Waypoint class] rootKeyPath:nil];
+	RKRequestDescriptor *waypointRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:pointMapping.inverseMapping objectClass:[Waypoint class] rootKeyPath:nil method:RKRequestMethodPOST];
 	[objectManager addRequestDescriptorsFromArray:
-	 @[[RKRequestDescriptor requestDescriptorWithMapping:activityMapping.inverseMapping objectClass:[Activity class] rootKeyPath:nil],
-	   waypointRequestDescriptor]];
-	
+	 @[[RKRequestDescriptor requestDescriptorWithMapping:activityMapping.inverseMapping objectClass:[Activity class] rootKeyPath:nil method:RKRequestMethodPOST],
+	   waypointRequestDescriptor]];	
 	
 	// Add routes for specific paths and HTTP methods.
 	[objectManager.router.routeSet addRoutes:
