@@ -117,7 +117,7 @@
 		}
 		self.centerLocationButton.tintColor = [UIColor whiteColor];
 	} else {
-		self.centerLocationButton.tintColor = [UIColor lightGrayColor];
+		self.centerLocationButton.tintColor = [UIColor darkGrayColor];
 	}
 }
 
