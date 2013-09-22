@@ -1,42 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="2844" systemVersion="12C60" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fk-8c-VxA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fk-8c-VxA">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1930"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
     <scenes>
         <!--Activity Table View Controller - Aktivitäten-->
         <scene sceneID="75Q-j0-Zvs">
             <objects>
                 <tableViewController title="Aktivitäten" clearsSelectionOnViewWillAppear="NO" id="O7t-dn-UOd" customClass="ActivityTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="n6t-Eg-SEa">
-                        <rect key="frame" x="0.0" y="64" width="320" height="788"/>
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="n6t-Eg-SEa">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recorded Activity Cell" textLabel="TBG-cJ-kGE" detailTextLabel="SsY-mE-rwA" imageView="ps2-Qa-cx3" rowHeight="54" style="IBUITableViewCellStyleSubtitle" id="dpz-h5-Hmr">
-                                <rect key="frame" x="0.0" y="22" width="320" height="54"/>
+                                <rect key="frame" x="0.0" y="86" width="320" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dpz-h5-Hmr" id="i9g-pK-JG1">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="53"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TBG-cJ-kGE">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TBG-cJ-kGE">
+                                            <rect key="frame" x="83" y="7" width="36" height="22"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SsY-mE-rwA">
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SsY-mE-rwA">
+                                            <rect key="frame" x="83" y="29" width="50" height="17"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </label>
                                         <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mapThumbnail.png" id="ps2-Qa-cx3">
-                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                                            <rect key="frame" x="15" y="0.0" width="53" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
                                     </subviews>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
+                                </tableViewCellContentView>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -112,11 +113,16 @@
         <scene sceneID="iew-Kd-abq">
             <objects>
                 <viewController id="n0c-63-k0j" customClass="TrackViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Dop-DC-gEX"/>
+                        <viewControllerLayoutGuide type="bottom" id="V4N-x6-Kbc"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="dcD-cC-dTj">
-                        <rect key="frame" x="0.0" y="64" width="768" height="960"/>
+                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="58a-U5-Lyz">
+                                <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                                 <connections>
                                     <outlet property="delegate" destination="n0c-63-k0j" id="1AP-DR-xwa"/>
                                 </connections>
@@ -124,10 +130,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="trailing" secondItem="dcD-cC-dTj" secondAttribute="trailing" type="default" id="35Q-b4-Pjx"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="leading" secondItem="dcD-cC-dTj" secondAttribute="leading" type="default" id="PnS-GQ-xE8"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="bottom" secondItem="dcD-cC-dTj" secondAttribute="bottom" type="default" id="gnS-Sc-DcT"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="top" secondItem="dcD-cC-dTj" secondAttribute="top" type="default" id="lxj-ZJ-KMU"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="trailing" secondItem="dcD-cC-dTj" secondAttribute="trailing" id="35Q-b4-Pjx"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="leading" secondItem="dcD-cC-dTj" secondAttribute="leading" id="PnS-GQ-xE8"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="bottom" secondItem="dcD-cC-dTj" secondAttribute="bottom" id="gnS-Sc-DcT"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="top" secondItem="dcD-cC-dTj" secondAttribute="top" id="lxj-ZJ-KMU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tracktivity" id="zXA-sz-jHH">
@@ -151,7 +157,7 @@
         <image name="mapThumbnail.png" width="53" height="53"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
-        <simulatedStatusBarMetrics key="statusBar" statusBarStyle="blackTranslucent"/>
+        <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination"/>
     </simulatedMetricsContainer>
