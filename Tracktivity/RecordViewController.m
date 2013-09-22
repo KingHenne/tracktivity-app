@@ -115,7 +115,7 @@
 				[self centerMapOnLocation:self.trackingManager.location];
 			}
 		}
-		[self.centerLocationButton setTitleColor:[UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f] forState:UIControlStateNormal];
+		[self.centerLocationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
 	} else {
 		[self.centerLocationButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
 	}
