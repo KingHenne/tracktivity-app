@@ -95,10 +95,10 @@
 - (void)initializeRestKit
 {
 	// Log all HTTP traffic with request and response bodies
-	RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
+	//RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 	
 	// Log debugging info about Core Data
-	RKLogConfigureByName("RestKit/CoreData", RKLogLevelDebug);
+	//RKLogConfigureByName("RestKit/CoreData", RKLogLevelDebug);
 	
 	NSError *error = nil;
 	
