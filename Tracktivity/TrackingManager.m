@@ -226,8 +226,12 @@ typedef enum {
 
 - (void)finishLiveTracking
 {
+	NSDate *date = [NSDate date];
+	if (self.activity) {
+		date = self.activity.end;
+	}
 	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingFinished],
-									   @"time":  RKStringFromDate(self.activity.end)}];
+									   @"time":  RKStringFromDate(date)}];
 }
 
 - (void)doLiveTrackingWithPoint:(Waypoint *)point
