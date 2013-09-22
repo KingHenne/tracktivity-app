@@ -5,19 +5,19 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>B1631219-A8F5-488C-AB6C-B19020CBF15E</string>
+	<string>8757492F-3C3C-45FB-9E39-18C8471D34DA</string>
 	<key>IDESourceControlProjectName</key>
 	<string>Tracktivity</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>23281554-BEFD-49B5-BD69-9F2AC40777D2</key>
-		<string>https://github.com/71squared/TBXML.git</string>
+		<key>01DCFBB7-D2A9-4F99-977D-B9A9B299B8E0</key>
+		<string>https://github.com/blakewatters/TransitionKit.git</string>
 		<key>339336D7-6AAF-4A1B-B4B4-CB636AE20EA3</key>
 		<string>ssh://github.com/blakewatters/ISO8601DateFormatterValueTransformer.git</string>
-		<key>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</key>
-		<string>git://github.com/RestKit/RestKit.git</string>
 		<key>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</key>
 		<string>https://github.com/KingHenne/tracktivity-app.git</string>
+		<key>BD7AC4B0-3472-4A83-B190-283A5B127E73</key>
+		<string>ssh://github.com/square/SocketRocket.git</string>
 		<key>D11265DD-34E0-4927-A740-B5BE07F1D4F6</key>
 		<string>https://github.com/AFNetworking/AFNetworking.git</string>
 	</dict>
@@ -25,14 +25,18 @@
 	<string>Tracktivity.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>23281554-BEFD-49B5-BD69-9F2AC40777D2</key>
-		<string>../../TBXML</string>
+		<key>01DCFBB7-D2A9-4F99-977D-B9A9B299B8E0</key>
+		<string>../../RestKit/Vendor/TransitionKit</string>
 		<key>339336D7-6AAF-4A1B-B4B4-CB636AE20EA3</key>
 		<string>../../RestKit/Vendor/ISO8601DateFormatterValueTransformer</string>
-		<key>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</key>
-		<string>../../RestKit</string>
+		<key>37B5E0DC-ABE0-41B1-9E1F-6C9B991258CF</key>
+		<string>../../TBXML</string>
 		<key>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</key>
 		<string>../..</string>
+		<key>B550F72E-8720-4111-AB81-21E50B9B600F</key>
+		<string>../../RestKit</string>
+		<key>BD7AC4B0-3472-4A83-B190-283A5B127E73</key>
+		<string>../../SocketRocket</string>
 		<key>D11265DD-34E0-4927-A740-B5BE07F1D4F6</key>
 		<string>../../RestKit/Vendor/AFNetworking</string>
 	</dict>
@@ -64,7 +68,7 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>8624CE6D-0C96-4A7F-8C66-CA23F9A1CDAB</string>
+			<string>B550F72E-8720-4111-AB81-21E50B9B600F</string>
 			<key>IDESourceControlWCCName</key>
 			<string>RestKit</string>
 		</dict>
@@ -72,7 +76,15 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>23281554-BEFD-49B5-BD69-9F2AC40777D2</string>
+			<string>BD7AC4B0-3472-4A83-B190-283A5B127E73</string>
+			<key>IDESourceControlWCCName</key>
+			<string>SocketRocket</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>37B5E0DC-ABE0-41B1-9E1F-6C9B991258CF</string>
 			<key>IDESourceControlWCCName</key>
 			<string>TBXML</string>
 		</dict>
@@ -83,6 +95,14 @@
 			<string>B0B47BAD-84A7-4F99-BFB1-74C466B83EA1</string>
 			<key>IDESourceControlWCCName</key>
 			<string>Tracktivity</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>01DCFBB7-D2A9-4F99-977D-B9A9B299B8E0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>TransitionKit</string>
 		</dict>
 	</array>
 </dict>
