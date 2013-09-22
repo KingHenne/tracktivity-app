@@ -338,7 +338,6 @@
 				   didFinishActivity:(Activity *)activity
 {
 	[self dismissViewControllerAnimated:YES completion:^{
-		[activity.managedObjectContext saveToPersistentStore:nil];
 	}];
 }
 

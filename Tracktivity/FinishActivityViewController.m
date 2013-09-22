@@ -67,8 +67,10 @@
 {
 	self.activity.name = self.nameTextField.text;
 	if (self.activity.type == nil) {
-		self.activity.type = [self.activityTypes objectAtIndex:0];
+		NSManagedObjectID *typeID = [[self.activityTypes objectAtIndex:0] objectID];
+		self.activity.type = (ActivityType *) [self.activity.managedObjectContext objectWithID:typeID];
 	}
+	[self.activity.managedObjectContext saveToPersistentStore:nil];
 	[self.delegate finishActivityViewController:self didFinishActivity:self.activity];
 }
 
