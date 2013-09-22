@@ -29,45 +29,25 @@
                                 <rect key="frame" x="0.0" y="387" width="320" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <items>
-                                    <barButtonItem style="plain" id="N50-OP-4sh">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hId-hr-wAP">
-                                            <rect key="frame" x="16" y="0.0" width="44" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                                            <state key="normal" title="🏁">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="finishButtonPressed:" destination="2" eventType="touchUpInside" id="gNJ-FG-jid"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="sXf-Xz-CgF"/>
+                                    <barButtonItem title="🏁" id="TVj-mj-3dp">
+                                        <connections>
+                                            <action selector="finishButtonPressed:" destination="2" id="Ubg-pI-Iv8"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Enu-TK-hZY"/>
-                                    <barButtonItem style="plain" id="pH4-ux-ezT">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ymd-L5-EM5">
-                                            <rect key="frame" x="109" y="0.0" width="102" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                            <state key="normal" title="Start"/>
-                                            <connections>
-                                                <action selector="recordButtonPressed:" destination="2" eventType="touchUpInside" id="GpE-l6-uBn"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem title="Start" id="bAP-5N-CMR">
+                                        <connections>
+                                            <action selector="recordButtonPressed:" destination="2" id="lbl-GK-l52"/>
+                                        </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="Z2S-Df-YyZ"/>
-                                    <barButtonItem style="plain" id="qxp-S4-p85">
-                                        <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="nB9-9N-6jf">
-                                            <rect key="frame" x="260" y="0.0" width="44" height="44"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
-                                            <state key="normal" title="➤">
-                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                            </state>
-                                            <connections>
-                                                <action selector="locationCenterButtonPressed:" destination="2" eventType="touchUpInside" id="UGq-bM-6Wr"/>
-                                            </connections>
-                                        </button>
+                                    <barButtonItem title="➤" id="OGo-P1-XjA">
+                                        <connections>
+                                            <action selector="locationCenterButtonPressed:" destination="2" id="g3N-p7-pYy"/>
+                                        </connections>
                                     </barButtonItem>
+                                    <barButtonItem width="10" style="plain" systemItem="fixedSpace" id="TZK-Sl-i2e"/>
                                 </items>
                                 <color key="tintColor" red="0.96862745100000003" green="0.96862745100000003" blue="0.96862745100000003" alpha="1" colorSpace="calibratedRGB"/>
                             </toolbar>
@@ -77,10 +57,10 @@
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <tabBarItem key="tabBarItem" title="Aufzeichnung" image="first.png" id="7"/>
                     <connections>
-                        <outlet property="centerLocationButton" destination="nB9-9N-6jf" id="gpJ-Y8-7NZ"/>
-                        <outlet property="finishButton" destination="hId-hr-wAP" id="MoV-og-apf"/>
+                        <outlet property="centerLocationButton" destination="OGo-P1-XjA" id="pLj-th-Uy9"/>
+                        <outlet property="finishButton" destination="TVj-mj-3dp" id="x3o-XB-x1G"/>
                         <outlet property="mapView" destination="mvK-m7-Ehr" id="adb-PF-CBI"/>
-                        <outlet property="recordButton" destination="Ymd-L5-EM5" id="5j0-0L-VIs"/>
+                        <outlet property="recordButton" destination="bAP-5N-CMR" id="B1M-nJ-86u"/>
                         <segue destination="Ljg-MU-crp" kind="modal" identifier="Finish Activity" modalTransitionStyle="coverVertical" id="NGI-aj-RhP"/>
                     </connections>
                 </viewController>
@@ -839,6 +819,7 @@
         <image name="bluetooth.png" width="30" height="30"/>
         <image name="first.png" width="30" height="30"/>
         <image name="gpxFile.png" width="128" height="128"/>
+        <image name="mapThumbnail.png" width="53" height="53"/>
         <image name="mapThumbnail.png" width="53" height="53"/>
         <image name="second.png" width="30" height="30"/>
     </resources>

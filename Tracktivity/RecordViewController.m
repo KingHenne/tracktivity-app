@@ -28,14 +28,14 @@
 #define BTN_RECORD_CONTINUE NSLocalizedString(@"RecordButtonContinue", @"record button label for continue action")
 
 @interface RecordViewController ()
-@property (nonatomic, weak) IBOutlet UIButton *recordButton;
-@property (nonatomic, weak) IBOutlet UIButton *finishButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *recordButton;
+@property (nonatomic, weak) IBOutlet UIBarButtonItem *finishButton;
 @property (nonatomic, strong) NSMutableArray *waypoints;
 @property (nonatomic, strong) MKPolyline *polyline;
 @property (nonatomic, strong) Segment *currentSegment;
 @property (nonatomic, strong, readonly) TrackingManager *trackingManager;
 @property (nonatomic) BOOL automaticallyCenterMapOnUser;
-@property (weak, nonatomic) IBOutlet UIButton *centerLocationButton;
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *centerLocationButton;
 @property (nonatomic, strong) UserLocationAnnotation *userLocation;
 @property (nonatomic, strong) WrappedTrack *backgroundTrack;
 @property (nonatomic, strong) MultiPolyline *backgroundTrackMultiPolyline;
@@ -115,9 +115,9 @@
 				[self centerMapOnLocation:self.trackingManager.location];
 			}
 		}
-		[self.centerLocationButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+		self.centerLocationButton.tintColor = [UIColor whiteColor];
 	} else {
-		[self.centerLocationButton setTitleColor:[UIColor lightGrayColor] forState:UIControlStateNormal];
+		self.centerLocationButton.tintColor = [UIColor lightGrayColor];
 	}
 }
 
@@ -128,35 +128,30 @@
 	[self.mapView setRegion:region animated:YES];
 }
 
-- (IBAction)recordButtonPressed:(UIButton *)sender
+- (IBAction)recordButtonPressed:(UIBarButtonItem *)sender
 {
 	if (self.trackingManager.isRecordingActivity) {
 		[self.trackingManager togglePause];
 		if (self.trackingManager.isPaused) {
-			[self setRecordButtonTitle:BTN_RECORD_CONTINUE];
+			self.recordButton.title = BTN_RECORD_CONTINUE;
 		} else {
-			[self setRecordButtonTitle:BTN_RECORD_PAUSE];
+			self.recordButton.title = BTN_RECORD_PAUSE;
 		}
 	} else {
 		[self.trackingManager startActivity];
-		[self setRecordButtonTitle:BTN_RECORD_PAUSE];
-		self.finishButton.alpha = 1;
+		self.recordButton.title = BTN_RECORD_PAUSE;
+		self.finishButton.enabled = YES;
 	}
 }
 
-- (IBAction)finishButtonPressed:(UIButton *)sender
+- (IBAction)finishButtonPressed:(UIBarButtonItem *)sender
 {
-	self.finishButton.alpha = 0;
-	[self setRecordButtonTitle:BTN_RECORD_START];
+	self.finishButton.enabled = NO;
+	self.recordButton.title = BTN_RECORD_START;
 	[self.trackingManager finishActivity];
 }
 
-- (void)setRecordButtonTitle:(NSString *)title
-{
-	[self.recordButton setTitle:title forState:UIControlStateNormal];
-}
-
-- (IBAction)locationCenterButtonPressed:(UIButton *)sender
+- (IBAction)locationCenterButtonPressed:(UIBarButtonItem *)sender
 {
 	self.automaticallyCenterMapOnUser = !self.automaticallyCenterMapOnUser;
 }
@@ -389,7 +384,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	self.finishButton.alpha = 0;
+	self.finishButton.enabled = NO;
 	self.automaticallyCenterMapOnUser = YES;
 	WildcardGestureRecognizer * tapInterceptor = [[WildcardGestureRecognizer alloc] init];
 	tapInterceptor.touchesBeganCallback = ^(NSSet * touches, UIEvent * event) {
