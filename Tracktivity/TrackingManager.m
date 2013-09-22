@@ -245,7 +245,10 @@ typedef enum {
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
 	if (jsonData) {
 		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-		[self.webSocket send:jsonString];
+		if (self.webSocket.readyState == SR_OPEN) {
+			// TODO: queue missed events and send later
+			[self.webSocket send:jsonString];
+		}
 	} else {
 		NSLog(@"Error while serializing: %@", error);
 	}
