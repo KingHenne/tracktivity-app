@@ -820,6 +820,7 @@
         <image name="first.png" width="30" height="30"/>
         <image name="gpxFile.png" width="128" height="128"/>
         <image name="mapThumbnail.png" width="53" height="53"/>
+        <image name="mapThumbnail.png" width="53" height="53"/>
         <image name="second.png" width="30" height="30"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
