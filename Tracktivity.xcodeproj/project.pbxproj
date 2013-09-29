@@ -52,8 +52,6 @@
 		B16A049B15B343F6005B372D /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A049A15B343F6005B372D /* MapViewController.m */; };
 		B16A04A215B34639005B372D /* WaypointAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B16A04A115B34639005B372D /* WaypointAnnotation.m */; };
 		B16C4ACA17EDD7F3002A1CFB /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B16C4AC917EDD7F3002A1CFB /* Images.xcassets */; };
-		B174D6831617AA480098B433 /* userLocation.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6811617AA480098B433 /* userLocation.png */; };
-		B174D6841617AA480098B433 /* userLocation@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B174D6821617AA480098B433 /* userLocation@2x.png */; };
 		B17D39D915BDD86800F28FA8 /* TrackTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */; };
 		B17D39E115BDDAF900F28FA8 /* CoreDataTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */; };
 		B17D39E415BDDD6A00F28FA8 /* Track+Create.m in Sources */ = {isa = PBXBuildFile; fileRef = B17D39E315BDDD6A00F28FA8 /* Track+Create.m */; };
@@ -86,7 +84,6 @@
 		B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1471622024A00926E42 /* ActivityTypes.json */; };
 		B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */; };
 		B1A8D150162221DD00926E42 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D14F162221DD00926E42 /* Activity.m */; };
-		B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
 		B1D4A6F5177A336B00EDD362 /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D4A6EB177A327D00EDD362 /* libSocketRocket.a */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
@@ -276,8 +273,6 @@
 		B16A04A115B34639005B372D /* WaypointAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WaypointAnnotation.m; sourceTree = "<group>"; };
 		B16A04A315B35784005B372D /* de */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = de; path = de.lproj/iPhone.storyboard; sourceTree = "<group>"; };
 		B16C4AC917EDD7F3002A1CFB /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		B174D6811617AA480098B433 /* userLocation.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = userLocation.png; path = Tracktivity/userLocation.png; sourceTree = "<group>"; };
-		B174D6821617AA480098B433 /* userLocation@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "userLocation@2x.png"; path = "Tracktivity/userLocation@2x.png"; sourceTree = "<group>"; };
 		B17D39D715BDD86800F28FA8 /* TrackTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackTableViewController.h; sourceTree = "<group>"; };
 		B17D39D815BDD86800F28FA8 /* TrackTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackTableViewController.m; sourceTree = "<group>"; };
 		B17D39DF15BDDAF900F28FA8 /* CoreDataTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreDataTableViewController.m; sourceTree = "<group>"; };
@@ -331,8 +326,6 @@
 		B1A8D1491622137B00926E42 /* RKSeedDatabase.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = RKSeedDatabase.sqlite; sourceTree = "<group>"; };
 		B1A8D14E162221DD00926E42 /* Activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Activity.h; sourceTree = "<group>"; };
 		B1A8D14F162221DD00926E42 /* Activity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Activity.m; sourceTree = "<group>"; };
-		B1B4DBDD1617715800579B90 /* UserLocationAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserLocationAnnotation.h; sourceTree = "<group>"; };
-		B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserLocationAnnotation.m; sourceTree = "<group>"; };
 		B1CDFB3215C5B90200D5D3B7 /* Waypoint+Strings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Waypoint+Strings.h"; sourceTree = "<group>"; };
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
 		B1D18380176DD3B2001D9172 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.1_beta3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
@@ -471,8 +464,6 @@
 				B142346D1634444800AEAFE9 /* activitySafari-43@2x.png */,
 				B142346E1634444800AEAFE9 /* activitySafari-55.png */,
 				B142346F1634444800AEAFE9 /* activitySafari-55@2x.png */,
-				B174D6811617AA480098B433 /* userLocation.png */,
-				B174D6821617AA480098B433 /* userLocation@2x.png */,
 				B187CEDF1607AF33008F6236 /* Default-568h@2x.png */,
 				B1E9298115D7B73F00CF1574 /* gpxFile.png */,
 				B1E9298215D7B74000CF1574 /* gpxFile@2x.png */,
@@ -629,8 +620,6 @@
 		BE3633DD15DBDEF500D81B35 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B1B4DBDD1617715800579B90 /* UserLocationAnnotation.h */,
-				B1B4DBDE1617715800579B90 /* UserLocationAnnotation.m */,
 				B16A04A015B34639005B372D /* WaypointAnnotation.h */,
 				B16A04A115B34639005B372D /* WaypointAnnotation.m */,
 			);
@@ -847,8 +836,6 @@
 				B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */,
 				B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */,
 				B187CEE01607AF33008F6236 /* Default-568h@2x.png in Resources */,
-				B174D6831617AA480098B433 /* userLocation.png in Resources */,
-				B174D6841617AA480098B433 /* userLocation@2x.png in Resources */,
 				B148B6B3161C9CD3003B9DDC /* iPad.storyboard in Resources */,
 				B1A8D1481622024A00926E42 /* ActivityTypes.json in Resources */,
 				B1A8D14A1622137B00926E42 /* RKSeedDatabase.sqlite in Resources */,
@@ -899,7 +886,6 @@
 				B13BCC3A160E3B7A001E7486 /* WildcardGestureRecognizer.m in Sources */,
 				B1A59B01160F6165000FFD92 /* Segment+Data.m in Sources */,
 				B1A59B04160F6E22000FFD92 /* MultiPolyline.m in Sources */,
-				B1B4DBDF1617715800579B90 /* UserLocationAnnotation.m in Sources */,
 				B19C0C7A161A402D0068B601 /* FinishActivityViewController.m in Sources */,
 				B1043220177F514500C56F23 /* NSURLRequest+Authorization.m in Sources */,
 				B19C0CD4161C7A5E0068B601 /* Segment.m in Sources */,

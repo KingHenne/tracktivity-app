@@ -12,7 +12,6 @@
 #import <MapKit/MKPolylineView.h>
 #import "WaypointAnnotation.h"
 #import "WildcardGestureRecognizer.h"
-#import "UserLocationAnnotation.h"
 #import "Segment+Data.h"
 #import "WrappedTrackHandler.h"
 #import "Track+Data.h"
@@ -21,7 +20,7 @@
 #import "TrackViewController.h"
 
 // default zoom (i.e. region width/height) in meters
-#define DEFAULT_ZOOM 500
+#define DEFAULT_ZOOM 1000
 
 #define BTN_RECORD_START NSLocalizedString(@"RecordButtonStart", @"record button label for start action")
 #define BTN_RECORD_PAUSE NSLocalizedString(@"RecordButtonPause", @"record button label for pause action")
@@ -36,7 +35,6 @@
 @property (nonatomic, strong, readonly) TrackingManager *trackingManager;
 @property (nonatomic) BOOL automaticallyCenterMapOnUser;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *centerLocationButton;
-@property (nonatomic, strong) UserLocationAnnotation *userLocation;
 @property (nonatomic, strong) WrappedTrack *backgroundTrack;
 @property (nonatomic, strong) MultiPolyline *backgroundTrackMultiPolyline;
 @end
@@ -50,7 +48,6 @@
 @synthesize currentSegment = _currentSegment;
 @synthesize automaticallyCenterMapOnUser = _automaticallyCenterMapOnUser;
 @synthesize centerLocationButton = _centerLocationButton;
-@synthesize userLocation = _userLocation;
 @synthesize backgroundTrack = _backgroundTrack;
 @synthesize backgroundTrackMultiPolyline = _backgroundTrackMultiPolyline;
 
@@ -69,22 +66,6 @@
 		_waypoints = [NSMutableArray array];
 	}
 	return _waypoints;
-}
-
-- (void)setUserLocation:(UserLocationAnnotation *)userLocation
-{
-	if (self.mapView) {
-		[self.mapView addAnnotation:userLocation];
-	}
-	_userLocation = userLocation;
-}
-
-- (UserLocationAnnotation *)userLocation
-{
-	if (_userLocation == nil) { // lazy instantiation
-		self.userLocation = [UserLocationAnnotation new];
-	}
-	return _userLocation;
 }
 
 - (void)setBackgroundTrack:(WrappedTrack *)backgroundTrack
@@ -109,14 +90,12 @@
 	_automaticallyCenterMapOnUser = center;
 	if (center) {
 		if (self.view.window) {
-			if (self.trackingManager.isPaused) {
-				[self centerMapOnLocation:self.mapView.userLocation.location];
-			} else {
-				[self centerMapOnLocation:self.trackingManager.location];
-			}
+			[self centerMapOnLocation:self.mapView.userLocation.location];
+			[self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
 		}
 		self.centerLocationButton.tintColor = [UIColor whiteColor];
 	} else {
+		[self.mapView setUserTrackingMode:MKUserTrackingModeNone];
 		self.centerLocationButton.tintColor = [UIColor darkGrayColor];
 	}
 }
@@ -125,7 +104,10 @@
 {
 	if (location == nil) return;
 	MKCoordinateRegion region = MKCoordinateRegionMakeWithDistance(location.coordinate, DEFAULT_ZOOM, DEFAULT_ZOOM);
-	[self.mapView setRegion:region animated:YES];
+	// only zoom if the difference is big enough to prevent unwanted jumping
+	if (abs(self.mapView.region.span.latitudeDelta / region.span.latitudeDelta) > 2) {
+		[self.mapView setRegion:region animated:YES];
+	}
 }
 
 - (IBAction)recordButtonPressed:(UIBarButtonItem *)sender
@@ -188,13 +170,6 @@
 			[self.mapView addAnnotation:startAnnotation];
 		}
 		[self updateTrackOverlay];
-		self.userLocation.coordinate = location.coordinate;
-		if (![self.mapView.annotations containsObject:self.userLocation]) {
-			[self.mapView addAnnotation:self.userLocation];
-		}
-	}
-	if (self.automaticallyCenterMapOnUser) {
-		[self centerMapOnLocation:location];
 	}
 }
 
@@ -243,11 +218,7 @@
 - (void)toggledPause:(BOOL)paused
 {
 	if (paused) {
-		[self.mapView removeAnnotation:self.userLocation];
-		self.mapView.showsUserLocation = YES;
 		self.polyline = nil;
-	} else {
-		self.mapView.showsUserLocation = NO;
 	}
 }
 
@@ -263,19 +234,7 @@
 - (MKAnnotationView *)mapView:(MKMapView *)mapView
 			viewForAnnotation:(id<MKAnnotation>)annotation
 {
-	if ([annotation isKindOfClass:[UserLocationAnnotation class]]) {
-		// Try to dequeue an existing view first.
-		MKAnnotationView *aView = [mapView dequeueReusableAnnotationViewWithIdentifier:@"UserLocationAnnotationView"];
-		if (!aView) {
-			// If an existing view was not available, create one.
-			aView = [[MKAnnotationView alloc] initWithAnnotation:annotation
-												 reuseIdentifier:@"UserLocationAnnotationView"];
-			aView.image = [UIImage imageNamed:@"userLocation.png"];
-			aView.centerOffset = CGPointMake(1, 0);
-			aView.canShowCallout = NO;
-		}
-		return aView;
-	}
+	// create views here for specific annotation kinds
 	return [super mapView:mapView viewForAnnotation:annotation];
 }
 
@@ -286,7 +245,7 @@
 	if ([self.backgroundTrackMultiPolyline.polylines containsObject:overlay]) {
 		lineView.strokeColor = [UIColor colorWithRed:0.13f green:0.73f blue:0.19f alpha:0.7f];
 	} else {
-		lineView.strokeColor = [UIColor colorWithRed:0 green:0.45f blue:0.9f alpha:0.8f];
+		lineView.strokeColor = [UIColor colorWithRed:0 green:0.478f blue:1.0f alpha:0.8f];
 	}
 	return lineView;
 }
@@ -295,9 +254,11 @@
 {
 	self.trackingManager.delegate = self;
 	[self.trackingManager startUpdatingWithoutRecording];
+	if (self.automaticallyCenterMapOnUser) {
+		[self centerMapOnLocation:self.mapView.userLocation.location];
+		[self.mapView setUserTrackingMode:MKUserTrackingModeFollow animated:YES];
+	}
 	if (self.trackingManager.isPaused) {
-		self.mapView.showsUserLocation = YES;
-	} else {
 		[self.mapView setNeedsDisplay];
 	}
 }
@@ -305,7 +266,6 @@
 - (void)stopUsingLocationServices
 {
 	[self.trackingManager stopUpdatingWithoutRecording];
-	self.mapView.showsUserLocation = NO;
 }
 
 - (void)appDidBecomeActiveNotification:(NSNotification *)notification
