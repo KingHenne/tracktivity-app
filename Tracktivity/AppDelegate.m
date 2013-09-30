@@ -151,7 +151,7 @@
     [objectManager addResponseDescriptorsFromArray:
 	 @[[RKResponseDescriptor responseDescriptorWithMapping:activityIdMapping method:RKRequestMethodGET pathPattern:@"users/:username/activities" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
 	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping method:RKRequestMethodGET pathPattern:@"activities/:tracktivityID" keyPath:nil statusCodes:RKStatusCodeIndexSetForClass(RKStatusCodeClassSuccessful)],
-	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping method:RKRequestMethodGET pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
+	   [RKResponseDescriptor responseDescriptorWithMapping:activityMapping method:RKRequestMethodPOST pathPattern:@"activities" keyPath:nil statusCodes:[NSIndexSet indexSetWithIndex:201]]]];
 	
 	// Register our mappings with the provider using request descriptors (sending objects)
 	RKRequestDescriptor *waypointRequestDescriptor = [RKRequestDescriptor requestDescriptorWithMapping:pointMapping.inverseMapping objectClass:[Waypoint class] rootKeyPath:nil method:RKRequestMethodPOST];
