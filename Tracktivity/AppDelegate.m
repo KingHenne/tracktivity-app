@@ -102,7 +102,8 @@
 	
 	NSError *error = nil;
 	
-	NSURL *apiEndpoint = [NSURL URLWithString:@"http://mackie-messer.local:8080/api"];
+	//NSURL *apiEndpoint = [NSURL URLWithString:@"http://mackie-messer.local:8080/api"];
+	NSURL *apiEndpoint = [NSURL URLWithString:@"http://henlie.sinnerschrader.it:8080/api"];
 	RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:apiEndpoint];
 	
 	// Enable automatic network activity indicator management.
