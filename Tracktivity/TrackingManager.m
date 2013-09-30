@@ -43,10 +43,11 @@ typedef enum {
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) Activity *activity;
 @property (nonatomic, assign, getter = isRecordingActivity) BOOL recording;
-@property (nonatomic, strong) SRWebSocket *webSocket;
 @end
 
-@implementation TrackingManager
+@implementation TrackingManager {
+	 SRWebSocket *_webSocket;
+}
 
 - (id)init
 {
@@ -64,11 +65,6 @@ typedef enum {
 		self.context = [RKManagedObjectStore.defaultStore newChildManagedObjectContextWithConcurrencyType:NSPrivateQueueConcurrencyType tracksChanges:NO];
 		_paused = YES;
 		_recording = NO;
-		NSURLRequest *urlRequest = [NSURLRequest requestWithURLString:@"wss://mackie-messer.local:8443/live"
-															 username:@"hendrik" password:@"123456"];
-		self.webSocket = [[SRWebSocket alloc] initWithURLRequest:urlRequest];
-		self.webSocket.delegate = self;
-		[self.webSocket open];
     }
     return self;
 }
@@ -205,6 +201,25 @@ typedef enum {
 
 #pragma mark SRWebSocketDelegate implementation
 
+- (void)webSocketDidOpen:(SRWebSocket *)webSocket
+{
+	NSLog(@"WebSocket opened");
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didFailWithError:(NSError *)error;
+{
+    NSLog(@"WebSocket failed with error %@", error);
+    _webSocket.delegate = nil;
+    _webSocket = nil;
+}
+
+- (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
+{
+	NSLog(@"WebSocket closed, code: %d, reason: %@, wasClean: %d", code, reason, wasClean);
+    _webSocket.delegate = nil;
+	_webSocket = nil;
+}
+
 - (void)webSocket:(SRWebSocket *)webSocket didReceiveMessage:(id)message
 {
 	NSLog(@"received WebSocket message: %@", message);
@@ -214,6 +229,17 @@ typedef enum {
 
 - (void)startLiveTracking
 {
+	NSURLRequest *urlRequest = [NSURLRequest requestWithURLString:@"wss://henlie.sinnerschrader.it:8443/live"
+														 username:@"hendrik" password:@"123456"];
+	_webSocket.delegate = nil;
+    [_webSocket close];
+    
+    _webSocket = [[SRWebSocket alloc] initWithURLRequest:urlRequest];
+    _webSocket.delegate = self;
+    
+	NSLog(@"Opening WebSocket ...");
+    [_webSocket open];
+	
 	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingStarted],
 									   @"time":  RKStringFromDate(self.activity.start)}];
 }
@@ -232,6 +258,7 @@ typedef enum {
 	}
 	[self sendDataAsJSONviaWebSocket:@{@"event": [NSNumber numberWithInt:LiveTrackingFinished],
 									   @"time":  RKStringFromDate(date)}];
+    [_webSocket close];
 }
 
 - (void)doLiveTrackingWithPoint:(Waypoint *)point
@@ -249,10 +276,9 @@ typedef enum {
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
 	if (jsonData) {
 		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-		if (self.webSocket.readyState == SR_OPEN) {
-			// TODO: queue missed events and send later
-			[self.webSocket send:jsonString];
-		}
+		// FIXME: Invalid State: Cannot call send: until connection is open
+		// TODO: what to do? use a custom queue here?
+		[_webSocket send:jsonString];
 	} else {
 		NSLog(@"Error while serializing: %@", error);
 	}
