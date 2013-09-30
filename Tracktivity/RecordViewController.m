@@ -293,17 +293,16 @@
 				   didFinishActivity:(Activity *)activity
 {
 	[self dismissViewControllerAnimated:YES completion:^{
+		[activity.managedObjectContext saveToPersistentStore:nil];
 	}];
 }
 
 - (void)finishActivityViewController:(FinishActivityViewController *)sender
 					didAbortActivity:(Activity *)activity
 {
-	__block __typeof__(self) blockSelf = self;
 	[self dismissViewControllerAnimated:YES completion:^{
 		[activity.managedObjectContext deleteObject:activity];
-		[blockSelf saveContext];
-		[blockSelf reset];
+		[activity.managedObjectContext saveToPersistentStore:nil];
 	}];
 }
 
