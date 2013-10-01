@@ -43,10 +43,11 @@ typedef enum {
 @property (nonatomic, strong) NSManagedObjectContext *context;
 @property (nonatomic, strong) Activity *activity;
 @property (nonatomic, assign, getter = isRecordingActivity) BOOL recording;
+@property (nonatomic, strong) NSMutableArray *messageQueue;
 @end
 
 @implementation TrackingManager {
-	 SRWebSocket *_webSocket;
+	SRWebSocket *_webSocket;
 }
 
 - (id)init
@@ -67,6 +68,14 @@ typedef enum {
 		_recording = NO;
     }
     return self;
+}
+
+- (NSMutableArray *)messageQueue
+{
+	if (!_messageQueue) {
+		_messageQueue = [NSMutableArray array];
+	}
+	return _messageQueue;
 }
 
 - (void)reset
@@ -276,9 +285,17 @@ typedef enum {
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:data options:0 error:&error];
 	if (jsonData) {
 		NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-		// FIXME: Invalid State: Cannot call send: until connection is open
-		// TODO: what to do? use a custom queue here?
-		[_webSocket send:jsonString];
+		[self.messageQueue addObject:jsonString];
+		NSMutableIndexSet *sentMessageIndexes = [NSMutableIndexSet indexSet];
+		[self.messageQueue enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+			if (_webSocket.readyState != SR_OPEN) {
+				*stop = YES;
+			} else {
+				[_webSocket send:obj];
+				[sentMessageIndexes addIndex:idx];
+			}
+		}];
+		[self.messageQueue removeObjectsAtIndexes:sentMessageIndexes];
 	} else {
 		NSLog(@"Error while serializing: %@", error);
 	}
