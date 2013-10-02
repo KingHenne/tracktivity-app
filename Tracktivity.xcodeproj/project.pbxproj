@@ -86,6 +86,7 @@
 		B1A8D150162221DD00926E42 /* Activity.m in Sources */ = {isa = PBXBuildFile; fileRef = B1A8D14F162221DD00926E42 /* Activity.m */; };
 		B1CDFB3415C5B90200D5D3B7 /* Waypoint+Strings.m in Sources */ = {isa = PBXBuildFile; fileRef = B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */; };
 		B1D4A6F5177A336B00EDD362 /* libSocketRocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B1D4A6EB177A327D00EDD362 /* libSocketRocket.a */; };
+		B1DBE0C717FB5899006AD467 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = B1DBE0C617FB5899006AD467 /* Settings.bundle */; };
 		B1E9298315D7B74000CF1574 /* gpxFile.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298115D7B73F00CF1574 /* gpxFile.png */; };
 		B1E9298415D7B74000CF1574 /* gpxFile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B1E9298215D7B74000CF1574 /* gpxFile@2x.png */; };
 		B1E9298715D7B87D00CF1574 /* ImportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B1E9298615D7B87D00CF1574 /* ImportViewController.m */; };
@@ -330,6 +331,7 @@
 		B1CDFB3315C5B90200D5D3B7 /* Waypoint+Strings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Waypoint+Strings.m"; sourceTree = "<group>"; };
 		B1D18380176DD3B2001D9172 /* WFConnector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WFConnector.framework; path = ../wf_api_3.1_beta3/dependencies/WFConnector.framework; sourceTree = "<group>"; };
 		B1D4A6E0177A327C00EDD362 /* SocketRocket.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SocketRocket.xcodeproj; path = SocketRocket/SocketRocket.xcodeproj; sourceTree = "<group>"; };
+		B1DBE0C617FB5899006AD467 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		B1E9298115D7B73F00CF1574 /* gpxFile.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = gpxFile.png; path = Tracktivity/gpxFile.png; sourceTree = "<group>"; };
 		B1E9298215D7B74000CF1574 /* gpxFile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gpxFile@2x.png"; path = "Tracktivity/gpxFile@2x.png"; sourceTree = "<group>"; };
 		B1E9298515D7B87C00CF1574 /* ImportViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImportViewController.h; sourceTree = "<group>"; };
@@ -438,6 +440,7 @@
 		B12D4BC515B1CCA6001490B3 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				B1DBE0C617FB5899006AD467 /* Settings.bundle */,
 				BE3633DE15DBE09500D81B35 /* GPX */,
 				B12D4BE915B1CD78001490B3 /* Images */,
 				B12D4BD015B1CCA6001490B3 /* iPhone.storyboard */,
@@ -843,6 +846,7 @@
 				B14234711634444800AEAFE9 /* activitySafari-43@2x.png in Resources */,
 				B14234721634444800AEAFE9 /* activitySafari-55.png in Resources */,
 				B14234731634444800AEAFE9 /* activitySafari-55@2x.png in Resources */,
+				B1DBE0C717FB5899006AD467 /* Settings.bundle in Resources */,
 				B1A5DA7D16A1E54C005FD4E6 /* bluetooth.png in Resources */,
 				B1A5DA7E16A1E54C005FD4E6 /* bluetooth@2x.png in Resources */,
 			);
