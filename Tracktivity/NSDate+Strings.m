@@ -16,7 +16,7 @@
 	NSUInteger h = elapsedSeconds / 3600;
 	NSUInteger m = ((NSUInteger)elapsedSeconds / 60) % 60;
 	NSUInteger s = ((NSUInteger)elapsedSeconds) % 60;
-	return [NSString stringWithFormat:@"%u:%02u:%02u", h, m, s];
+	return [NSString stringWithFormat:@"%lu:%02lu:%02lu", (unsigned long)h, (unsigned long)m, (unsigned long)s];
 }
 
 @end

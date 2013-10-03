@@ -17,7 +17,7 @@ enum {
 	kRouteViewController = 1
 };
 
-- (void)setCurrentViewControllerWithIndex:(int)viewControllerIndex;
+- (void)setCurrentViewControllerWithIndex:(NSUInteger)viewControllerIndex;
 - (TrackTableViewController *)currentViewController;
 
 @end

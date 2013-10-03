@@ -41,7 +41,7 @@
 	_currentViewController = currentViewController;
 }
 
-- (void)setCurrentViewControllerWithIndex:(int)viewControllerIndex
+- (void)setCurrentViewControllerWithIndex:(NSUInteger)viewControllerIndex
 {
 	if (viewControllerIndex == kActivityViewController || viewControllerIndex == kRouteViewController) {
 		self.trackTypeControl.selectedSegmentIndex = viewControllerIndex;

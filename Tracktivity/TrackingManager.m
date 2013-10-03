@@ -224,7 +224,7 @@ typedef enum {
 
 - (void)webSocket:(SRWebSocket *)webSocket didCloseWithCode:(NSInteger)code reason:(NSString *)reason wasClean:(BOOL)wasClean
 {
-	NSLog(@"WebSocket closed, code: %d, reason: %@, wasClean: %d", code, reason, wasClean);
+	NSLog(@"WebSocket closed, code: %ld, reason: %@, wasClean: %d", (long)code, reason, wasClean);
     _webSocket.delegate = nil;
 	_webSocket = nil;
 }

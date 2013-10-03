@@ -15,11 +15,11 @@
 {
 	MKPolyline *polyline;
 	NSOrderedSet *points = [self points];
-	int numPoints = points.count;
+	NSInteger numPoints = points.count;
 	if (numPoints > 1)
 	{
 		CLLocationCoordinate2D* coords = malloc(numPoints * sizeof(CLLocationCoordinate2D));
-		for (int i = 0; i < numPoints; i++)
+		for (NSInteger i = 0; i < numPoints; i++)
 		{
 			Waypoint *point = [points objectAtIndex:i];
 			coords[i] = CLLocationCoordinate2DMake(point.latitude.doubleValue, point.longitude.doubleValue);
@@ -30,10 +30,10 @@
 	return polyline;
 }
 
-- (NSString *)encodeNumber:(int)num
+- (NSString *)encodeNumber:(NSInteger)num
 {
 	NSMutableString *encodeString = [NSMutableString string];
-	int nextValue, finalValue;
+	NSInteger nextValue, finalValue;
 	while (num >= 0x20) {
 		nextValue = (0x20 | (num & 0x1f)) + 63;
 		//     if (nextValue == 92) {
@@ -50,9 +50,9 @@
 	return encodeString;
 }
 
-- (NSString *)encodeSignedNumber:(int)num
+- (NSString *)encodeSignedNumber:(NSInteger)num
 {
-	int sgn_num = num << 1;
+	NSInteger sgn_num = num << 1;
 	if (num < 0) {
 		sgn_num = ~(sgn_num);
 	}
@@ -93,28 +93,28 @@
 
 - (double *)computeDistancesForPoints:(NSArray *)points withMinimumDistanceBetweenPoints:(float)minDist
 {
-	int maxLoc = 0;
+	NSInteger maxLoc = 0;
 	double maxDist = 0;
 	double absMaxDist = 0;
 	
 	NSMutableArray *stack = [NSMutableArray array];
 	double *dists = calloc(points.count, sizeof(double));
-	for (int i = 0; i < points.count; i++) {
+	for (NSInteger i = 0; i < points.count; i++) {
 		dists[i] = -1;
 	}
 	
-	NSLog(@"computing distances for %d points using distance limit %.6f", points.count, minDist);
+	NSLog(@"computing distances for %lu points using distance limit %.6f", (unsigned long)points.count, minDist);
 	if (points.count > 2) {
-		[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0], [NSNumber numberWithInt:points.count-1], nil]];
+		[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithLong:0], [NSNumber numberWithLong:points.count-1], nil]];
 		while (stack.count > 0) {
 			NSArray *current = stack.lastObject;
 			[stack removeLastObject];
 			maxDist = 0;
-			int idx0 = ((NSNumber *)[current objectAtIndex:0]).integerValue;
-			int idx1 = ((NSNumber *)[current objectAtIndex:1]).integerValue;
+			NSInteger idx0 = ((NSNumber *)[current objectAtIndex:0]).integerValue;
+			NSInteger idx1 = ((NSNumber *)[current objectAtIndex:1]).integerValue;
 			Waypoint *p0 = [points objectAtIndex:idx0];
 			Waypoint *p1 = [points objectAtIndex:idx1];
-			for (int i = idx0 + 1; i < idx1; i++) {
+			for (NSInteger i = idx0 + 1; i < idx1; i++) {
 				double temp = [self distanceBetweenPoint:[points objectAtIndex:i] andSegmentWithPoint:p0 andPoint:p1];
 				if (temp > maxDist) {
 					maxDist = temp;
@@ -126,8 +126,8 @@
 			}
 			if (maxDist > minDist) {
 				dists[maxLoc] = maxDist;
-				[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:idx0], [NSNumber numberWithInt:maxLoc], nil]];
-				[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:maxLoc], [NSNumber numberWithInt:idx1], nil]];
+				[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithLong:idx0], [NSNumber numberWithLong:maxLoc], nil]];
+				[stack addObject:[NSArray arrayWithObjects:[NSNumber numberWithLong:maxLoc], [NSNumber numberWithLong:idx1], nil]];
 			}
 		}
 	}
@@ -137,19 +137,19 @@
 
 - (NSString *)encodedPolylineStringWithMinimumDistanceBetweenPoints:(float)minDist
 {
-	int dlat, dlng;
-	int plat = 0;
-	int plng = 0;
+	NSInteger dlat, dlng;
+	NSInteger plat = 0;
+	NSInteger plng = 0;
 	
 	NSArray *points = self.points.array;
 	NSMutableString *encodedPoints = [NSMutableString string];
 	double *dists = [self computeDistancesForPoints:points withMinimumDistanceBetweenPoints:minDist];
 	
-	for (int i = 0; i < points.count; i++) {
+	for (NSInteger i = 0; i < points.count; i++) {
 		Waypoint *point = [points objectAtIndex:i];
 		if (dists[i] != -1 || i == 0 || i == points.count-1) {
-			int late5 = floor(point.latitude.doubleValue * 1e5);
-			int lnge5 = floor(point.longitude.doubleValue * 1e5);
+			NSInteger late5 = floor(point.latitude.doubleValue * 1e5);
+			NSInteger lnge5 = floor(point.longitude.doubleValue * 1e5);
 			dlat = late5 - plat;
 			dlng = lnge5 - plng;
 			plat = late5;
