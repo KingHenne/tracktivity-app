@@ -96,7 +96,7 @@ typedef enum {
 	[self reset];
 	self.activity = [self.context insertNewObjectForEntityForName:@"Activity"];
 	self.activity.track = [self.context insertNewObjectForEntityForName:@"Track"];
-	self.activity.recording = [NSNumber numberWithBool:YES];
+	self.activity.recording = @YES;
 	self.activity.start = [NSDate date];
 	self.recording = YES;
 	self.paused = NO;
@@ -115,7 +115,7 @@ typedef enum {
 		self.activity = nil;
 	} else {
 		self.activity.end = [NSDate date];
-		self.activity.recording = [NSNumber numberWithBool:NO];
+		self.activity.recording = @NO;
 	}
 	[self saveContext];
 	[self finishLiveTracking];

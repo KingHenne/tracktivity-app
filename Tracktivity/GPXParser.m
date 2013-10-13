@@ -130,7 +130,7 @@
 - (void)didStartElement:(TBXMLElement *)element
 {
 	NSString *elementName = [TBXML elementName:element].lowercaseString;
-	[self.elementStates setObject:[NSNumber numberWithBool:YES] forKey:elementName];
+	[self.elementStates setObject:@YES forKey:elementName];
 	if ([elementName isEqualToString:@"trk"] || [elementName isEqualToString:@"rte"]) {
 		self.currentRoute = [self.context insertNewObjectForEntityForName:@"Route"];
 		self.currentRoute.created = [NSDate date];
@@ -176,7 +176,7 @@
 - (void)didEndElement:(TBXMLElement *)element
 {
 	NSString *elementName = [TBXML elementName:element].lowercaseString;
-	[self.elementStates setObject:[NSNumber numberWithBool:NO] forKey:elementName];
+	[self.elementStates setObject:@NO forKey:elementName];
 	if ([elementName isEqualToString:@"trk"] || [elementName isEqualToString:@"rte"]) {
 		if (self.currentRoute.name == nil) {
 			self.currentRoute.name = self.fileURL.fileNameWithoutExtension;
