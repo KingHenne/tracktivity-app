@@ -112,6 +112,7 @@
 	//RKLogConfigureByName("RestKit/CoreData", RKLogLevelDebug);
 
 	RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:apiEndpoint];
+	[RKObjectManager setSharedManager:objectManager];
 	
 	// Enable automatic network activity indicator management.
 	[AFNetworkActivityIndicatorManager sharedManager].enabled = YES;
