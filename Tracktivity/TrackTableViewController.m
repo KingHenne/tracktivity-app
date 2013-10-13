@@ -223,7 +223,7 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 }
 
 -(void)viewWillLayoutSubviews {
-	if (self.parentViewController) {
+	if (self.parentViewController && self.splitViewController == nil) {
 		CGFloat top = self.parentViewController.topLayoutGuide.length;
 		CGFloat bottom = self.parentViewController.bottomLayoutGuide.length;
 		// The first view controller is laid out correctly. We only need to fix the other ones.
