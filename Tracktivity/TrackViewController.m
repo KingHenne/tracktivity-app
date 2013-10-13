@@ -68,19 +68,20 @@ NSString * const BackgroundTrackRequestedNotification = @"BackgroundTrackRequest
 			[self.mapView addOverlay:polyline];
 			unionRect = MKMapRectUnion(unionRect, polyline.boundingMapRect);
 		}
+
 		// add a little padding
-		UIEdgeInsets padding = UIEdgeInsetsMake(40, 20, 20, 20);
+		CGFloat top = self.topLayoutGuide.length;
+		CGFloat bottom = self.bottomLayoutGuide.length;
+		UIEdgeInsets padding = UIEdgeInsetsMake(top + 60, 20, bottom + 50, 20);
 		if (IPAD) {
-			padding = UIEdgeInsetsMake(60, 40, 40, 40);
+			padding = UIEdgeInsetsMake(top + 60, 40, bottom + 60, 40);
 		}
 		MKMapRect paddedRect = [self.mapView mapRectThatFits:unionRect edgePadding:padding];
+
 		// stay above minimum zoom level
 		MKCoordinateRegion adjustedRegion = [self adjustRectForMinimumZoomLevel:paddedRect onMapView:self.mapView];
-		if (IPAD) {
-			[self.mapView setRegion:adjustedRegion animated:YES];
-		} else {
-			[self.mapView setRegion:adjustedRegion animated:NO];
-		}
+		BOOL adjustRegionAnimated = (self.splitViewController != nil);
+		[self.mapView setRegion:adjustedRegion animated:adjustRegionAnimated];
 		[self.mapView setNeedsDisplay];
 	}
 }
