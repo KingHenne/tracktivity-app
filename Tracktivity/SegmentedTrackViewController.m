@@ -8,51 +8,68 @@
 
 #import "SegmentedTrackViewController.h"
 #import "ActivityTableViewController.h"
+#import "RouteTableViewController.h"
 #import "Activity.h"
 
 @interface SegmentedTrackViewController ()
 @property (weak, nonatomic) IBOutlet UISegmentedControl *trackTypeControl;
+@property (weak, nonatomic) IBOutlet UIView *containerView;
 @property (strong, nonatomic) TrackTableViewController *currentViewController;
-@property (strong, nonatomic) NSArray *childViewControllers;
+@property (strong, nonatomic) ActivityTableViewController *activityViewController;
+@property (strong, nonatomic) RouteTableViewController *routeViewController;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *refreshButton;
 @end
 
 @implementation SegmentedTrackViewController
 
-@synthesize trackTypeControl = _trackTypeControl;
-@synthesize refreshButton = _refreshButton;
-@synthesize childViewControllers = _childViewControllers;
-
-- (NSArray *)childViewControllers
-{
-	if (_childViewControllers == nil) {
-		UIViewController *activityVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Activity Table View Controller"];
-		UIViewController *routeVC = [self.storyboard instantiateViewControllerWithIdentifier:@"Route Table View Controller"];
-		_childViewControllers = [NSArray arrayWithObjects:activityVC, routeVC, nil];
-	}
-	return _childViewControllers;
-}
-
-- (void)setCurrentViewController:(TrackTableViewController *)currentViewController
-{
-	[_currentViewController.view removeFromSuperview];
-	currentViewController.view.frame = self.view.bounds;
-	[self.view addSubview:currentViewController.view];
-	_currentViewController = currentViewController;
-}
-
 - (void)setCurrentViewControllerWithIndex:(NSUInteger)viewControllerIndex
 {
-	if (viewControllerIndex == kActivityViewController || viewControllerIndex == kRouteViewController) {
-		self.trackTypeControl.selectedSegmentIndex = viewControllerIndex;
-		self.title = [self.trackTypeControl titleForSegmentAtIndex:viewControllerIndex];
-		self.currentViewController = [self.childViewControllers objectAtIndex:viewControllerIndex];
+	self.trackTypeControl.selectedSegmentIndex = viewControllerIndex;
+	self.title = [self.trackTypeControl titleForSegmentAtIndex:viewControllerIndex];
+	
+	switch (viewControllerIndex) {
+		case kActivityViewController:
+			if (self.currentViewController == self.routeViewController) {
+				[self addChildViewController:self.activityViewController];
+				[self moveToNewController:self.activityViewController];
+			}
+			break;
+		case kRouteViewController:
+			if (self.currentViewController == self.activityViewController) {
+				[self addChildViewController:self.routeViewController];
+				[self moveToNewController:self.routeViewController];
+			}
+			break;
+		default:
+			break;
 	}
-	if (viewControllerIndex == kActivityViewController) {
-		self.navigationItem.leftBarButtonItem = self.refreshButton;
-	} else {
-		self.navigationItem.leftBarButtonItem = nil;
-	}
+}
+
+-(void)moveToNewController:(TrackTableViewController *) newController {
+    [self.currentViewController willMoveToParentViewController:nil];
+    [self transitionFromViewController:self.currentViewController
+					  toViewController:newController
+							  duration:.2
+							   options:UIViewAnimationOptionTransitionCrossDissolve
+							animations:^{}
+							completion:^(BOOL finished) {
+								[self.currentViewController removeFromParentViewController];
+								UIView *newSubview = newController.view;
+								newSubview.translatesAutoresizingMaskIntoConstraints = NO;
+								NSDictionary *views = NSDictionaryOfVariableBindings(newSubview);
+								[self.containerView addConstraints:
+								 [NSLayoutConstraint constraintsWithVisualFormat:@"V:|[newSubview]|"
+																		 options:0
+																		 metrics:nil
+																		   views:views]];
+								[self.containerView addConstraints:
+								 [NSLayoutConstraint constraintsWithVisualFormat:@"H:|[newSubview]|"
+																		 options:0
+																		 metrics:nil
+																		   views:views]];
+								[newController didMoveToParentViewController:self];
+								self.currentViewController = newController;
+							}];
 }
 
 - (IBAction)trackTypeChanged:(UISegmentedControl *)sender
@@ -65,13 +82,6 @@
 	[self.currentViewController trashButtonPressed:sender];
 }
 
-- (IBAction)refreshButtonPressed:(UIBarButtonItem *)sender
-{
-	if ([self.currentViewController respondsToSelector:@selector(refreshButtonPressed:)]) {
-		[self.currentViewController performSelector:@selector(refreshButtonPressed:) withObject:sender];
-	}
-}
-
 #pragma mark UIViewController Methods
 
 - (void)viewDidLoad
@@ -79,25 +89,18 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
 	
-	for (UIViewController *childVC in self.childViewControllers) {
-		[self addChildViewController:childVC];
-	}
-	
 	NSInteger segmentIndex = self.trackTypeControl.selectedSegmentIndex;
-	
-	TrackTableViewController *vc = [self.childViewControllers objectAtIndex:segmentIndex];
-    vc.view.frame = self.view.bounds;
-    [self.view addSubview:vc.view];
-    _currentViewController = vc;
-	
 	self.title = [self.trackTypeControl titleForSegmentAtIndex:segmentIndex];
+	
+	self.currentViewController = self.childViewControllers.lastObject;
+	self.activityViewController = (ActivityTableViewController *) self.currentViewController;
+    self.routeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"Route Table View Controller"];
 }
 
 - (void)viewDidUnload
 {
     // Release any retained subviews of the main view.
 	[self setTrackTypeControl:nil];
-	[self setRefreshButton:nil];
     [super viewDidUnload];
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F37" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fk-8c-VxA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4510" systemVersion="12F45" targetRuntime="iOS.CocoaTouch.iPad" propertyAccessControl="none" useAutolayout="YES" initialViewController="6fk-8c-VxA">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3742"/>
     </dependencies>
@@ -13,7 +13,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recorded Activity Cell" textLabel="TBG-cJ-kGE" detailTextLabel="SsY-mE-rwA" imageView="ps2-Qa-cx3" rowHeight="54" style="IBUITableViewCellStyleSubtitle" id="dpz-h5-Hmr">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Recorded Activity Cell" textLabel="TBG-cJ-kGE" detailTextLabel="g02-7S-PdY" imageView="tZW-vZ-Y36" rowHeight="54" style="IBUITableViewCellStyleSubtitle" id="dpz-h5-Hmr">
                                 <rect key="frame" x="0.0" y="86" width="320" height="54"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dpz-h5-Hmr" id="i9g-pK-JG1">
@@ -21,18 +21,19 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TBG-cJ-kGE">
-                                            <rect key="frame" x="83" y="7" width="36" height="22"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                            <rect key="frame" x="83" y="8" width="34" height="22"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="SsY-mE-rwA">
-                                            <rect key="frame" x="83" y="29" width="50" height="17"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <color key="textColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="highlightedColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="g02-7S-PdY">
+                                            <rect key="frame" x="83" y="30" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mapThumbnail.png" id="ps2-Qa-cx3">
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="mapThumbnail.png" id="tZW-vZ-Y36">
                                             <rect key="frame" x="15" y="0.0" width="53" height="53"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
@@ -130,10 +131,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="trailing" secondItem="dcD-cC-dTj" secondAttribute="trailing" id="35Q-b4-Pjx"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="leading" secondItem="dcD-cC-dTj" secondAttribute="leading" id="PnS-GQ-xE8"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="bottom" secondItem="dcD-cC-dTj" secondAttribute="bottom" id="gnS-Sc-DcT"/>
-                            <constraint firstItem="58a-U5-Lyz" firstAttribute="top" secondItem="dcD-cC-dTj" secondAttribute="top" id="lxj-ZJ-KMU"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="leading" secondItem="dcD-cC-dTj" secondAttribute="leading" id="KSN-NA-OCF"/>
+                            <constraint firstAttribute="trailing" secondItem="58a-U5-Lyz" secondAttribute="trailing" id="Uzc-GT-w3K"/>
+                            <constraint firstAttribute="bottom" secondItem="58a-U5-Lyz" secondAttribute="bottom" id="aOp-oW-1J1"/>
+                            <constraint firstItem="58a-U5-Lyz" firstAttribute="top" secondItem="dcD-cC-dTj" secondAttribute="top" id="bju-Tq-LfU"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Tracktivity" id="zXA-sz-jHH">

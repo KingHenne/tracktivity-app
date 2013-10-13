@@ -65,6 +65,13 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 	self.deleteActionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:cancelButtonTitle destructiveButtonTitle:destructiveButtonTitle otherButtonTitles:otherButtonTitle, nil];
 	[self.deleteActionSheet showFromBarButtonItem:sender animated:YES];
 }
+	
+- (void)saveContext
+{
+	NSError *error = nil;
+	BOOL success = [RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
+	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
+}
 
 #pragma mark UIActionSheetDelegate Methods
 
@@ -125,13 +132,6 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 	}
     
     return cell;
-}
-
-- (void)saveContext
-{
-	NSError *error = nil;
-	BOOL success = [RKManagedObjectStore.defaultStore.mainQueueManagedObjectContext saveToPersistentStore:&error];
-	if (!success) RKLogWarning(@"Failed saving managed object context: %@", error);
 }
 
 // Override to support conditional editing of the table view.
@@ -220,6 +220,20 @@ NSString * const DisplayImportedTrackNotification = @"DisplayImportedTrackNotifi
 - (void)viewWillAppear:(BOOL)animated
 {
 	[self.tableView deselectRowAtIndexPath:self.tableView.indexPathForSelectedRow animated:YES];
+}
+
+-(void)viewWillLayoutSubviews {
+	if (self.parentViewController) {
+		CGFloat top = self.parentViewController.topLayoutGuide.length;
+		CGFloat bottom = self.parentViewController.bottomLayoutGuide.length;
+		// The first view controller is laid out correctly. We only need to fix the other ones.
+		// We check if its laid out correctly using this condition:
+		if (self.tableView.contentInset.top != top) {
+			UIEdgeInsets newInsets = UIEdgeInsetsMake(top, 0, bottom, 0);
+			self.tableView.contentInset = newInsets;
+			self.tableView.scrollIndicatorInsets = newInsets;
+		}
+	}
 }
 
 - (void)awakeFromNib
