@@ -92,18 +92,25 @@
 	[self.gpxParser removeObserver:self.tbc forKeyPath:@"parseProgress"];
 }
 
-- (void)initializeRestKit
+- (NSURL *)apiURL
+{
+	NSString *apiURL = [NSUserDefaults.standardUserDefaults objectForKey:@"api_url_preference"];
+	if (apiURL == nil) {
+		apiURL = @"http://henlie.sinnerschrader.it:8080/api";
+	} else if (![[apiURL substringToIndex:4] isEqual:@"http"]) {
+		apiURL = [NSString stringWithFormat:@"http://%@", apiURL];
+	}
+	return [NSURL URLWithString:apiURL];
+}
+
+- (void)initializeRestKit:(NSURL *)apiEndpoint
 {
 	// Log all HTTP traffic with request and response bodies
 	//RKLogConfigureByName("RestKit/Network", RKLogLevelTrace);
 	
 	// Log debugging info about Core Data
 	//RKLogConfigureByName("RestKit/CoreData", RKLogLevelDebug);
-	
-	NSError *error = nil;
-	
-	//NSURL *apiEndpoint = [NSURL URLWithString:@"http://mackie-messer.local:8080/api"];
-	NSURL *apiEndpoint = [NSURL URLWithString:@"http://henlie.sinnerschrader.it:8080/api"];
+
 	RKObjectManager *objectManager = [RKObjectManager managerWithBaseURL:apiEndpoint];
 	
 	// Enable automatic network activity indicator management.
@@ -167,6 +174,8 @@
 	   [RKRoute routeWithClass:[Activity class] pathPattern:@"activities/:tracktivityID" method:RKRequestMethodDELETE],
 	   [RKRoute routeWithClass:[Activity class] pathPattern:@"activities" method:RKRequestMethodPOST]]];
 	
+	NSError *error = nil;
+
 	BOOL success = RKEnsureDirectoryExistsAtPath(RKApplicationDataDirectory(), &error);
 	if (! success) {
 		RKLogError(@"Failed to create Application Data Directory at path '%@': %@", RKApplicationDataDirectory(), error);
@@ -335,7 +344,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-	[self initializeRestKit];
+	[self initializeRestKit:self.apiURL];
 	//[self initializeAccessories];
     return YES;
 }
@@ -358,6 +367,12 @@
 - (void)applicationWillEnterForeground:(UIApplication *)application
 {
 	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	NSURL *apiURL = self.apiURL;
+	RKObjectManager *objectManager = RKObjectManager.sharedManager;
+	if (![apiURL isEqual:objectManager.baseURL]) {
+		NSLog(@"API endpoint changed to %@", apiURL.absoluteString);
+		[self initializeRestKit:apiURL];
+	}
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application

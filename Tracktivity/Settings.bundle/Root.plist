@@ -8,7 +8,7 @@
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>
 			<key>Title</key>
-			<string>Server</string>
+			<string>API Endpoint</string>
 		</dict>
 		<dict>
 			<key>AutocapitalizationType</key>
@@ -20,7 +20,7 @@
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>
-			<string>server_preference</string>
+			<string>api_url_preference</string>
 			<key>KeyboardType</key>
 			<string>URL</string>
 			<key>Title</key>
