@@ -44,6 +44,7 @@
 		[RKObjectManager.sharedManager postObject:newActivity path:nil parameters:nil success:^(RKObjectRequestOperation *operation, RKMappingResult *mappingResult) {
 			Activity *activity = (Activity *) mappingResult.firstObject;
 			NSLog(@"successfully uploaded activity with newly assigned tracktivity ID: %@", activity.tracktivityID);
+			[blockSelf updateRefreshControl];
 		} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 			[blockSelf operationFailedWithError:error];
 		}];
@@ -60,11 +61,18 @@
 		NSArray *activityIDs = mappingResult.array;
 		[blockSelf downloadNewActivities:activityIDs];
 		//[blockSelf deleteActivitiesNotIncludedInList:activityIDs];
+		[blockSelf updateRefreshControl];
 	} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 		[blockSelf operationFailedWithError:error];
 	}];
 }
 
+- (void)updateRefreshControl
+{
+	if (RKObjectManager.sharedManager.operationQueue.operationCount == 0) {
+		[self.refreshControl endRefreshing];
+	}
+}
 // activityIDs must be an array of ThinActivity objects
 - (void)downloadNewActivities:(NSArray *)activityIDs
 {
@@ -82,6 +90,7 @@
 				NSLog(@"successfully fetched activity: %@", tracktivityID);
 				Activity *fetchedActivity = (Activity *) mappingResult.firstObject;
 				fetchedActivity.recording = @NO;
+				[blockSelf updateRefreshControl];
 			} failure:^(RKObjectRequestOperation *operation, NSError *error) {
 				[blockSelf operationFailedWithError:error];
 			}];
@@ -118,6 +127,7 @@
 	NSString *cancelButtonTitle = NSLocalizedString(@"AlertViewOK", @"alert view ok button label");
 	UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:nil message:localizedErrorMessage delegate:self cancelButtonTitle:cancelButtonTitle otherButtonTitles: nil];
 	[alertView show];
+	[self.refreshControl endRefreshing];
 }
 
 - (void)saveContext
